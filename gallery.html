@@ -305,126 +305,81 @@ $('.play').on('click', function() {
   <script>
 $(document).ready(function () {
   const items = $(".carousel-item");
-  let currentIndex = 4; // The center index (5th item)
-  let isAnimating = false; // Flag to check if the animation is ongoing
+  let currentIndex = 4;
+  let isAnimating = false;
   CustomEase.create("customEase", ".06,.39,.95,-0.06");
-  let touchStartY = 0; // Starting Y position of touch
-  let touchEndY = 0; // Ending Y position of touch
+  let touchStartY = 0;
+  let touchEndY = 0;
+
   function updateCarousel() {
     items.each(function (index) {
       let newIndex = (index - currentIndex + items.length) % items.length;
       let zIndexClass;
       switch (newIndex) {
-        case 0:
-          zIndexClass = "center";
-          break;
-        case 1:
-        case 7:
-          zIndexClass = "z1";
-          break;
-        case 2:
-        case 6:
-          zIndexClass = "z2";
-          break;
-        case 3:
-        case 5:
-          zIndexClass = "z3";
-          break;
-        case 4:
-        default:
-          zIndexClass = "";
-          break;
+        case 0: zIndexClass = "center"; break;
+        case 1: case 7: zIndexClass = "z1"; break;
+        case 2: case 6: zIndexClass = "z2"; break;
+        case 3: case 5: zIndexClass = "z3"; break;
+        case 4: default: zIndexClass = ""; break;
       }
       $(this).removeClass("center z3 z2 z1").addClass(zIndexClass);
       let bgColor = "#" + $(".center").attr("data-bg-color");
       $(".carousel-container").css("background-color", bgColor);
       let yPercent = newIndex <= 3 ? newIndex * 25 : (newIndex - 8) * 25;
       gsap.to(this, {
-        duration: .4,
+        duration: 0.4,
         ease: "customEase",
         y: yPercent + "%",
         scale: getScale(newIndex),
         zIndex: getZIndex(newIndex),
         onComplete: function () {
-          if (newIndex === 1 || newIndex === 7) {
-            $(this).removeClass("z3");
-          }
-          if (newIndex === 2 || newIndex === 6) {
-            $(this).removeClass("z2");
-          }
-          if (newIndex === 3 || newIndex === 5) {
-            $(this).removeClass("z1");
-          }
-          setTimeout(() => {
-            isAnimating = false; // Allow scrolling after animation completes
-          }, 500);
+          if (newIndex === 1 || newIndex === 7) $(this).removeClass("z3");
+          if (newIndex === 2 || newIndex === 6) $(this).removeClass("z2");
+          if (newIndex === 3 || newIndex === 5) $(this).removeClass("z1");
+          setTimeout(function () { isAnimating = false; }, 500);
         },
       });
     });
   }
   function getScale(index) {
     switch (index) {
-      case 0:
-        return 1;
-      case 1:
-      case 7:
-        return 0.9;
-      case 2:
-      case 6:
-        return 0.8;
-      case 3:
-      case 5:
-        return 0.7;
-      case 4:
-      default:
-        return 0.7;
+      case 0: return 1;
+      case 1: case 7: return 0.9;
+      case 2: case 6: return 0.8;
+      case 3: case 5: case 4: default: return 0.7;
     }
   }
   function getZIndex(index) {
     switch (index) {
-      case 0:
-        return 4;
-      case 1:
-      case 7:
-        return 3;
-      case 2:
-      case 6:
-        return 2;
-      case 3:
-      case 5:
-        return 1;
-      case 4:
-      default:
-        return 0;
+      case 0: return 4;
+      case 1: case 7: return 3;
+      case 2: case 6: return 2;
+      case 3: case 5: return 1;
+      case 4: default: return 0;
     }
   }
-  $(window).on("wheel", function (event) {
-    if (isAnimating) return; // Prevent scrolling if animation is ongoing
+
+  $(window).on("wheel", function (e) {
+    if (isAnimating) return;
     isAnimating = true;
-    if (event.originalEvent.deltaY > 0) {
-      currentIndex = (currentIndex + 1) % items.length;
-    } else {
-      currentIndex = (currentIndex - 1 + items.length) % items.length;
-    }
+    if (e.originalEvent.deltaY > 0) currentIndex = (currentIndex + 1) % items.length;
+    else currentIndex = (currentIndex - 1 + items.length) % items.length;
     updateCarousel();
   });
-  // Touch event listeners
-  $('.carousel-container').on('touchstart', function(event) {
-    touchStartY = event.touches[0].clientY;
+  $(".carousel-container").on("touchstart", function (e) {
+    touchStartY = e.originalEvent.touches[0].clientY;
   });
-  $('.carousel-container').on('touchmove', function(event) {
-    touchEndY = event.touches[0].clientY;
+  $(".carousel-container").on("touchmove", function (e) {
+    touchEndY = e.originalEvent.touches[0].clientY;
   });
-  $('.carousel-container').on('touchend', function() {
-    if (isAnimating) return; // Prevent scrolling if animation is ongoing
+  $(".carousel-container").on("touchend", function () {
+    if (isAnimating) return;
     isAnimating = true;
-    if (touchEndY < touchStartY) {
-      currentIndex = (currentIndex + 1) % items.length;
-    } else if (touchEndY > touchStartY) {
-      currentIndex = (currentIndex - 1 + items.length) % items.length;
-    }
+    if (touchEndY < touchStartY) currentIndex = (currentIndex + 1) % items.length;
+    else if (touchEndY > touchStartY) currentIndex = (currentIndex - 1 + items.length) % items.length;
     updateCarousel();
   });
+
   updateCarousel();
 });
 </script>
