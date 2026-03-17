@@ -303,16 +303,16 @@ body {
     const safeShare = shareUrl || "";
     const src = (embedBaseUrl || "").replace(/^https?:\/\//, "https://");
     const html =
-      "<iframe class=\\\"embedly-embed\\\" " +
-      "src=\\\"//cdn.embedly.com/widgets/media.html?src=" +
+      "<iframe class='embedly-embed' " +
+      "src='//cdn.embedly.com/widgets/media.html?src=" +
       encodeURIComponent(src) +
       "&dntp=1&display_name=Vimeo&url=" +
       encodeURIComponent(safeShare) +
-      "&type=text%2Fhtml&schema=vimeo\\\" " +
-      "width=\\\"940\\\" height=\\\"529\\\" scrolling=\\\"no\\\" " +
-      "title=\\\"Vimeo embed\\\" frameborder=\\\"0\\\" " +
-      "allow=\\\"autoplay; fullscreen; encrypted-media; picture-in-picture;\\\" " +
-      "allowfullscreen=\\\"true\\\"></iframe>";
+      "&type=text%2Fhtml&schema=vimeo' " +
+      "width='940' height='529' scrolling='no' " +
+      "title='Vimeo embed' frameborder='0' " +
+      "allow='autoplay; fullscreen; encrypted-media; picture-in-picture;' " +
+      "allowfullscreen='true'></iframe>";
 
     return {
       items: [
