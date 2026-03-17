@@ -2962,6 +2962,15 @@ p {
 }
 
 @media screen and (max-width: 991px) {
+  /* Homepage right-column: show L0ST TAPES on mobile */
+  .right-desktop-video {
+    display: none;
+  }
+
+  .right-mobile-video {
+    display: block;
+  }
+
   .section {
     padding-top: 100px;
     padding-bottom: 100px;
@@ -4118,4 +4127,9 @@ p {
   min-height: 100%;
   width: max(100%, 177.78vh);
   height: max(100%, 56.25vw);
+}
+
+/* Homepage right-column video swap default */
+.right-mobile-video {
+  display: none;
 }
