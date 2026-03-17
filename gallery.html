@@ -288,6 +288,104 @@ body {
     </div>
   </div>
   <script src="https://d3e54v103j8qbb.cloudfront.net/js/jquery-3.5.1.min.dc5e7f18c8.js?site=692ebc79d55153a076f9bb6d" type="text/javascript" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+  <script>
+(function () {
+  const API_URL = "/api/videos";
+  const IFRAME_PARAMS =
+    "title=0&byline=0&portrait=0&badge=0&autopause=0&autoplay=1&loop=1&muted=1";
+
+  function buildIframeSrc(embedBaseUrl) {
+    if (!embedBaseUrl) return "";
+    return embedBaseUrl + (embedBaseUrl.includes("?") ? "&" : "?") + IFRAME_PARAMS;
+  }
+
+  function buildLightboxJson(shareUrl, embedBaseUrl) {
+    const safeShare = shareUrl || "";
+    const src = (embedBaseUrl || "").replace(/^https?:\/\//, "https://");
+    const html =
+      "<iframe class=\\\"embedly-embed\\\" " +
+      "src=\\\"//cdn.embedly.com/widgets/media.html?src=" +
+      encodeURIComponent(src) +
+      "&dntp=1&display_name=Vimeo&url=" +
+      encodeURIComponent(safeShare) +
+      "&type=text%2Fhtml&schema=vimeo\\\" " +
+      "width=\\\"940\\\" height=\\\"529\\\" scrolling=\\\"no\\\" " +
+      "title=\\\"Vimeo embed\\\" frameborder=\\\"0\\\" " +
+      "allow=\\\"autoplay; fullscreen; encrypted-media; picture-in-picture;\\\" " +
+      "allowfullscreen=\\\"true\\\"></iframe>";
+
+    return {
+      items: [
+        {
+          url: safeShare,
+          originalUrl: safeShare,
+          width: 940,
+          height: 529,
+          thumbnailUrl: "",
+          html,
+          type: "video",
+        },
+      ],
+      group: "",
+    };
+  }
+
+  async function load() {
+    const items = Array.from(document.querySelectorAll(".carousel-container .carousel > a.carousel-item"));
+    if (!items.length) return;
+
+    const res = await fetch(API_URL, { headers: { accept: "application/json" } });
+    if (!res.ok) return;
+    const data = await res.json();
+    const cmsItems = Array.isArray(data?.items) ? data.items : [];
+    const top4 = cmsItems.slice(0, 4);
+    if (top4.length < 1) return;
+
+    const expanded = [];
+    for (let i = 0; i < 8; i++) expanded.push(top4[i % top4.length]);
+
+    items.forEach((el, idx) => {
+      const record = expanded[idx];
+      if (!record) return;
+
+      const title = record.title || "";
+      const shareUrl = record?.vimeo?.shareUrl || "";
+      const embedBaseUrl = record?.vimeo?.embedBaseUrl || "";
+
+      const h1 = el.querySelector(".carousel_item_title");
+      if (h1) h1.textContent = title;
+
+      const iframe = el.querySelector("iframe");
+      if (iframe) {
+        iframe.src = buildIframeSrc(embedBaseUrl);
+        iframe.title = title;
+      }
+
+      const jsonScript = el.querySelector("script.w-json");
+      if (jsonScript) {
+        jsonScript.textContent = JSON.stringify(buildLightboxJson(shareUrl, embedBaseUrl));
+      }
+
+      // Keep link from navigating
+      el.setAttribute("href", "#");
+    });
+
+    // Re-initialize Webflow lightbox after swapping JSON
+    try {
+      if (window.Webflow && typeof window.Webflow.require === "function") {
+        const lb = window.Webflow.require("lightbox");
+        if (lb && typeof lb.ready === "function") lb.ready();
+      }
+    } catch (_) {}
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", load);
+  } else {
+    load();
+  }
+})();
+  </script>
   <script src="js/webflow.js" type="text/javascript"></script>
   <script>
 $('.link').on('click', function() {
