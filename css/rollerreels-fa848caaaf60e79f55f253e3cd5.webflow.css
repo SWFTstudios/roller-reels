@@ -2641,24 +2641,27 @@ p {
 }
 
 .carousel-container {
-  background-color: var(--black);
+  position: fixed;
+  inset: 0%;
+  overflow: hidden;
   width: 100%;
-  height: 100vh;
+  height: 100svh;
   padding-top: 5rem;
   padding-bottom: 5rem;
-  transition: background-color .5s cubic-bezier(.47, 0, .745, .715);
-  position: relative;
-  overflow: hidden;
+  background-color: var(--black);
+  transition-property: background-color;
+  transition-duration: 500ms;
+  transition-timing-function: cubic-bezier(0.47, 0, 0.745, 0.715);
 }
 
 .carousel {
+  position: relative;
+  display: flex;
+  width: 100%;
+  height: 100%;
   flex-flow: column;
   justify-content: center;
   align-items: center;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  position: relative;
 }
 
 .carousel-item {
@@ -2727,6 +2730,28 @@ p {
   background-image: linear-gradient(#0000 50%, #000 90%);
   position: absolute;
   inset: 0%;
+}
+
+/* Vimeo embed: same shape as native video (cover fill) */
+.video-bg .vimeo-embed-wrap,
+.carousel-video .vimeo-embed-wrap {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.video-bg .vimeo-embed-wrap iframe,
+.carousel-video .vimeo-embed-wrap iframe {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  min-width: 100%;
+  min-height: 100%;
+  width: max(100%, 177.78vh);
+  height: max(100%, 56.25vw);
 }
 
 @media screen and (min-width: 1440px) {
