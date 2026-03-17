@@ -1,2 +1,5 @@
 # Cloudflare Pages file size limit is 25 MiB — site uses Vimeo embeds, no local videos
 videos/
+
+# Local documentation notes (not tracked in Git)
+docs/cms-architecture.md
