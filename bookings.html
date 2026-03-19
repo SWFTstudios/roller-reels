@@ -862,7 +862,14 @@
           if (stepNumber === 6) {
             clearErrors(['error-fullName', 'error-email', 'error-phone', 'error-agreement']);
             if (!state.fullName) { setError('error-fullName', 'Please enter your full name.'); valid = false; }
-            if (!state.email || !isValidEmail(state.email)) { setError('error-email', 'Please enter a valid email address.'); valid = false; }
+            var emailInput = qs('#email', form);
+            var emailOk = false;
+            if (emailInput && typeof emailInput.checkValidity === 'function') {
+              emailOk = emailInput.checkValidity();
+            } else {
+              emailOk = !!state.email && isValidEmail(state.email);
+            }
+            if (!emailOk) { setError('error-email', 'Please enter a valid email address.'); valid = false; }
             if (!state.phone) { setError('error-phone', 'Please enter your phone number.'); valid = false; }
             if (!state.agreement) { setError('error-agreement', 'Please check the agreement box.'); valid = false; }
             return valid;
