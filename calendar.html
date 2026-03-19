@@ -113,9 +113,11 @@
   <script>
 (function() {
   var summary = '';
+  var depositParam = '';
   try {
     var params = new URLSearchParams(window.location.search);
     summary = params.get('summary') ? decodeURIComponent(params.get('summary')) : '';
+    depositParam = params.get('deposit') ? decodeURIComponent(params.get('deposit')) : '';
     if (!summary) summary = sessionStorage.getItem('bookingSummary') || '';
   } catch (e) {}
 
@@ -144,7 +146,7 @@
 
   // Dynamic deposit rendering (fallback to a generic message).
   try {
-    var depositDueStr = sessionStorage.getItem('bookingDepositDue') || '';
+    var depositDueStr = depositParam || sessionStorage.getItem('bookingDepositDue') || '';
     var depositDueNum = parseFloat(depositDueStr);
     if (depositCopy) {
       if (!isNaN(depositDueNum) && depositDueNum > 0) {
