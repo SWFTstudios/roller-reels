@@ -85,7 +85,7 @@
       <div bloc="question-container" class="container-3 w-container">
         <div class="form-block w-form">
           <form id="wf-form-Booking-Form" name="wf-form-Booking-Form" data-name="Booking Form" action="https://formsubmit.co/elombe@swftstudios.com" method="post" class="form" data-wf-page-id="692ebc79d55153a076f9bb67" data-wf-element-id="766d0790-9c06-6645-a2a9-1b15b0163512">
-            <input type="hidden" name="_next" id="form-next-url" value="">
+            <input type="hidden" name="_next" id="form-next-url" value="calendar.html">
             <input type="hidden" id="booking-summary-hidden" name="Booking-Summary" value="">
             <input type="hidden" id="estimated-total-hidden" name="estimated-total" value="">
             <input type="hidden" id="deposit-due-hidden" name="deposit-due-today" value="">
@@ -1209,6 +1209,13 @@
         }
 
         form.addEventListener('submit', function() {
+          // Always set redirect target first so a later JS error can't fall back.
+          try {
+            var path = window.location.pathname;
+            var dir = path.substring(0, path.lastIndexOf('/') + 1) || '/';
+            qs('#form-next-url', form).value = window.location.origin + dir + 'calendar.html';
+          } catch (e) {}
+
           var state = getBookingState();
           syncConditionalUI(state);
           var estimate = estimateBooking(state);
@@ -1250,10 +1257,7 @@
             sessionStorage.setItem('pricingBreakdownJson', qs('#pricing-breakdown-json-hidden', form).value);
           } catch (e) {}
 
-          // Keep the redirect pointed to calendar.html
-          var path = window.location.pathname;
-          var dir = path.substring(0, path.lastIndexOf('/') + 1) || '/';
-          qs('#form-next-url', form).value = window.location.origin + dir + 'calendar.html';
+          // Redirect already set above.
         });
 
         // Initial sync
