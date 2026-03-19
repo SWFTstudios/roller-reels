@@ -26,15 +26,16 @@
 .radio-input.w--redirected-checked ~ .radio-circle-box { border-color: #fff; background-color: rgb(177 177 177 / 19%); }
 .booking-step { display: none; }
 .booking-step.active { display: block; }
+.question-2 { margin-top: 0.75rem !important; }
 .field-error { display: none; color: #ff0004; font-size: 0.85rem; margin-top: 0.25rem; }
 .field-error.show { display: block; }
 .is-hidden { display: none !important; }
 .route-grid { display: grid; grid-template-columns: 1fr; gap: 12px; }
 @media (min-width: 768px) { .route-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 .route-card { min-width: 0; width: 100%; box-sizing: border-box; }
-.booking-step-nav { margin-top: 1.5rem; display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+.booking-step-nav { margin-top: 1rem; display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
 .booking-step-nav .w-button { cursor: pointer; }
-.step-indicator { text-align: center; margin-bottom: 1rem; font-size: 0.9rem; opacity: 0.9; }</style>
+.step-indicator { text-align: center; margin-bottom: 0.5rem; font-size: 0.9rem; opacity: 0.9; }</style>
     </div>
     <div class="navigation">
       <div class="logotypes">
@@ -326,65 +327,12 @@
               <section class="booking-step" id="step-5" data-step="5">
                 <div class="question-2">
                   <div class="section-header medium-header">
-                    <h2 class="heading-2">Schedule & references</h2>
-                  </div>
-
-                  <div class="question-box">
-                    <div class="section-header small-header" style="margin-top:0;">
-                      <h2 class="heading-2" style="font-size:1.15rem;">Pick a date style</h2>
-                    </div>
-                    <div class="radio-buttons">
-                      <label class="radio-button w-radio">
-                        <div class="w-form-formradioinput w-form-formradioinput--inputType-custom radio-input w-radio-input"></div>
-                        <input type="radio" name="dateMode" id="date-mode-single" value="single" checked style="opacity:0;position:absolute;z-index:-1">
-                        <div class="radio-circle-box"></div>
-                        <span for="date-mode-single" class="radio-main-text w-form-label">Single date</span>
-                      </label>
-                      <label class="radio-button w-radio">
-                        <div class="w-form-formradioinput w-form-formradioinput--inputType-custom radio-input w-radio-input"></div>
-                        <input type="radio" name="dateMode" id="date-mode-range" value="range" style="opacity:0;position:absolute;z-index:-1">
-                        <div class="radio-circle-box"></div>
-                        <span for="date-mode-range" class="radio-main-text w-form-label">Date range</span>
-                      </label>
-                    </div>
-                  </div>
-
-                  <div id="single-date-wrap" class="question-2" style="margin-top:1rem;">
-                    <div class="input-box">
-                      <label class="price-box-label" for="preferred-date">Preferred date</label>
-                      <input class="text-field w-input" type="date" id="preferred-date" name="preferredDate">
-                    </div>
-                  </div>
-
-                  <div id="date-range-wrap" class="question-2" style="display:none;margin-top:1rem;">
-                    <div class="input-box">
-                      <label class="price-box-label" for="preferred-date-start">Start date</label>
-                      <input class="text-field w-input" type="date" id="preferred-date-start" name="preferredDateStart">
-                    </div>
-                    <div class="input-box" style="margin-top:0.75rem;">
-                      <label class="price-box-label" for="preferred-date-end">End date</label>
-                      <input class="text-field w-input" type="date" id="preferred-date-end" name="preferredDateEnd">
-                    </div>
+                    <h2 class="heading-2">References</h2>
                   </div>
 
                   <div class="question-2" style="margin-top:1rem;">
                     <div class="section-header small-header">
-                      <h2 class="heading-2" style="font-size:1.15rem;">Time of day</h2>
-                    </div>
-                    <div class="input-box">
-                      <select id="time-of-day" name="timeOfDay" class="text-field w-input">
-                        <option value="Morning">Morning</option>
-                        <option value="Afternoon">Afternoon</option>
-                        <option value="Golden Hour / Sunset">Golden Hour / Sunset</option>
-                        <option value="Night">Night</option>
-                        <option value="Flexible" selected>Flexible</option>
-                      </select>
-                    </div>
-                  </div>
-
-                  <div class="question-2" style="margin-top:1rem;">
-                    <div class="section-header small-header">
-                      <h2 class="heading-2" style="font-size:1.15rem;">Optional references</h2>
+                      <h2 class="heading-2" style="font-size:1.15rem;">Optional</h2>
                     </div>
                     <div class="input-box">
                       <label class="price-box-label" for="instagram-handle">Instagram handle (optional)</label>
@@ -480,7 +428,7 @@
         </div>
       </div>
 
-      <aside id="booking-summary-card" class="price-box" style="margin-top:1.25rem;">
+      <aside id="booking-summary-card" class="price-box" style="margin-top:0.75rem;">
         <div class="price is-hidden" id="summary-price-row"><span id="summary-estimated-total" class="cost-per-rider"></span></div>
         <div class="price-box-label">Estimated total</div>
 
@@ -583,12 +531,6 @@
           var calendar12Month = !!(qs('#addon-calendar', form) && qs('#addon-calendar', form).checked);
           var customVideoEdit = !!(qs('#addon-custom-edit', form) && qs('#addon-custom-edit', form).checked);
 
-          var dateMode = getSelectedRadioValue('dateMode');
-          var preferredDate = (qs('#preferred-date', form) || {}).value ? qs('#preferred-date', form).value : '';
-          var preferredDateStart = (qs('#preferred-date-start', form) || {}).value ? qs('#preferred-date-start', form).value : '';
-          var preferredDateEnd = (qs('#preferred-date-end', form) || {}).value ? qs('#preferred-date-end', form).value : '';
-          var timeOfDay = (qs('#time-of-day', form) || {}).value ? qs('#time-of-day', form).value : '';
-
           var instagramHandle = (qs('#instagram-handle', form) || {}).value ? qs('#instagram-handle', form).value.trim() : '';
           var referenceLink = (qs('#reference-link', form) || {}).value ? qs('#reference-link', form).value.trim() : '';
           var extraNotes = (qs('#extra-notes', form) || {}).value ? qs('#extra-notes', form).value.trim() : '';
@@ -615,11 +557,6 @@
             posterQty: posterQty,
             calendar12Month: calendar12Month,
             customVideoEdit: customVideoEdit,
-            dateMode: dateMode,
-            preferredDate: preferredDate,
-            preferredDateStart: preferredDateStart,
-            preferredDateEnd: preferredDateEnd,
-            timeOfDay: timeOfDay,
             instagramHandle: instagramHandle,
             referenceLink: referenceLink,
             extraNotes: extraNotes,
@@ -827,13 +764,6 @@
             }
           }
 
-          // Step 5
-          var singleWrap = qs('#single-date-wrap', form);
-          var rangeWrap = qs('#date-range-wrap', form);
-          if (singleWrap && rangeWrap) {
-            singleWrap.style.display = (state.dateMode === 'single') ? 'block' : 'none';
-            rangeWrap.style.display = (state.dateMode === 'range') ? 'block' : 'none';
-          }
         }
 
         function validateStep(stepNumber, state) {
@@ -1103,17 +1033,6 @@
         // Core + add-ons
         qsa('#core-stills,#core-video,#addon-raw-footage,#addon-rush,#addon-posters,#addon-calendar,#addon-custom-edit').forEach(function(el) {
           el.addEventListener('change', handleEstimateUpdate);
-        });
-
-        // Date mode UI visibility
-        qsa('input[name="dateMode"]').forEach(function(el) {
-          el.addEventListener('change', function() {
-            var state = getBookingState();
-            var singleWrap = qs('#single-date-wrap', form);
-            var rangeWrap = qs('#date-range-wrap', form);
-            if (singleWrap) singleWrap.style.display = (state.dateMode === 'single') ? 'block' : 'none';
-            if (rangeWrap) rangeWrap.style.display = (state.dateMode === 'range') ? 'block' : 'none';
-          });
         });
 
         // Poster checkbox toggles qty wrap
