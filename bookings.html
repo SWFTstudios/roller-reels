@@ -22,19 +22,19 @@
   <div class="page">
     <div class="w-embed">
       <style>html{-webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale;}
-.radio-input, .w-checkbox-input {
-	box-shadow: none !important;
-}
-.radio-input.w--redirected-checked ~ .radio-circle-box {
-		border-color: #fff;
-    background-color: rgb(177 177 177 / 19%);
-}
+.radio-input, .w-checkbox-input { box-shadow: none !important; }
+.radio-input.w--redirected-checked ~ .radio-circle-box { border-color: #fff; background-color: rgb(177 177 177 / 19%); }
 .booking-step { display: none; }
 .booking-step.active { display: block; }
+.field-error { display: none; color: #ff0004; font-size: 0.85rem; margin-top: 0.25rem; }
+.field-error.show { display: block; }
+.is-hidden { display: none !important; }
+.route-grid { display: grid; grid-template-columns: 1fr; gap: 12px; }
+@media (min-width: 768px) { .route-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+.route-card { min-width: 0; width: 100%; box-sizing: border-box; }
 .booking-step-nav { margin-top: 1.5rem; display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
 .booking-step-nav .w-button { cursor: pointer; }
-.step-indicator { text-align: center; margin-bottom: 1rem; font-size: 0.9rem; opacity: 0.9; }
-</style>
+.step-indicator { text-align: center; margin-bottom: 1rem; font-size: 0.9rem; opacity: 0.9; }</style>
     </div>
     <div class="navigation">
       <div class="logotypes">
@@ -59,167 +59,418 @@
         <div class="form-block w-form">
           <form id="wf-form-Booking-Form" name="wf-form-Booking-Form" data-name="Booking Form" action="https://formsubmit.co/elombe@swftstudios.com" method="post" class="form" data-wf-page-id="692ebc79d55153a076f9bb67" data-wf-element-id="766d0790-9c06-6645-a2a9-1b15b0163512">
             <input type="hidden" name="_next" id="form-next-url" value="">
-            <input type="hidden" name="Booking-Summary" id="booking-summary-field" value="">
+            <input type="hidden" id="booking-summary-hidden" name="Booking-Summary" value="">
+            <input type="hidden" id="estimated-total-hidden" name="estimated-total" value="">
+            <input type="hidden" id="deposit-due-hidden" name="deposit-due-today" value="">
+            <input type="hidden" id="pricing-breakdown-json-hidden" name="pricing-breakdown-json" value="">
+
             <div class="question-wrapper">
-              <div id="step-indicator" class="step-indicator">Step 1 of 5</div>
-              <div class="booking-step active" data-step="1">
-              <div class="question-2">
-                <div class="section-header small-header">
-                  <h2 class="heading-2">How many riders coming to the shoot?</h2>
+              <div id="step-indicator" class="step-indicator">Step 1 of 7</div>
+
+              <!-- Step 1 -->
+              <section class="booking-step active" id="step-1" data-step="1">
+                <div class="question-2">
+                  <div class="section-header small-header">
+                    <h2 class="heading-2">What kind of session are you booking?</h2>
+                  </div>
+
+                  <div class="question-box">
+                    <div class="section-header small-header" style="margin-top:0;">
+                      <h2 class="heading-2" style="font-size:1.15rem;">Session type</h2>
+                    </div>
+                    <div class="radio-buttons">
+                      <label class="radio-button w-radio">
+                        <div class="w-form-formradioinput w-form-formradioinput--inputType-custom radio-input w-radio-input"></div>
+                        <input type="radio" name="sessionType" id="session-static" style="opacity:0;position:absolute;z-index:-1" value="STATIC">
+                        <div class="radio-circle-box"></div>
+                        <span for="session-static" class="radio-main-text w-form-label">STATIC</span>
+                        <div class="radio-sub-text">Stills-first</div>
+                      </label>
+                      <label class="radio-button w-radio">
+                        <div class="w-form-formradioinput w-form-formradioinput--inputType-custom radio-input w-radio-input"></div>
+                        <input type="radio" name="sessionType" id="session-rollers" style="opacity:0;position:absolute;z-index:-1" value="ROLLERS">
+                        <div class="radio-circle-box"></div>
+                        <span for="session-rollers" class="radio-main-text w-form-label">ROLLERS</span>
+                        <div class="radio-sub-text">Video coverage</div>
+                      </label>
+                    </div>
+                    <div id="error-sessionType" class="field-error"></div>
+                  </div>
+
+                  <div class="question-box" style="margin-top:1rem;">
+                    <div class="section-header small-header" style="margin-top:0;">
+                      <h2 class="heading-2" style="font-size:1.15rem;">How many riders?</h2>
+                    </div>
+                    <div class="radio-buttons">
+                      <label class="radio-button w-radio">
+                        <div class="w-form-formradioinput w-form-formradioinput--inputType-custom radio-input w-radio-input"></div>
+                        <input type="radio" name="people" id="people-1" style="opacity:0;position:absolute;z-index:-1" value="1">
+                        <div class="radio-circle-box"></div>
+                        <span for="people-1" class="radio-main-text w-form-label">1</span>
+                        <div class="radio-sub-text">Solo</div>
+                      </label>
+                      <label class="radio-button w-radio">
+                        <div class="w-form-formradioinput w-form-formradioinput--inputType-custom radio-input w-radio-input"></div>
+                        <input type="radio" name="people" id="people-2" style="opacity:0;position:absolute;z-index:-1" value="2">
+                        <div class="radio-circle-box"></div>
+                        <span for="people-2" class="radio-main-text w-form-label">2</span>
+                        <div class="radio-sub-text">Friends</div>
+                      </label>
+                      <label class="radio-button w-radio">
+                        <div class="w-form-formradioinput w-form-formradioinput--inputType-custom radio-input w-radio-input"></div>
+                        <input type="radio" name="people" id="people-3plus" style="opacity:0;position:absolute;z-index:-1" value="3+">
+                        <div class="radio-circle-box"></div>
+                        <span for="people-3plus" class="radio-main-text w-form-label">3+</span>
+                        <div class="radio-sub-text">Group</div>
+                      </label>
+                    </div>
+                    <div id="error-people" class="field-error"></div>
+                  </div>
+
+                  <div class="question-2" id="group-count-wrap" style="display:none;">
+                    <div class="section-header small-header">
+                      <h2 class="heading-2">How many in your group?</h2>
+                    </div>
+                    <div class="input-box">
+                      <label class="price-box-label" for="group-count">Group size</label>
+                      <input class="text-field w-input" type="number" name="groupCount" id="group-count" data-name="groupCount" min="3" step="1" placeholder="3" style="max-width:6rem;">
+                    </div>
+                    <div id="error-group-count" class="field-error"></div>
+                  </div>
                 </div>
-                <div class="question-box">
-                  <div class="radio-buttons"><label class="radio-button w-radio">
-                      <div class="w-form-formradioinput w-form-formradioinput--inputType-custom radio-input w-radio-input"></div><input type="radio" name="people" id="1-2" data-name="people" style="opacity:0;position:absolute;z-index:-1" value="1">
-                      <div class="radio-circle-box"></div><span for="1-2" class="radio-main-text w-form-label">1 </span>
-                      <div class="radio-sub-text">Solo</div>
-                    </label><label class="radio-button w-radio">
-                      <div class="w-form-formradioinput w-form-formradioinput--inputType-custom radio-input w-radio-input"></div><input type="radio" name="people" id="2-2" data-name="people" style="opacity:0;position:absolute;z-index:-1" value="2">
-                      <div class="radio-circle-box"></div><span for="2-2" class="radio-main-text w-form-label">2</span>
-                      <div class="radio-sub-text">50% Discount</div>
-                      <div class="radio-sub-text">Friends</div>
-                    </label><label class="radio-button w-radio">
-                      <div class="w-form-formradioinput w-form-formradioinput--inputType-custom radio-input w-radio-input"></div><input type="radio" name="people" id="3-2" data-name="people" style="opacity:0;position:absolute;z-index:-1" value="3">
-                      <div class="radio-circle-box"></div><span for="3-2" class="radio-main-text w-form-label">3+</span>
-                      <div class="radio-sub-text">Group</div>
-                    </label></div>
-                </div>
-              </div>
-              <div class="question-2" id="group-count-wrap" style="display:none;">
-                <div class="section-header small-header">
-                  <h2 class="heading-2">How many in the group?</h2>
-                </div>
-                <div class="input-box">
-                  <input class="text-field w-input" type="number" name="group-count" id="group-count" data-name="Group Count" min="3" max="20" placeholder="3" style="max-width:6rem;">
-                </div>
-              </div>
-              <div class="booking-step-nav">
-                <button type="button" class="submit-button w-button" id="btn-next-1">Next</button>
-              </div>
-              </div>
-              <div class="booking-step" data-step="2">
+              </section>
+
+              <!-- Step 2 -->
+              <section class="booking-step" id="step-2" data-step="2">
                 <div class="question-2">
                   <div class="section-header small-header">
                     <h2 class="heading-2">What will you be riding?</h2>
                   </div>
+
                   <div class="question-box">
-                    <div class="radio-buttons"><label class="radio-button w-radio">
-                        <div class="w-form-formradioinput w-form-formradioinput--inputType-custom radio-input w-radio-input"></div><input type="radio" name="vehicles" id="veh-car" data-name="vehicles" style="opacity:0;position:absolute;z-index:-1" value="Car">
-                        <div class="radio-circle-box"></div><span for="veh-car" class="radio-main-text w-form-label">Car</span>
-                      </label><label class="radio-button w-radio">
-                        <div class="w-form-formradioinput w-form-formradioinput--inputType-custom radio-input w-radio-input"></div><input type="radio" name="vehicles" id="veh-moto" data-name="vehicles" style="opacity:0;position:absolute;z-index:-1" value="Motorcycle">
-                        <div class="radio-circle-box"></div><span for="veh-moto" class="radio-main-text w-form-label">Motorcycle</span>
-                      </label><label class="radio-button w-radio">
-                        <div class="w-form-formradioinput w-form-formradioinput--inputType-custom radio-input w-radio-input"></div><input type="radio" name="vehicles" id="veh-both" data-name="vehicles" style="opacity:0;position:absolute;z-index:-1" value="Both">
-                        <div class="radio-circle-box"></div><span for="veh-both" class="radio-main-text w-form-label">Both</span>
-                      </label></div>
+                    <div class="radio-buttons">
+                      <label class="radio-button w-radio">
+                        <div class="w-form-formradioinput w-form-formradioinput--inputType-custom radio-input w-radio-input"></div>
+                        <input type="radio" name="vehicleType" id="vehicle-motorcycle" style="opacity:0;position:absolute;z-index:-1" value="Motorcycle">
+                        <div class="radio-circle-box"></div>
+                        <span for="vehicle-motorcycle" class="radio-main-text w-form-label">Motorcycle</span>
+                      </label>
+                      <label class="radio-button w-radio">
+                        <div class="w-form-formradioinput w-form-formradioinput--inputType-custom radio-input w-radio-input"></div>
+                        <input type="radio" name="vehicleType" id="vehicle-car" style="opacity:0;position:absolute;z-index:-1" value="Car">
+                        <div class="radio-circle-box"></div>
+                        <span for="vehicle-car" class="radio-main-text w-form-label">Car</span>
+                      </label>
+                      <label class="radio-button w-radio">
+                        <div class="w-form-formradioinput w-form-formradioinput--inputType-custom radio-input w-radio-input"></div>
+                        <input type="radio" name="vehicleType" id="vehicle-both" style="opacity:0;position:absolute;z-index:-1" value="Both">
+                        <div class="radio-circle-box"></div>
+                        <span for="vehicle-both" class="radio-main-text w-form-label">Both</span>
+                      </label>
+                    </div>
+                    <div id="error-vehicleType" class="field-error"></div>
+                  </div>
+
+                  <div class="question-2" style="margin-top:1rem;">
+                    <div class="section-header small-header">
+                      <h2 class="heading-2">Vehicle details</h2>
+                    </div>
+                    <div class="input-box">
+                      <label class="price-box-label" for="vehicle-year-make-model">Year / Make / Model</label>
+                      <input class="text-field w-input" type="text" id="vehicle-year-make-model" name="vehicleYearMakeModel" maxlength="500" placeholder="e.g. 2023 Yamaha R7" value="">
+                    </div>
+                    <div id="error-vehicleYearMakeModel" class="field-error"></div>
+                    <div class="input-box" style="margin-top:0.75rem;">
+                      <label class="price-box-label" for="vehicle-count">Number of vehicles</label>
+                      <input class="text-field w-input" type="number" id="vehicle-count" name="vehicleCount" min="1" step="1" placeholder="1" style="max-width:6rem;">
+                    </div>
+                    <div id="error-vehicleCount" class="field-error"></div>
                   </div>
                 </div>
+              </section>
+
+              <!-- Step 3 -->
+              <section class="booking-step" id="step-3" data-step="3">
                 <div class="question-2">
                   <div class="section-header small-header">
-                    <h2 class="heading-2">Vehicle details <span class="italic">(optional)</span></h2>
+                    <h2 class="heading-2">Choose your route</h2>
                   </div>
-                  <div class="input-box">
-                    <input class="text-field w-input" type="text" name="vehicle-details" id="vehicle-details" data-name="Vehicle Details" maxlength="500" placeholder="e.g. make, model, color">
+
+                  <div class="question-box">
+                    <div id="route-grid" class="route-grid">
+                      <label class="route-card radio-button w-radio">
+                        <div class="w-form-formradioinput w-form-formradioinput--inputType-custom radio-input w-radio-input"></div>
+                        <input type="radio" name="routeChoice" id="route-autobahn-80" style="opacity:0;position:absolute;z-index:-1" value="autobahn-80">
+                        <div class="radio-circle-box"></div>
+                        <span for="route-autobahn-80" class="radio-main-text w-form-label">Autobahn 80</span>
+                        <a href="https://maps.app.goo.gl/3DUNGfH6iWVvEadd6" target="_blank" class="course-link">Link To Course</a>
+                        <div class="radio-sub-text">4 Lane Highway, Mild Turns</div>
+                      </label>
+                      <label class="route-card radio-button w-radio">
+                        <div class="w-form-formradioinput w-form-formradioinput--inputType-custom radio-input w-radio-input"></div>
+                        <input type="radio" name="routeChoice" id="route-winding-mountains" style="opacity:0;position:absolute;z-index:-1" value="winding-mountains">
+                        <div class="radio-circle-box"></div>
+                        <span for="route-winding-mountains" class="radio-main-text w-form-label">Winding Mountains</span>
+                        <a href="https://maps.app.goo.gl/aEqvvc6V5b8mWsnA6" target="_blank" class="course-link">Link To Course</a>
+                        <div class="radio-sub-text">Highway plus mix of windy roads with nature in the background</div>
+                      </label>
+                      <label class="route-card radio-button w-radio">
+                        <div class="w-form-formradioinput w-form-formradioinput--inputType-custom radio-input w-radio-input"></div>
+                        <input type="radio" name="routeChoice" id="route-nyc-skyline-views" style="opacity:0;position:absolute;z-index:-1" value="nyc-skyline-views">
+                        <div class="radio-circle-box"></div>
+                        <span for="route-nyc-skyline-views" class="radio-main-text w-form-label">NYC Skyline Views</span>
+                        <a href="https://maps.app.goo.gl/wvMpe1VVAtAW9BS48" target="_blank" class="course-link">Link To Course</a>
+                        <div class="radio-sub-text">Highway and narrow streets with NYC in the background</div>
+                      </label>
+                      <label class="route-card radio-button w-radio">
+                        <div class="w-form-formradioinput w-form-formradioinput--inputType-custom radio-input w-radio-input"></div>
+                        <input type="radio" name="routeChoice" id="route-custom" style="opacity:0;position:absolute;z-index:-1" value="custom">
+                        <div class="radio-circle-box"></div>
+                        <span for="route-custom" class="radio-main-text w-form-label">Custom Location</span>
+                        <div class="radio-sub-text">Tell us where you want to go</div>
+                      </label>
+                    </div>
+                    <div id="error-routeChoice" class="field-error"></div>
                   </div>
-                </div>
-                <div class="booking-step-nav">
-                  <button type="button" class="submit-button w-button" id="btn-back-2">Back</button>
-                  <button type="button" class="submit-button w-button" id="btn-next-2">Next</button>
-                </div>
-              </div>
-              <div class="booking-step" data-step="3">
-              <div class="question-2">
-                <div class="section-header small-header">
-                  <h2 class="heading-2">Choose a course you&#x27;d like to ride?<br><span class="italic">(all routes start and end at </span>
-                    <a href="https://g.co/kgs/NEVvi7B" target="_blank" class="highlight"><span class="italic">Wawa in Lodi NJ</span></a><span class="italic">)</span>
-                  </h2>
-                </div>
-                <div class="question-box">
-                  <div class="radio-buttons"><label class="radio-button w-radio">
-                      <div class="w-form-formradioinput w-form-formradioinput--inputType-custom radio-input w-radio-input"></div><input type="radio" name="locations" id="1" data-name="locations" style="opacity:0;position:absolute;z-index:-1" value="1">
-                      <div class="radio-circle-box"></div><span for="1" class="radio-main-text w-form-label">Autobahn 80</span>
-                      <a href="https://maps.app.goo.gl/3DUNGfH6iWVfEadd6" target="_blank" class="course-link">Link To Course</a>
-                      <div class="radio-sub-text">4 Lane Highway, Mild Turns</div>
-                    </label><label class="radio-button w-radio">
-                      <div class="w-form-formradioinput w-form-formradioinput--inputType-custom radio-input w-radio-input"></div><input type="radio" name="locations" id="2" data-name="locations" style="opacity:0;position:absolute;z-index:-1" value="2">
-                      <div class="radio-circle-box"></div><span for="2" class="radio-main-text w-form-label">Winding Mountains</span>
-                      <a href="https://maps.app.goo.gl/aEqvvc6V5b8mWsnA6" target="_blank" class="course-link">Link To Course</a>
-                      <div class="radio-sub-text">Highway plus mix of windy roads with nature in the background</div>
-                    </label><label class="radio-button w-radio">
-                      <div class="w-form-formradioinput w-form-formradioinput--inputType-custom radio-input w-radio-input"></div><input type="radio" name="locations" id="3" data-name="locations" style="opacity:0;position:absolute;z-index:-1" value="3">
-                      <div class="radio-circle-box"></div><span for="3" class="radio-main-text w-form-label">NYC Skyline Views</span>
-                      <a href="https://maps.app.goo.gl/wvMpe1VVAtAW9BS48" target="_blank" class="course-link">Link To Course</a>
-                      <div class="radio-sub-text">Highway and narrow streets with NYC in the background</div>
-                    </label><label id="w-node-_51d90fdf-2bd7-5142-1e78-7eca7b71fef5-76f9bb67" class="radio-button w-radio">
-                      <div class="w-form-formradioinput w-form-formradioinput--inputType-custom radio-input w-radio-input"></div><input type="radio" name="locations" id="4" data-name="locations" style="opacity:0;position:absolute;z-index:-1" value="4">
-                      <div class="radio-circle-box"></div><span for="4" class="radio-main-text w-form-label">Custom Location</span>
-                      <div class="radio-sub-text">Tell us where you want to go</div>
-                    </label></div>
-                </div>
-              </div>
-              <div class="question-2" id="custom-location-wrap" style="display:none;">
-                <div class="section-header small-header">
-                  <h2 class="heading-2">Custom location(s)</h2>
-                  <p class="radio-sub-text">Additional cost TBD.</p>
-                </div>
-                <div class="input-box">
-                  <input class="text-field w-input" type="text" name="custom-location" id="custom-location" data-name="Custom Location" maxlength="500" placeholder="Where do you want to go?">
-                </div>
-              </div>
-              <div class="booking-step-nav">
-                <button type="button" class="submit-button w-button" id="btn-back-3">Back</button>
-                <button type="button" class="submit-button w-button" id="btn-next-3">Next</button>
-              </div>
-              </div>
-              <div class="booking-step" data-step="4">
-              <div class="question-2">
-                <div class="section-header medium-header">
-                  <h2 class="heading-2">What deliverables would you like at the end of it all?<br><span class="italic">(You&#x27;ll receive the raw footage we shoot the day/night of)</span></h2>
-                </div>
-                <div class="question-box">
-                  <div class="radio-buttons">
-                    <div><label class="w-checkbox checkbox-field">
-                        <div class="w-checkbox-input w-checkbox-input--inputType-custom checkbox"></div><input type="checkbox" name="photography" id="photography" data-name="photography" style="opacity:0;position:absolute;z-index:-1"><span for="photography" class="checkbox-label w-form-label">Photography (Stills)</span>
-                      </label><label class="w-checkbox checkbox-field">
-                        <div class="w-checkbox-input w-checkbox-input--inputType-custom checkbox"></div><input type="checkbox" name="calendar" id="calendar" data-name="calendar" style="opacity:0;position:absolute;z-index:-1"><span for="calendar" class="checkbox-label w-form-label">12 Month Calendar</span>
-                      </label></div>
-                    <div><label class="w-checkbox checkbox-field">
-                        <div class="w-checkbox-input w-checkbox-input--inputType-custom checkbox"></div><input type="checkbox" name="poster" id="poster" data-name="poster" style="opacity:0;position:absolute;z-index:-1"><span for="poster" class="checkbox-label w-form-label">Poster(s)</span>
-                      </label><label class="w-checkbox checkbox-field">
-                        <div class="w-checkbox-input w-checkbox-input--inputType-custom checkbox"></div><input type="checkbox" name="edit" id="edit" data-name="edit" style="opacity:0;position:absolute;z-index:-1"><span for="edit" class="checkbox-label w-form-label">Custom Video Edit</span>
-                      </label></div>
-                    <div></div>
+
+                  <div class="question-2" id="custom-location-wrap" style="display:none;margin-top:1rem;">
+                    <div class="section-header small-header">
+                      <h2 class="heading-2">Custom location details</h2>
+                      <p class="radio-sub-text">Additional cost applies for custom setups.</p>
+                    </div>
+                    <div class="input-box">
+                      <label class="price-box-label" for="custom-location-details">Where should we shoot?</label>
+                      <textarea class="text-field w-input" id="custom-location-details" name="customLocationDetails" maxlength="500" placeholder="Neighborhood, address, or exact spot(s)..." style="min-height:96px;"></textarea>
+                    </div>
+                    <div id="error-customLocationDetails" class="field-error"></div>
                   </div>
                 </div>
-              </div>
-              <div class="booking-step-nav">
-                <button type="button" class="submit-button w-button" id="btn-back-4">Back</button>
-                <button type="button" class="submit-button w-button" id="btn-next-4">Next</button>
-              </div>
-              </div>
-              <div class="booking-step" data-step="5">
-              <div class="question-center-flex">
-                <div class="question-center-box">
-                  <div class="input-box">
-                    <div class="text-block-46">Once we receive your details, you&#x27;ll be sent to the booking calendar to choose the date and time. <strong>$100 non-refundable deposit</strong> required to confirm.</div>
-                    <div class="price-box-label">Name</div><input class="text-field w-input" maxlength="256" name="Name" data-name="Name" placeholder="John Doe" type="text" id="name" required="">
+              </section>
+
+              <!-- Step 4 -->
+              <section class="booking-step" id="step-4" data-step="4">
+                <div class="question-2">
+                  <div class="section-header medium-header">
+                    <h2 class="heading-2">Deliverables & add-ons</h2>
                   </div>
-                  <div class="input-box">
-                    <div class="price-box-label">Email</div><input class="text-field w-input" maxlength="256" name="email" data-name="Email" placeholder="johndoe@gmail.com" type="email" id="email" required="">
+
+                  <div class="question-box">
+                    <div class="section-header small-header" style="margin-top:0;">
+                      <h2 class="heading-2" style="font-size:1.15rem;">Core deliverables</h2>
+                    </div>
+                    <div class="radio-buttons" style="display:flex;flex-direction:column;gap:0.5rem;">
+                      <label class="w-checkbox checkbox-field" style="margin:0;">
+                        <div class="w-checkbox-input w-checkbox-input--inputType-custom checkbox"></div>
+                        <input type="checkbox" id="core-stills" name="coreStills" style="opacity:0;position:absolute;z-index:-1">
+                        <span for="core-stills" class="checkbox-label w-form-label">Photography (Stills)</span>
+                      </label>
+
+                      <label class="w-checkbox checkbox-field" style="margin:0;">
+                        <div class="w-checkbox-input w-checkbox-input--inputType-custom checkbox"></div>
+                        <input type="checkbox" id="core-video" name="coreVideo" style="opacity:0;position:absolute;z-index:-1">
+                        <span for="core-video" class="checkbox-label w-form-label">Rollers Video (Moving coverage)</span>
+                      </label>
+                    </div>
+
+                    <div id="error-coreDeliverables" class="field-error" style="margin-top:0.5rem;"></div>
                   </div>
-                  <div class="input-box">
-                    <div class="price-box-label">Phone Number</div><input class="text-field w-input" maxlength="256" name="Phone-Number" data-name="Phone Number" placeholder="000-000-0000" type="tel" id="Phone-Number" required="">
+
+                  <div class="question-box" style="margin-top:1rem;">
+                    <div class="section-header small-header" style="margin-top:0;">
+                      <h2 class="heading-2" style="font-size:1.15rem;">Add-ons</h2>
+                    </div>
+
+                    <div class="radio-buttons" style="display:flex;flex-direction:column;gap:0.5rem;">
+                      <label class="w-checkbox checkbox-field" style="margin:0;">
+                        <div class="w-checkbox-input w-checkbox-input--inputType-custom checkbox"></div>
+                        <input type="checkbox" id="addon-raw-footage" name="rawFootage" style="opacity:0;position:absolute;z-index:-1">
+                        <span for="addon-raw-footage" class="checkbox-label w-form-label">Raw Footage Archive — $150</span>
+                      </label>
+
+                      <label class="w-checkbox checkbox-field" style="margin:0;">
+                        <div class="w-checkbox-input w-checkbox-input--inputType-custom checkbox"></div>
+                        <input type="checkbox" id="addon-rush" name="rushDelivery" style="opacity:0;position:absolute;z-index:-1">
+                        <span for="addon-rush" class="checkbox-label w-form-label">Rush Delivery (48–72 hrs) — $125</span>
+                      </label>
+
+                      <label class="w-checkbox checkbox-field" style="margin:0;">
+                        <div class="w-checkbox-input w-checkbox-input--inputType-custom checkbox"></div>
+                        <input type="checkbox" id="addon-posters" name="posters" style="opacity:0;position:absolute;z-index:-1">
+                        <span for="addon-posters" class="checkbox-label w-form-label">Signature Posters — $60 each</span>
+                      </label>
+
+                      <div id="poster-qty-wrap" style="display:none;align-items:center;gap:0.75rem;margin-top:0.25rem;">
+                        <button type="button" id="poster-qty-minus" class="submit-button w-button" style="min-width:44px;">-</button>
+                        <div class="price-box-label" style="margin:0;">Qty</div>
+                        <input type="number" id="poster-qty" name="posterQty" min="1" step="1" value="1" class="text-field w-input" style="max-width:6rem;">
+                        <button type="button" id="poster-qty-plus" class="submit-button w-button" style="min-width:44px;">+</button>
+                      </div>
+
+                      <label class="w-checkbox checkbox-field" style="margin:0;">
+                        <div class="w-checkbox-input w-checkbox-input--inputType-custom checkbox"></div>
+                        <input type="checkbox" id="addon-calendar" name="calendar12Month" style="opacity:0;position:absolute;z-index:-1">
+                        <span for="addon-calendar" class="checkbox-label w-form-label">12-Month Photo Calendar — $95</span>
+                      </label>
+
+                      <label class="w-checkbox checkbox-field" style="margin:0;">
+                        <div class="w-checkbox-input w-checkbox-input--inputType-custom checkbox"></div>
+                        <input type="checkbox" id="addon-custom-edit" name="customVideoEdit" style="opacity:0;position:absolute;z-index:-1">
+                        <span for="addon-custom-edit" class="checkbox-label w-form-label">Custom Edit / Alternate Cut — $150</span>
+                      </label>
+                    </div>
                   </div>
-                  <div class="text-block-46" style="margin-top:0.5rem;margin-bottom:0.5rem;">By submitting, you agree to our <a href="terms.html" class="blocs-link">Terms and Conditions</a> and <a href="privacy.html" class="blocs-link">Privacy Policy</a>.</div>
+                </div>
+              </section>
+
+              <!-- Step 5 -->
+              <section class="booking-step" id="step-5" data-step="5">
+                <div class="question-2">
+                  <div class="section-header medium-header">
+                    <h2 class="heading-2">Schedule & references</h2>
+                  </div>
+
+                  <div class="question-box">
+                    <div class="section-header small-header" style="margin-top:0;">
+                      <h2 class="heading-2" style="font-size:1.15rem;">Pick a date style</h2>
+                    </div>
+                    <div class="radio-buttons">
+                      <label class="radio-button w-radio">
+                        <div class="w-form-formradioinput w-form-formradioinput--inputType-custom radio-input w-radio-input"></div>
+                        <input type="radio" name="dateMode" id="date-mode-single" value="single" checked style="opacity:0;position:absolute;z-index:-1">
+                        <div class="radio-circle-box"></div>
+                        <span for="date-mode-single" class="radio-main-text w-form-label">Single date</span>
+                      </label>
+                      <label class="radio-button w-radio">
+                        <div class="w-form-formradioinput w-form-formradioinput--inputType-custom radio-input w-radio-input"></div>
+                        <input type="radio" name="dateMode" id="date-mode-range" value="range" style="opacity:0;position:absolute;z-index:-1">
+                        <div class="radio-circle-box"></div>
+                        <span for="date-mode-range" class="radio-main-text w-form-label">Date range</span>
+                      </label>
+                    </div>
+                  </div>
+
+                  <div id="single-date-wrap" class="question-2" style="margin-top:1rem;">
+                    <div class="input-box">
+                      <label class="price-box-label" for="preferred-date">Preferred date</label>
+                      <input class="text-field w-input" type="date" id="preferred-date" name="preferredDate">
+                    </div>
+                  </div>
+
+                  <div id="date-range-wrap" class="question-2" style="display:none;margin-top:1rem;">
+                    <div class="input-box">
+                      <label class="price-box-label" for="preferred-date-start">Start date</label>
+                      <input class="text-field w-input" type="date" id="preferred-date-start" name="preferredDateStart">
+                    </div>
+                    <div class="input-box" style="margin-top:0.75rem;">
+                      <label class="price-box-label" for="preferred-date-end">End date</label>
+                      <input class="text-field w-input" type="date" id="preferred-date-end" name="preferredDateEnd">
+                    </div>
+                  </div>
+
+                  <div class="question-2" style="margin-top:1rem;">
+                    <div class="section-header small-header">
+                      <h2 class="heading-2" style="font-size:1.15rem;">Time of day</h2>
+                    </div>
+                    <div class="input-box">
+                      <select id="time-of-day" name="timeOfDay" class="text-field w-input">
+                        <option value="Morning">Morning</option>
+                        <option value="Afternoon">Afternoon</option>
+                        <option value="Golden Hour / Sunset">Golden Hour / Sunset</option>
+                        <option value="Night">Night</option>
+                        <option value="Flexible" selected>Flexible</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <div class="question-2" style="margin-top:1rem;">
+                    <div class="section-header small-header">
+                      <h2 class="heading-2" style="font-size:1.15rem;">Optional references</h2>
+                    </div>
+                    <div class="input-box">
+                      <label class="price-box-label" for="instagram-handle">Instagram handle (optional)</label>
+                      <input class="text-field w-input" type="text" id="instagram-handle" name="instagramHandle" maxlength="120" placeholder="@yourname">
+                    </div>
+                    <div class="input-box" style="margin-top:0.75rem;">
+                      <label class="price-box-label" for="reference-link">Inspiration / reference link (optional)</label>
+                      <input class="text-field w-input" type="url" id="reference-link" name="referenceLink" maxlength="500" placeholder="https://...">
+                    </div>
+                    <div class="input-box" style="margin-top:0.75rem;">
+                      <label class="price-box-label" for="extra-notes">Extra notes (optional)</label>
+                      <textarea class="text-field w-input" id="extra-notes" name="extraNotes" maxlength="2000" placeholder="Any must-have shots or specific vibes?"></textarea>
+                    </div>
+                  </div>
+                </div>
+              </section>
+
+              <!-- Step 6 -->
+              <section class="booking-step" id="step-6" data-step="6">
+                <div class="question-2">
+                  <div class="section-header medium-header">
+                    <h2 class="heading-2">Contact & agreement</h2>
+                  </div>
+
+                  <div class="question-center-box">
+                    <div class="input-box">
+                      <label class="price-box-label" for="full-name">Full name</label>
+                      <input class="text-field w-input" type="text" id="full-name" name="fullName" maxlength="256" placeholder="John Doe">
+                      <div id="error-fullName" class="field-error"></div>
+                    </div>
+
+                    <div class="input-box" style="margin-top:0.75rem;">
+                      <label class="price-box-label" for="email">Email</label>
+                      <input class="text-field w-input" type="email" id="email" name="email" maxlength="256" placeholder="johndoe@gmail.com">
+                      <div id="error-email" class="field-error"></div>
+                    </div>
+
+                    <div class="input-box" style="margin-top:0.75rem;">
+                      <label class="price-box-label" for="phone">Phone number</label>
+                      <input class="text-field w-input" type="tel" id="phone" name="phone" maxlength="50" placeholder="000-000-0000">
+                      <div id="error-phone" class="field-error"></div>
+                    </div>
+
+                    <div class="text-block-46" style="margin-top:0.75rem;">
+                      <label class="w-checkbox checkbox-field" style="display:flex;gap:0.75rem;align-items:flex-start;">
+                        <div class="w-checkbox-input w-checkbox-input--inputType-custom checkbox" style="margin-top:0.15rem;"></div>
+                        <input type="checkbox" id="agreement" name="agreement" style="opacity:0;position:absolute;z-index:-1">
+                        <span for="agreement" class="checkbox-label w-form-label">I agree to the <a href="terms.html" class="blocs-link">Terms and Conditions</a> and <a href="privacy.html" class="blocs-link">Privacy Policy</a>.</span>
+                      </label>
+                      <div id="error-agreement" class="field-error"></div>
+                    </div>
+                  </div>
+                </div>
+              </section>
+
+              <!-- Step 7 -->
+              <section class="booking-step" id="step-7" data-step="7">
+                <div class="question-2">
+                  <div class="section-header medium-header">
+                    <h2 class="heading-2">Review deposit today</h2>
+                  </div>
+
+                  <div id="review-summary" style="background:rgba(255,255,255,0.06);border-radius:8px;padding:1rem 1.25rem;margin-top:1rem;text-align:left;">
+                    <div id="review-line-session" style="margin-bottom:0.5rem;"></div>
+                    <div id="review-line-riders" style="margin-bottom:0.5rem;"></div>
+                    <div id="review-line-vehicle" style="margin-bottom:0.5rem;"></div>
+                    <div id="review-line-route" style="margin-bottom:0.5rem;"></div>
+                    <div id="review-line-deliverables" style="margin-bottom:0.75rem;"></div>
+                    <div id="review-line-estimated-total" style="margin-bottom:0.5rem;font-weight:600;"></div>
+                    <div id="review-line-deposit" style="font-weight:600;"></div>
+                  </div>
+
                   <div class="booking-step-nav" style="justify-content:flex-start;">
-                    <button type="button" class="submit-button w-button" id="btn-back-5">Back</button>
-                    <input type="submit" data-wait="Please wait..." class="submit-button w-button" value="Continue to calendar" id="btn-submit">
+                    <button type="submit" id="booking-submit" class="submit-button w-button" data-wait="Please wait...">Confirm booking request</button>
                   </div>
                 </div>
-              </div>
+              </section>
+
+              <!-- Global step navigation -->
+              <div class="booking-step-nav booking-global-nav">
+                <button type="button" class="submit-button w-button" id="prev-step-btn">Back</button>
+                <button type="button" class="submit-button w-button" id="next-step-btn">Next</button>
               </div>
             </div>
           </form>
+
           <div class="success-message w-form-done">
             <div class="text">Thank you! We will contact you very soon!</div>
           </div>
@@ -228,118 +479,707 @@
           </div>
         </div>
       </div>
+
+      <aside id="booking-summary-card" class="price-box" style="margin-top:1.25rem;">
+        <div class="price is-hidden" id="summary-price-row"><span id="summary-estimated-total" class="cost-per-rider"></span></div>
+        <div class="price-box-label">Estimated total</div>
+
+        <div class="price-box-label" id="summary-package-type"></div>
+        <div class="price-box-label" id="summary-rider-count"></div>
+        <div class="price-box-label" id="summary-vehicle-type"></div>
+        <div class="price-box-label" id="summary-route"></div>
+        <div class="price-box-label" id="summary-deliverables"></div>
+
+        <div class="price-box-label is-hidden" id="summary-breakdown"></div>
+        <div class="price-box-label is-hidden" id="summary-deposit-due" style="margin-top:0.75rem;"></div>
+
+        <div id="summary-unavailable" style="text-align:left;margin-top:0.75rem;font-size:0.95rem;opacity:0.9;">
+          Select your session details to see your estimate.
+        </div>
+      </aside>
     </div>
-    <div class="price-box">
-      <div class="price">$ <span bloc="budget" class="cost-per-rider">0</span></div>
-      <div class="price-box-label">cost Per rider</div>
-      <div class="total-range">$ <span bloc="budget" class="cost-per-rider">0</span> </div>
-      <div class="price-box-label">total range</div>
-      <div class="price-box-label"><span class="text-span">$100 non-refundable deposit</span><br>Rest Due on Location</div>
-    </div>
+
+    <script src="https://d3e54v103j8qbb.cloudfront.net/js/jquery-3.5.1.min.dc5e7f18c8.js?site=692ebc79d55153a076f9bb6d" type="text/javascript" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+    <script src="js/webflow.js" type="text/javascript"></script>
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        var form = document.getElementById('wf-form-Booking-Form');
+        if (!form) return;
+
+        var totalSteps = 7;
+        var currentStep = 1;
+        var frozenReview = null;
+
+        var PRICING = {
+          rawFootage: 150,
+          rushDelivery: 125,
+          customLocation: 75,
+          posterEach: 60,
+          calendar12Month: 95,
+          customVideoEdit: 150,
+          staticCore: 200,
+          rollersVideoOnly: 300,
+          rollersStillsOnly: 300,
+          rollersVideoAndStills: 400,
+          extraRider: 50
+        };
+
+        function qs(sel, root) { return (root || document).querySelector(sel); }
+        function qsa(sel, root) { return Array.prototype.slice.call((root || document).querySelectorAll(sel)); }
+
+        function setError(containerId, message) {
+          var el = document.getElementById(containerId);
+          if (!el) return;
+          el.textContent = message || '';
+          el.classList.toggle('show', !!message);
+        }
+
+        function clearErrors(ids) {
+          ids.forEach(function(id) { setError(id, ''); });
+        }
+
+        function getSelectedRadioValue(name) {
+          var checked = form.querySelector('input[name="' + name + '"]:checked');
+          return checked ? checked.value : '';
+        }
+
+        function getRadioLabel(name) {
+          var checked = form.querySelector('input[name="' + name + '"]:checked');
+          if (!checked) return '';
+          var label = checked.closest('label');
+          if (!label) return '';
+          var textEl = label.querySelector('.radio-main-text');
+          return textEl ? textEl.textContent.trim() : '';
+        }
+
+        function isValidEmail(value) {
+          return /^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/.test(String(value || '').trim());
+        }
+
+        function getBookingState() {
+          var sessionType = getSelectedRadioValue('sessionType');
+          var people = getSelectedRadioValue('people');
+          var groupCount = parseInt((qs('#group-count', form) || {}).value || '', 10);
+
+          var riderCount = 0;
+          if (people === '1') riderCount = 1;
+          else if (people === '2') riderCount = 2;
+          else if (people === '3+') riderCount = isNaN(groupCount) ? 0 : groupCount;
+
+          var vehicleType = getSelectedRadioValue('vehicleType');
+          var vehicleYearMakeModel = (qs('#vehicle-year-make-model', form) || {}).value ? qs('#vehicle-year-make-model', form).value.trim() : '';
+          var vehicleCount = parseInt((qs('#vehicle-count', form) || {}).value || '', 10);
+
+          var routeChoice = getSelectedRadioValue('routeChoice');
+          var customLocationDetails = (qs('#custom-location-details', form) || {}).value ? qs('#custom-location-details', form).value.trim() : '';
+
+          var coreStills = !!(qs('#core-stills', form) && qs('#core-stills', form).checked);
+          var coreVideo = !!(qs('#core-video', form) && qs('#core-video', form).checked);
+
+          var rawFootage = !!(qs('#addon-raw-footage', form) && qs('#addon-raw-footage', form).checked);
+          var rushDelivery = !!(qs('#addon-rush', form) && qs('#addon-rush', form).checked);
+          var posters = !!(qs('#addon-posters', form) && qs('#addon-posters', form).checked);
+          var posterQty = parseInt((qs('#poster-qty', form) || {}).value || '', 10);
+          var calendar12Month = !!(qs('#addon-calendar', form) && qs('#addon-calendar', form).checked);
+          var customVideoEdit = !!(qs('#addon-custom-edit', form) && qs('#addon-custom-edit', form).checked);
+
+          var dateMode = getSelectedRadioValue('dateMode');
+          var preferredDate = (qs('#preferred-date', form) || {}).value ? qs('#preferred-date', form).value : '';
+          var preferredDateStart = (qs('#preferred-date-start', form) || {}).value ? qs('#preferred-date-start', form).value : '';
+          var preferredDateEnd = (qs('#preferred-date-end', form) || {}).value ? qs('#preferred-date-end', form).value : '';
+          var timeOfDay = (qs('#time-of-day', form) || {}).value ? qs('#time-of-day', form).value : '';
+
+          var instagramHandle = (qs('#instagram-handle', form) || {}).value ? qs('#instagram-handle', form).value.trim() : '';
+          var referenceLink = (qs('#reference-link', form) || {}).value ? qs('#reference-link', form).value.trim() : '';
+          var extraNotes = (qs('#extra-notes', form) || {}).value ? qs('#extra-notes', form).value.trim() : '';
+
+          var fullName = (qs('#full-name', form) || {}).value ? qs('#full-name', form).value.trim() : '';
+          var email = (qs('#email', form) || {}).value ? qs('#email', form).value.trim() : '';
+          var phone = (qs('#phone', form) || {}).value ? qs('#phone', form).value.trim() : '';
+          var agreement = !!(qs('#agreement', form) && qs('#agreement', form).checked);
+
+          return {
+            sessionType: sessionType,
+            people: people,
+            riderCount: riderCount,
+            vehicleType: vehicleType,
+            vehicleYearMakeModel: vehicleYearMakeModel,
+            vehicleCount: vehicleCount,
+            routeChoice: routeChoice,
+            customLocationDetails: customLocationDetails,
+            coreStills: coreStills,
+            coreVideo: coreVideo,
+            rawFootage: rawFootage,
+            rushDelivery: rushDelivery,
+            posters: posters,
+            posterQty: posterQty,
+            calendar12Month: calendar12Month,
+            customVideoEdit: customVideoEdit,
+            dateMode: dateMode,
+            preferredDate: preferredDate,
+            preferredDateStart: preferredDateStart,
+            preferredDateEnd: preferredDateEnd,
+            timeOfDay: timeOfDay,
+            instagramHandle: instagramHandle,
+            referenceLink: referenceLink,
+            extraNotes: extraNotes,
+            fullName: fullName,
+            email: email,
+            phone: phone,
+            agreement: agreement
+          };
+        }
+
+        function estimateBooking(state) {
+          var canEstimate =
+            !!state.sessionType &&
+            !!state.people &&
+            !((state.people === '3+' && state.riderCount < 3)) &&
+            !!state.vehicleType &&
+            !!state.vehicleYearMakeModel &&
+            !!state.vehicleCount &&
+            state.vehicleCount >= 1 &&
+            !!state.routeChoice &&
+            !(state.routeChoice === 'custom' && !state.customLocationDetails) &&
+            (
+              (state.sessionType === 'STATIC' && !!state.coreStills) ||
+              (state.sessionType === 'ROLLERS' && (state.coreStills || state.coreVideo))
+            );
+
+          var coreTotal = 0;
+          var addOnsTotal = 0;
+          var customLocationFee = 0;
+          var breakdown = {
+            coreLabel: '',
+            coreTotal: 0,
+            addOns: [],
+            customLocationFee: 0,
+            estimatedTotal: 0,
+            depositDue: 0
+          };
+
+          if (!canEstimate) {
+            return {
+              canEstimate: false,
+              coreTotal: 0,
+              addOnsTotal: 0,
+              customLocationFee: 0,
+              estimatedTotal: 0,
+              depositDue: 0,
+              breakdown: breakdown
+            };
+          }
+
+          var riderCount = state.riderCount;
+
+          // Core pricing
+          if (state.sessionType === 'STATIC') {
+            coreTotal = PRICING.staticCore;
+            breakdown.coreLabel = 'Stills session';
+            if (riderCount >= 3) {
+              coreTotal = PRICING.staticCore + PRICING.extraRider * (riderCount - 3);
+              breakdown.coreLabel = 'Stills session (group)';
+            }
+          } else if (state.sessionType === 'ROLLERS') {
+            if (state.coreVideo && state.coreStills) coreTotal = PRICING.rollersVideoAndStills;
+            else if (state.coreVideo) coreTotal = PRICING.rollersVideoOnly;
+            else if (state.coreStills) coreTotal = PRICING.rollersStillsOnly;
+
+            if (riderCount >= 3) {
+              coreTotal += PRICING.extraRider * (riderCount - 3);
+            }
+            breakdown.coreLabel = 'Crew coverage included';
+          }
+
+          // Add-ons
+          function addAddon(label, amount) {
+            if (amount <= 0) return;
+            addOnsTotal += amount;
+            breakdown.addOns.push({ label: label, amount: amount });
+          }
+
+          if (state.rawFootage && state.coreVideo) {
+            addAddon('Raw Footage Archive', PRICING.rawFootage);
+          }
+
+          if (state.rushDelivery && (state.coreStills || state.coreVideo)) {
+            addAddon('Rush Delivery (48–72 hrs)', PRICING.rushDelivery);
+          }
+
+          if (state.posters) {
+            var qty = state.posterQty;
+            if (isNaN(qty) || qty < 1) qty = 1;
+            addAddon('Signature Posters', PRICING.posterEach * qty);
+          }
+
+          if (state.calendar12Month && state.coreStills) {
+            addAddon('12-Month Photo Calendar', PRICING.calendar12Month);
+          }
+
+          if (state.customVideoEdit && state.coreVideo) {
+            addAddon('Custom Edit / Alternate Cut', PRICING.customVideoEdit);
+          }
+
+          if (state.routeChoice === 'custom') {
+            customLocationFee = PRICING.customLocation;
+          }
+
+          var estimatedTotal = coreTotal + addOnsTotal + customLocationFee;
+          var depositDue = Math.max(100, estimatedTotal * 0.30);
+          depositDue = Math.ceil(depositDue / 10) * 10;
+
+          breakdown.coreTotal = coreTotal;
+          breakdown.customLocationFee = customLocationFee;
+          breakdown.estimatedTotal = estimatedTotal;
+          breakdown.depositDue = depositDue;
+
+          return {
+            canEstimate: true,
+            coreTotal: coreTotal,
+            addOnsTotal: addOnsTotal,
+            customLocationFee: customLocationFee,
+            estimatedTotal: estimatedTotal,
+            depositDue: depositDue,
+            breakdown: breakdown
+          };
+        }
+
+        function syncConditionalUI(state) {
+          // Step 1
+          var groupCountWrap = qs('#group-count-wrap', form);
+          if (groupCountWrap) groupCountWrap.style.display = (state.people === '3+') ? 'block' : 'none';
+
+          // Step 3
+          var customWrap = qs('#custom-location-wrap', form);
+          if (customWrap) customWrap.style.display = (state.routeChoice === 'custom') ? 'block' : 'none';
+
+          // Step 4 core deliverables rules
+          var coreStillsEl = qs('#core-stills', form);
+          var coreVideoEl = qs('#core-video', form);
+
+          if (coreStillsEl && coreVideoEl) {
+            if (state.sessionType === 'STATIC') {
+              coreStillsEl.checked = true;
+              coreVideoEl.checked = false;
+              coreVideoEl.disabled = true;
+              coreVideoEl.closest('label').style.display = 'none';
+
+              coreStillsEl.disabled = false;
+
+              // rawFootage + customVideoEdit hidden/disabled on STATIC
+              var rawEl = qs('#addon-raw-footage', form);
+              if (rawEl) { rawEl.checked = false; rawEl.disabled = true; rawEl.closest('label').style.display = 'none'; }
+              var customEditEl = qs('#addon-custom-edit', form);
+              if (customEditEl) { customEditEl.checked = false; customEditEl.disabled = true; customEditEl.closest('label').style.display = 'none'; }
+
+              // calendar depends on stills
+              var calendarEl = qs('#addon-calendar', form);
+              if (calendarEl) {
+                calendarEl.disabled = !coreStillsEl.checked;
+                calendarEl.checked = coreStillsEl.checked ? !!calendarEl.checked : false;
+                if (coreStillsEl.checked) calendarEl.closest('label').style.display = 'block';
+                else calendarEl.closest('label').style.display = 'none';
+              }
+
+            } else if (state.sessionType === 'ROLLERS') {
+              // Restore visibility and enable core-video
+              coreVideoEl.disabled = false;
+              coreVideoEl.closest('label').style.display = 'block';
+              // Allow stills selection; do not force
+
+              var rawEl = qs('#addon-raw-footage', form);
+              if (rawEl) {
+                rawEl.disabled = !coreVideoEl.checked;
+                if (rawEl.disabled) rawEl.checked = false;
+                rawEl.closest('label').style.display = coreVideoEl.checked ? 'block' : 'block';
+                // Keep it visible but disabled; meets "enabled only when coreVideo checked"
+              }
+
+              var customEditEl = qs('#addon-custom-edit', form);
+              if (customEditEl) {
+                customEditEl.disabled = !coreVideoEl.checked;
+                if (customEditEl.disabled) customEditEl.checked = false;
+                customEditEl.closest('label').style.display = 'block';
+              }
+
+              // calendar enabled only when stills checked
+              var calendarEl = qs('#addon-calendar', form);
+              if (calendarEl) {
+                calendarEl.disabled = !coreStillsEl.checked;
+                if (calendarEl.disabled) calendarEl.checked = false;
+              }
+            }
+          }
+
+          // posters behavior
+          var postersEl = qs('#addon-posters', form);
+          var posterQtyWrap = qs('#poster-qty-wrap', form);
+          var posterQtyEl = qs('#poster-qty', form);
+          if (postersEl && posterQtyWrap) {
+            var selected = postersEl.checked;
+            posterQtyWrap.style.display = selected ? 'flex' : 'none';
+            if (selected) {
+              if (!posterQtyEl) return;
+              var qty = parseInt(posterQtyEl.value, 10);
+              if (isNaN(qty) || qty < 1) posterQtyEl.value = '1';
+            } else {
+              // When posters are off, keep qty but hidden.
+            }
+          }
+
+          // Step 5
+          var singleWrap = qs('#single-date-wrap', form);
+          var rangeWrap = qs('#date-range-wrap', form);
+          if (singleWrap && rangeWrap) {
+            singleWrap.style.display = (state.dateMode === 'single') ? 'block' : 'none';
+            rangeWrap.style.display = (state.dateMode === 'range') ? 'block' : 'none';
+          }
+        }
+
+        function validateStep(stepNumber, state) {
+          var valid = true;
+          if (stepNumber === 1) {
+            clearErrors(['error-sessionType', 'error-people', 'error-group-count']);
+            if (!state.sessionType) { setError('error-sessionType', 'Please select a session type.'); valid = false; }
+            if (!state.people) { setError('error-people', 'Please select how many riders are coming.'); valid = false; }
+            if (state.people === '3+' && state.riderCount < 3) { setError('error-group-count', 'Group size must be at least 3.'); valid = false; }
+            return valid;
+          }
+
+          if (stepNumber === 2) {
+            clearErrors(['error-vehicleType', 'error-vehicleYearMakeModel', 'error-vehicleCount']);
+            if (!state.vehicleType) { setError('error-vehicleType', 'Please choose what you will ride.'); valid = false; }
+            if (!state.vehicleYearMakeModel) { setError('error-vehicleYearMakeModel', 'Enter your vehicle year/make/model.'); valid = false; }
+            if (!state.vehicleCount || state.vehicleCount < 1) { setError('error-vehicleCount', 'Enter at least 1 vehicle.'); valid = false; }
+            return valid;
+          }
+
+          if (stepNumber === 3) {
+            clearErrors(['error-routeChoice', 'error-customLocationDetails']);
+            if (!state.routeChoice) { setError('error-routeChoice', 'Choose a route.'); valid = false; }
+            if (state.routeChoice === 'custom' && !state.customLocationDetails) {
+              setError('error-customLocationDetails', 'Please add custom location details.');
+              valid = false;
+            }
+            return valid;
+          }
+
+          if (stepNumber === 4) {
+            clearErrors(['error-coreDeliverables']);
+            if (state.sessionType === 'STATIC') {
+              if (!state.coreStills) { setError('error-coreDeliverables', 'Please select Photography (Stills).'); valid = false; }
+            } else if (state.sessionType === 'ROLLERS') {
+              if (!(state.coreStills || state.coreVideo)) { setError('error-coreDeliverables', 'Select at least one core deliverable.'); valid = false; }
+            }
+            return valid;
+          }
+
+          if (stepNumber === 6) {
+            clearErrors(['error-fullName', 'error-email', 'error-phone', 'error-agreement']);
+            if (!state.fullName) { setError('error-fullName', 'Please enter your full name.'); valid = false; }
+            if (!state.email || !isValidEmail(state.email)) { setError('error-email', 'Please enter a valid email address.'); valid = false; }
+            if (!state.phone) { setError('error-phone', 'Please enter your phone number.'); valid = false; }
+            if (!state.agreement) { setError('error-agreement', 'Please check the agreement box.'); valid = false; }
+            return valid;
+          }
+
+          return true;
+        }
+
+        function renderLiveSummary(state, estimate) {
+          var summaryUnavailable = qs('#summary-unavailable', form.parentElement) || qs('#summary-unavailable');
+          var summaryEstimatedTotal = qs('#summary-estimated-total', form.parentElement) || qs('#summary-estimated-total');
+          var summaryPriceRow = qs('#summary-price-row', form.parentElement) || qs('#summary-price-row');
+          var summaryDeposit = qs('#summary-deposit-due', form.parentElement) || qs('#summary-deposit-due');
+          var summaryBreakdown = qs('#summary-breakdown', form.parentElement) || qs('#summary-breakdown');
+          var summaryPackageType = qs('#summary-package-type', form.parentElement) || qs('#summary-package-type');
+          var summaryRiderCount = qs('#summary-rider-count', form.parentElement) || qs('#summary-rider-count');
+          var summaryVehicleType = qs('#summary-vehicle-type', form.parentElement) || qs('#summary-vehicle-type');
+          var summaryRoute = qs('#summary-route', form.parentElement) || qs('#summary-route');
+          var summaryDeliverables = qs('#summary-deliverables', form.parentElement) || qs('#summary-deliverables');
+
+          summaryPackageType.textContent = state.sessionType ? ('Session: ' + state.sessionType) : '';
+          summaryRiderCount.textContent = state.riderCount ? ('Riders: ' + state.riderCount) : '';
+          summaryVehicleType.textContent = state.vehicleType ? ('Vehicle: ' + state.vehicleType) : '';
+
+          var routeLabel = '';
+          if (state.routeChoice) {
+            routeLabel = getRadioLabel('routeChoice');
+            if (state.routeChoice === 'custom' && state.customLocationDetails) routeLabel = 'Custom - ' + state.customLocationDetails;
+            summaryRoute.textContent = 'Route: ' + (routeLabel || state.routeChoice);
+          } else {
+            summaryRoute.textContent = '';
+          }
+
+          var deliverables = [];
+          if (state.coreStills) deliverables.push('Stills');
+          if (state.coreVideo) deliverables.push('Video');
+          if (state.rawFootage && state.coreVideo) deliverables.push('Raw Footage');
+          if (state.rushDelivery) deliverables.push('Rush Delivery');
+          if (state.posters) deliverables.push('Posters x' + (isNaN(state.posterQty) ? 1 : state.posterQty));
+          if (state.calendar12Month && state.coreStills) deliverables.push('12-Month Calendar');
+          if (state.customVideoEdit && state.coreVideo) deliverables.push('Custom Edit');
+          summaryDeliverables.textContent = deliverables.length ? ('Deliverables: ' + deliverables.join(' + ')) : '';
+
+          if (!estimate || !estimate.canEstimate) {
+            if (summaryUnavailable) summaryUnavailable.classList.remove('is-hidden');
+            if (summaryEstimatedTotal) summaryEstimatedTotal.textContent = '';
+            if (summaryPriceRow) summaryPriceRow.classList.add('is-hidden');
+            if (summaryDeposit) { summaryDeposit.textContent = ''; summaryDeposit.classList.add('is-hidden'); }
+            if (summaryBreakdown) { summaryBreakdown.innerHTML = ''; summaryBreakdown.classList.add('is-hidden'); }
+            return;
+          }
+
+          if (summaryUnavailable) summaryUnavailable.classList.add('is-hidden');
+
+          if (summaryEstimatedTotal) summaryEstimatedTotal.textContent = '$' + estimate.estimatedTotal;
+          if (summaryPriceRow) summaryPriceRow.classList.remove('is-hidden');
+
+          if (summaryDeposit) {
+            summaryDeposit.textContent = 'Deposit due today: $' + estimate.depositDue;
+            summaryDeposit.classList.remove('is-hidden');
+          }
+
+          if (summaryBreakdown) {
+            var parts = [];
+            parts.push('Core (' + estimate.breakdown.coreLabel + '): $' + estimate.coreTotal);
+            if (estimate.breakdown.customLocationFee > 0) parts.push('Custom Location Setup: $' + estimate.breakdown.customLocationFee);
+            estimate.breakdown.addOns.forEach(function(a) { parts.push(a.label + ': $' + a.amount); });
+            summaryBreakdown.innerHTML = parts.join('<br>');
+            summaryBreakdown.classList.remove('is-hidden');
+          }
+        }
+
+        function renderReviewSummary(state, estimate) {
+          var sessionLine = qs('#review-line-session');
+          var ridersLine = qs('#review-line-riders');
+          var vehicleLine = qs('#review-line-vehicle');
+          var routeLine = qs('#review-line-route');
+          var deliverablesLine = qs('#review-line-deliverables');
+          var totalLine = qs('#review-line-estimated-total');
+          var depositLine = qs('#review-line-deposit');
+
+          var sessionLabel = state.sessionType === 'STATIC' ? 'STATIC' : 'ROLLERS';
+          var ridersLabel = String(state.riderCount || '');
+
+          var routeLabel = getRadioLabel('routeChoice');
+          if (state.routeChoice === 'custom') {
+            routeLabel = state.customLocationDetails ? ('Custom - ' + state.customLocationDetails) : 'Custom Location';
+          }
+
+          var deliverables = [];
+          if (state.sessionType === 'STATIC') {
+            // stills forced
+            if (state.coreStills) deliverables.push('Stills');
+          } else {
+            if (state.coreVideo) deliverables.push('Video');
+            if (state.coreStills) deliverables.push('Stills');
+          }
+          if (state.rawFootage && state.coreVideo) deliverables.push('Raw Footage');
+          if (state.rushDelivery) deliverables.push('Rush Delivery');
+          if (state.posters) deliverables.push('Posters x' + (isNaN(state.posterQty) ? 1 : state.posterQty));
+          if (state.calendar12Month && state.coreStills) deliverables.push('12-Month Calendar');
+          if (state.customVideoEdit && state.coreVideo) deliverables.push('Custom Edit');
+
+          if (sessionLine) sessionLine.textContent = 'Session: ' + sessionLabel;
+          if (ridersLine) ridersLine.textContent = 'Riders: ' + ridersLabel;
+          if (vehicleLine) vehicleLine.textContent = 'Vehicle: ' + state.vehicleType + ' | ' + state.vehicleYearMakeModel + ' | ' + state.vehicleCount + ' vehicle(s)';
+          if (routeLine) routeLine.textContent = 'Route: ' + routeLabel;
+          if (deliverablesLine) deliverablesLine.textContent = 'Deliverables: ' + deliverables.join(' + ');
+          if (totalLine) totalLine.textContent = 'Estimated Total: $' + estimate.estimatedTotal;
+          if (depositLine) depositLine.textContent = 'Deposit Due Today: $' + estimate.depositDue;
+        }
+
+        function setStep(step) {
+          currentStep = step;
+          var stepEls = qsa('.booking-step');
+          stepEls.forEach(function(el) { el.classList.remove('active'); });
+          var active = qs('#step-' + step, form);
+          if (active) active.classList.add('active');
+
+          qs('#step-indicator').textContent = 'Step ' + step + ' of ' + totalSteps;
+
+          var prevBtn = qs('#prev-step-btn');
+          var nextBtn = qs('#next-step-btn');
+          var bookingSubmit = qs('#booking-submit');
+
+          if (prevBtn) prevBtn.style.display = (step === 1) ? 'none' : 'inline-flex';
+
+          if (nextBtn) nextBtn.style.display = (step === 7) ? 'none' : 'inline-flex';
+          if (bookingSubmit) bookingSubmit.style.display = (step === 7) ? 'inline-flex' : 'none';
+
+          // When arriving on step 7, freeze the current estimate for the review UI.
+          if (step === 7) {
+            var state = getBookingState();
+            syncConditionalUI(state);
+            var estimate = estimateBooking(state);
+            frozenReview = { state: state, estimate: estimate };
+            renderReviewSummary(state, estimate);
+
+            // Keep pricing live summary consistent with the final estimate.
+            renderLiveSummary(state, estimate);
+          } else {
+            if (bookingSubmit) bookingSubmit.style.display = 'none';
+          }
+        }
+
+        function canGoNext(stepNumber) {
+          var state = getBookingState();
+          syncConditionalUI(state);
+          if (!validateStep(stepNumber, state)) return false;
+          return true;
+        }
+
+        var prevBtn = qs('#prev-step-btn');
+        var nextBtn = qs('#next-step-btn');
+        if (prevBtn) prevBtn.addEventListener('click', function() {
+          if (currentStep > 1) setStep(currentStep - 1);
+        });
+        if (nextBtn) nextBtn.addEventListener('click', function() {
+          if (currentStep >= totalSteps) return;
+          if (!canGoNext(currentStep)) return;
+          setStep(currentStep + 1);
+        });
+
+        // Keep UI + summary in sync for estimate-relevant fields.
+        function handleEstimateUpdate() {
+          var state = getBookingState();
+          syncConditionalUI(state);
+          var estimate = estimateBooking(state);
+          renderLiveSummary(state, estimate);
+        }
+
+        // Poster qty clamping
+        var posterQtyEl = qs('#poster-qty', form);
+        if (posterQtyEl) {
+          posterQtyEl.addEventListener('input', function() {
+            var v = parseInt(posterQtyEl.value, 10);
+            if (qs('#addon-posters', form) && qs('#addon-posters', form).checked) {
+              if (isNaN(v) || v < 1) posterQtyEl.value = '1';
+            }
+          });
+        }
+
+        var posterMinus = qs('#poster-qty-minus', form);
+        var posterPlus = qs('#poster-qty-plus', form);
+        if (posterMinus) {
+          posterMinus.addEventListener('click', function() {
+            if (!posterQtyEl) return;
+            var v = parseInt(posterQtyEl.value, 10) || 1;
+            v = Math.max(1, v - 1);
+            posterQtyEl.value = String(v);
+            handleEstimateUpdate();
+          });
+        }
+        if (posterPlus) {
+          posterPlus.addEventListener('click', function() {
+            if (!posterQtyEl) return;
+            var v = parseInt(posterQtyEl.value, 10) || 1;
+            v = v + 1;
+            posterQtyEl.value = String(v);
+            handleEstimateUpdate();
+          });
+        }
+
+        // Route + date mode UI toggles
+        qsa('input[name="people"]').forEach(function(el) {
+          el.addEventListener('change', handleEstimateUpdate);
+        });
+        var groupCountInput = qs('#group-count', form);
+        if (groupCountInput) groupCountInput.addEventListener('input', handleEstimateUpdate);
+
+        qsa('input[name="sessionType"]').forEach(function(el) { el.addEventListener('change', handleEstimateUpdate); });
+
+        qsa('input[name="vehicleType"]').forEach(function(el) { el.addEventListener('change', handleEstimateUpdate); });
+        var vehicleYear = qs('#vehicle-year-make-model', form);
+        if (vehicleYear) vehicleYear.addEventListener('input', handleEstimateUpdate);
+        var vehicleCount = qs('#vehicle-count', form);
+        if (vehicleCount) vehicleCount.addEventListener('input', handleEstimateUpdate);
+
+        qsa('input[name="routeChoice"]').forEach(function(el) { el.addEventListener('change', handleEstimateUpdate); });
+        var customLocation = qs('#custom-location-details', form);
+        if (customLocation) customLocation.addEventListener('input', handleEstimateUpdate);
+
+        // Core + add-ons
+        qsa('#core-stills,#core-video,#addon-raw-footage,#addon-rush,#addon-posters,#addon-calendar,#addon-custom-edit').forEach(function(el) {
+          el.addEventListener('change', handleEstimateUpdate);
+        });
+
+        // Date mode UI visibility
+        qsa('input[name="dateMode"]').forEach(function(el) {
+          el.addEventListener('change', function() {
+            var state = getBookingState();
+            var singleWrap = qs('#single-date-wrap', form);
+            var rangeWrap = qs('#date-range-wrap', form);
+            if (singleWrap) singleWrap.style.display = (state.dateMode === 'single') ? 'block' : 'none';
+            if (rangeWrap) rangeWrap.style.display = (state.dateMode === 'range') ? 'block' : 'none';
+          });
+        });
+
+        // Poster checkbox toggles qty wrap
+        var postersEl = qs('#addon-posters', form);
+        if (postersEl) {
+          postersEl.addEventListener('change', function() {
+            if (posterQtyEl && postersEl.checked) posterQtyEl.value = '1';
+            var state = getBookingState();
+            syncConditionalUI(state);
+            handleEstimateUpdate();
+          });
+        }
+
+        form.addEventListener('submit', function() {
+          var state = getBookingState();
+          syncConditionalUI(state);
+          var estimate = estimateBooking(state);
+
+          // Build Booking-Summary from current state.
+          function formatMoney(n) { return '$' + String(Math.round(n || 0)); }
+          function buildSummaryLine() {
+            var session = state.sessionType;
+            var riders = state.riderCount;
+            var vehicle = state.vehicleType + ' | ' + state.vehicleYearMakeModel + ' | ' + state.vehicleCount + ' vehicle(s)';
+            var route = getRadioLabel('routeChoice');
+            if (state.routeChoice === 'custom') route = state.customLocationDetails ? ('Custom - ' + state.customLocationDetails) : 'Custom Location';
+
+            var deliverables = [];
+            if (state.coreStills) deliverables.push('Stills');
+            if (state.coreVideo) deliverables.push('Video');
+            if (state.rawFootage && state.coreVideo) deliverables.push('Raw Footage');
+            if (state.rushDelivery) deliverables.push('Rush Delivery');
+            if (state.posters) deliverables.push('Posters x' + (isNaN(state.posterQty) ? 1 : state.posterQty));
+            if (state.calendar12Month && state.coreStills) deliverables.push('12-Month Calendar');
+            if (state.customVideoEdit && state.coreVideo) deliverables.push('Custom Edit');
+
+            var deliverablesStr = deliverables.length ? deliverables.join(' + ') : '—';
+            return 'Session: ' + session + ' | Riders: ' + riders + ' | Vehicle: ' + state.vehicleType + ' | Route: ' + route + ' | Deliverables: ' + deliverablesStr + ' | Estimated Total: $' + estimate.estimatedTotal + ' | Deposit Due Today: $' + estimate.depositDue;
+          }
+
+          var summary = buildSummaryLine();
+          qs('#booking-summary-hidden', form).value = summary;
+          qs('#estimated-total-hidden', form).value = String(estimate.estimatedTotal);
+          qs('#deposit-due-hidden', form).value = String(estimate.depositDue);
+          qs('#pricing-breakdown-json-hidden', form).value = JSON.stringify(estimate.breakdown || {});
+
+          try {
+            sessionStorage.setItem('bookingSummary', summary);
+            sessionStorage.setItem('bookingDepositDue', String(estimate.depositDue));
+            sessionStorage.setItem('bookingEstimatedTotal', String(estimate.estimatedTotal));
+            sessionStorage.setItem('pricingBreakdownJson', qs('#pricing-breakdown-json-hidden', form).value);
+          } catch (e) {}
+
+          // Keep the redirect pointed to calendar.html
+          var path = window.location.pathname;
+          var dir = path.substring(0, path.lastIndexOf('/') + 1) || '/';
+          qs('#form-next-url', form).value = window.location.origin + dir + 'calendar.html';
+        });
+
+        // Initial sync
+        syncConditionalUI(getBookingState());
+        handleEstimateUpdate();
+        setStep(1);
+      });
+    </script>
   </div>
-  <script src="https://d3e54v103j8qbb.cloudfront.net/js/jquery-3.5.1.min.dc5e7f18c8.js?site=692ebc79d55153a076f9bb6d" type="text/javascript" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
-  <script src="js/webflow.js" type="text/javascript"></script>
-  <script>
-$(document).ready(function() {
-  var totalSteps = 5;
-  var currentStep = 1;
-
-  function showStep(step) {
-    currentStep = step;
-    $('.booking-step').removeClass('active');
-    $('.booking-step[data-step="' + step + '"]').addClass('active');
-    $('#step-indicator').text('Step ' + step + ' of ' + totalSteps);
-  }
-
-  function buildSummary() {
-    var parts = [];
-    var p = $('[name="people"]:checked');
-    if (p.length) {
-      var peopleLabel = p.closest('label').find('.radio-main-text').text().trim();
-      parts.push('People: ' + peopleLabel);
-      if (p.val() === '3') {
-        var gc = $('#group-count').val();
-        if (gc) parts[parts.length - 1] += ' (' + gc + ')';
-      }
-    }
-    var v = $('[name="vehicles"]:checked').val();
-    if (v) parts.push('Vehicles: ' + v);
-    var vd = $('#vehicle-details').val();
-    if (vd) parts.push('Vehicle details: ' + vd);
-    var loc = $('[name="locations"]:checked');
-    if (loc.length) {
-      var locLabel = loc.closest('label').find('.radio-main-text').text().trim();
-      parts.push('Location: ' + locLabel);
-      if (loc.val() === '4') {
-        var cl = $('#custom-location').val();
-        if (cl) parts.push('Custom: ' + cl);
-      }
-    }
-    var deliverables = [];
-    $('#photography:checked').length && deliverables.push('Photography');
-    $('#calendar:checked').length && deliverables.push('12 Month Calendar');
-    $('#poster:checked').length && deliverables.push('Poster(s)');
-    $('#edit:checked').length && deliverables.push('Custom Video Edit');
-    if (deliverables.length) parts.push('Deliverables: ' + deliverables.join(', '));
-    return parts.join(' | ');
-  }
-
-  $('[name="people"]').on('change', function() {
-    var v = $(this).val();
-    $('#group-count-wrap').toggle(v === '3');
-    calculateBudget();
-  });
-
-  $('[name="locations"]').on('change', function() {
-    $('#custom-location-wrap').toggle($(this).val() === '4');
-    calculateBudget();
-  });
-
-  function calculateBudget() {
-    var baseBudget = 0;
-    var peopleOption = parseFloat($('[name="people"]:checked').val()) || 0;
-    var locations = parseFloat($('[name="locations"]:checked').val()) || 0;
-    if (peopleOption === 1) baseBudget += 100;
-    else if (peopleOption === 2) baseBudget += 50;
-    else if (peopleOption === 3) baseBudget += 100;
-    if (locations === 4) baseBudget += 50;
-    $('[bloc="budget"]').text(baseBudget);
-    if (peopleOption === 2) {
-      var totalMin = baseBudget * 2, totalMax = baseBudget * 6;
-      $('.total-range').text("Estimated total: $" + totalMin + " - $" + totalMax + " USD");
-    } else {
-      $('.total-range').text("");
-    }
-  }
-  calculateBudget();
-
-  $('#btn-next-1').on('click', function() {
-    if (!$('[name="people"]:checked').length) return;
-    showStep(2);
-  });
-  $('#btn-back-2').on('click', function() { showStep(1); });
-  $('#btn-next-2').on('click', function() {
-    if (!$('[name="vehicles"]:checked').length) return;
-    showStep(3);
-  });
-  $('#btn-back-3').on('click', function() { showStep(2); });
-  $('#btn-next-3').on('click', function() {
-    if (!$('[name="locations"]:checked').length) return;
-    showStep(4);
-  });
-  $('#btn-back-4').on('click', function() { showStep(3); });
-  $('#btn-next-4').on('click', function() { showStep(5); });
-  $('#btn-back-5').on('click', function() { showStep(4); });
-
-  $('#wf-form-Booking-Form').on('submit', function(e) {
-    var summary = buildSummary();
-    $('#booking-summary-field').val(summary);
-    try { sessionStorage.setItem('bookingSummary', summary); } catch (err) {}
-    var path = window.location.pathname;
-    var dir = path.substring(0, path.lastIndexOf('/') + 1) || '/';
-    $('#form-next-url').val(window.location.origin + dir + 'calendar.html');
-  });
-});
-</script>
 </body>
 </html>
+
