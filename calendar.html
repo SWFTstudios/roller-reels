@@ -114,10 +114,16 @@
   <script>
 (function() {
   var summary = '';
+  var bookingName = '';
+  var bookingEmail = '';
   try {
     var params = new URLSearchParams(window.location.search);
     summary = params.get('summary') ? decodeURIComponent(params.get('summary')) : '';
+    bookingName = params.get('name') ? decodeURIComponent(params.get('name')) : '';
+    bookingEmail = params.get('email') ? decodeURIComponent(params.get('email')) : '';
     if (!summary) summary = sessionStorage.getItem('bookingSummary') || '';
+    if (!bookingName) bookingName = sessionStorage.getItem('bookingName') || '';
+    if (!bookingEmail) bookingEmail = sessionStorage.getItem('bookingEmail') || '';
   } catch (e) {}
 
   var panel = document.getElementById('booking-summary-panel');
@@ -171,9 +177,13 @@
   var calPrefillConfig = {
     layout: 'month_view',
     useSlotsViewOnSmallScreen: 'true',
+    name: bookingName,
+    email: bookingEmail,
     notes: summaryForNotes,
     'metadata[intakeSummary]': summaryForNotes,
     'metadata[intakeSource]': 'rollerreels-booking-intake',
+    'metadata[intakeName]': bookingName,
+    'metadata[intakeEmail]': bookingEmail,
     'metadata[estimatedTotal]': String(estimatedTotal || ''),
     'metadata[depositDueToday]': String(depositDueToday || '100')
   };
