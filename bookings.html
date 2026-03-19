@@ -865,9 +865,17 @@
             var emailInput = qs('#email', form);
             var emailOk = false;
             if (emailInput && typeof emailInput.checkValidity === 'function') {
-              emailOk = emailInput.checkValidity();
+              // Prevent false negatives caused by NBSP characters (common with copy/paste).
+              var rawEmail = (emailInput.value || '').replace(/\u00A0/g, ' ').trim();
+              if (rawEmail !== emailInput.value) emailInput.value = rawEmail;
+              try {
+                emailOk = emailInput.checkValidity();
+              } catch (e) {
+                emailOk = false;
+              }
             } else {
-              emailOk = !!state.email && isValidEmail(state.email);
+              var sanitized = (state.email || '').replace(/\u00A0/g, ' ').trim();
+              emailOk = !!sanitized && isValidEmail(sanitized);
             }
             if (!emailOk) { setError('error-email', 'Please enter a valid email address.'); valid = false; }
             if (!state.phone) { setError('error-phone', 'Please enter your phone number.'); valid = false; }
