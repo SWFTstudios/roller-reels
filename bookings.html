@@ -579,7 +579,7 @@
             !!state.routeChoice &&
             !(state.routeChoice === 'custom' && !state.customLocationDetails) &&
             (
-              (state.sessionType === 'STATIC' && !!state.coreStills) ||
+              (state.sessionType === 'STATIC' && (state.coreStills || state.coreVideo)) ||
               (state.sessionType === 'ROLLERS' && (state.coreStills || state.coreVideo))
             );
 
@@ -611,11 +611,19 @@
 
           // Core pricing
           if (state.sessionType === 'STATIC') {
-            coreTotal = PRICING.staticCore;
-            breakdown.coreLabel = 'Stills session';
+            if (state.coreVideo && state.coreStills) {
+              coreTotal = PRICING.rollersVideoAndStills;
+              breakdown.coreLabel = 'Video + Stills session';
+            } else if (state.coreVideo) {
+              coreTotal = PRICING.rollersVideoOnly;
+              breakdown.coreLabel = 'Video-only session';
+            } else {
+              coreTotal = PRICING.staticCore;
+              breakdown.coreLabel = 'Stills session';
+            }
             if (riderCount >= 3) {
-              coreTotal = PRICING.staticCore + PRICING.extraRider * (riderCount - 3);
-              breakdown.coreLabel = 'Stills session (group)';
+              coreTotal = coreTotal + PRICING.extraRider * (riderCount - 3);
+              breakdown.coreLabel = breakdown.coreLabel + ' (group)';
             }
           } else if (state.sessionType === 'ROLLERS') {
             if (state.coreVideo && state.coreStills) coreTotal = PRICING.rollersVideoAndStills;
@@ -696,26 +704,30 @@
 
           if (coreStillsEl && coreVideoEl) {
             if (state.sessionType === 'STATIC') {
-              coreStillsEl.checked = true;
-              coreVideoEl.checked = false;
-              coreVideoEl.disabled = true;
-              coreVideoEl.closest('label').style.display = 'none';
+              coreVideoEl.disabled = false;
+              if (coreVideoEl.closest('label')) coreVideoEl.closest('label').style.display = 'block';
+              if (coreStillsEl.closest('label')) coreStillsEl.closest('label').style.display = 'block';
 
-              coreStillsEl.disabled = false;
-
-              // rawFootage + customVideoEdit hidden/disabled on STATIC
+              // rawFootage + customVideoEdit depend on coreVideo
               var rawEl = qs('#addon-raw-footage', form);
-              if (rawEl) { rawEl.checked = false; rawEl.disabled = true; rawEl.closest('label').style.display = 'none'; }
+              if (rawEl) {
+                rawEl.disabled = !coreVideoEl.checked;
+                if (rawEl.disabled) rawEl.checked = false;
+                if (rawEl.closest('label')) rawEl.closest('label').style.display = coreVideoEl.checked ? 'block' : 'none';
+              }
               var customEditEl = qs('#addon-custom-edit', form);
-              if (customEditEl) { customEditEl.checked = false; customEditEl.disabled = true; customEditEl.closest('label').style.display = 'none'; }
+              if (customEditEl) {
+                customEditEl.disabled = !coreVideoEl.checked;
+                if (customEditEl.disabled) customEditEl.checked = false;
+                if (customEditEl.closest('label')) customEditEl.closest('label').style.display = coreVideoEl.checked ? 'block' : 'none';
+              }
 
               // calendar depends on stills
               var calendarEl = qs('#addon-calendar', form);
               if (calendarEl) {
                 calendarEl.disabled = !coreStillsEl.checked;
                 calendarEl.checked = coreStillsEl.checked ? !!calendarEl.checked : false;
-                if (coreStillsEl.checked) calendarEl.closest('label').style.display = 'block';
-                else calendarEl.closest('label').style.display = 'none';
+                if (calendarEl.closest('label')) calendarEl.closest('label').style.display = coreStillsEl.checked ? 'block' : 'none';
               }
 
             } else if (state.sessionType === 'ROLLERS') {
@@ -728,15 +740,14 @@
               if (rawEl) {
                 rawEl.disabled = !coreVideoEl.checked;
                 if (rawEl.disabled) rawEl.checked = false;
-                rawEl.closest('label').style.display = coreVideoEl.checked ? 'block' : 'block';
-                // Keep it visible but disabled; meets "enabled only when coreVideo checked"
+                if (rawEl.closest('label')) rawEl.closest('label').style.display = coreVideoEl.checked ? 'block' : 'none';
               }
 
               var customEditEl = qs('#addon-custom-edit', form);
               if (customEditEl) {
                 customEditEl.disabled = !coreVideoEl.checked;
                 if (customEditEl.disabled) customEditEl.checked = false;
-                customEditEl.closest('label').style.display = 'block';
+                if (customEditEl.closest('label')) customEditEl.closest('label').style.display = coreVideoEl.checked ? 'block' : 'none';
               }
 
               // calendar enabled only when stills checked
@@ -797,7 +808,7 @@
           if (stepNumber === 4) {
             clearErrors(['error-coreDeliverables']);
             if (state.sessionType === 'STATIC') {
-              if (!state.coreStills) { setError('error-coreDeliverables', 'Please select Photography (Stills).'); valid = false; }
+              if (!(state.coreStills || state.coreVideo)) { setError('error-coreDeliverables', 'Select at least one core deliverable.'); valid = false; }
             } else if (state.sessionType === 'ROLLERS') {
               if (!(state.coreStills || state.coreVideo)) { setError('error-coreDeliverables', 'Select at least one core deliverable.'); valid = false; }
             }
@@ -898,13 +909,8 @@
           }
 
           var deliverables = [];
-          if (state.sessionType === 'STATIC') {
-            // stills forced
-            if (state.coreStills) deliverables.push('Stills');
-          } else {
-            if (state.coreVideo) deliverables.push('Video');
-            if (state.coreStills) deliverables.push('Stills');
-          }
+          if (state.coreVideo) deliverables.push('Video');
+          if (state.coreStills) deliverables.push('Stills');
           if (state.rawFootage && state.coreVideo) deliverables.push('Raw Footage');
           if (state.rushDelivery) deliverables.push('Rush Delivery');
           if (state.posters) deliverables.push('Posters x' + (isNaN(state.posterQty) ? 1 : state.posterQty));
