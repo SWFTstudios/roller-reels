@@ -111,14 +111,14 @@
                         <input type="radio" name="sessionType" id="session-static" style="opacity:0;position:absolute;z-index:-1" value="STATIC">
                         <div class="radio-circle-box"></div>
                         <span for="session-static" class="radio-main-text w-form-label">STATIC</span>
-                        <div class="radio-sub-text">Stationary locations (photos + optional video at rest)</div>
+                        <div class="radio-sub-text">Photo and/or video while stationary at a location.</div>
                       </label>
                       <label class="radio-button w-radio">
                         <div class="w-form-formradioinput w-form-formradioinput--inputType-custom radio-input w-radio-input"></div>
                         <input type="radio" name="sessionType" id="session-rollers" style="opacity:0;position:absolute;z-index:-1" value="ROLLERS">
                         <div class="radio-circle-box"></div>
                         <span for="session-rollers" class="radio-main-text w-form-label">ROLLERS</span>
-                        <div class="radio-sub-text">Moving shots + stationary locations (photos/videos)</div>
+                        <div class="radio-sub-text">Photo and/or video while moving on the road/highway (rolling shots).</div>
                       </label>
                     </div>
                     <div id="error-sessionType" class="field-error"></div>
@@ -283,17 +283,24 @@
                     <div class="section-header small-header" style="margin-top:0;">
                       <h2 class="heading-2" style="font-size:1.15rem;">Core deliverables</h2>
                     </div>
-                    <div class="radio-buttons" style="display:flex;flex-direction:column;gap:0.5rem;">
-                      <label class="w-checkbox checkbox-field" style="margin:0;">
-                        <div class="w-checkbox-input w-checkbox-input--inputType-custom checkbox"></div>
-                        <input type="checkbox" id="core-stills" name="coreStills" style="opacity:0;position:absolute;z-index:-1">
-                        <span for="core-stills" class="checkbox-label w-form-label">Photography (Stills)</span>
+                    <div class="radio-buttons">
+                      <label class="radio-button w-radio">
+                        <div class="w-form-formradioinput w-form-formradioinput--inputType-custom radio-input w-radio-input"></div>
+                        <input type="radio" name="corePackage" id="core-photo-only" style="opacity:0;position:absolute;z-index:-1" value="photo">
+                        <div class="radio-circle-box"></div>
+                        <span for="core-photo-only" class="radio-main-text w-form-label">Photo Only</span>
                       </label>
-
-                      <label class="w-checkbox checkbox-field" style="margin:0;">
-                        <div class="w-checkbox-input w-checkbox-input--inputType-custom checkbox"></div>
-                        <input type="checkbox" id="core-video" name="coreVideo" style="opacity:0;position:absolute;z-index:-1">
-                        <span for="core-video" class="checkbox-label w-form-label">Video coverage</span>
+                      <label class="radio-button w-radio">
+                        <div class="w-form-formradioinput w-form-formradioinput--inputType-custom radio-input w-radio-input"></div>
+                        <input type="radio" name="corePackage" id="core-video-only" style="opacity:0;position:absolute;z-index:-1" value="video">
+                        <div class="radio-circle-box"></div>
+                        <span for="core-video-only" class="radio-main-text w-form-label">Video Only</span>
+                      </label>
+                      <label class="radio-button w-radio">
+                        <div class="w-form-formradioinput w-form-formradioinput--inputType-custom radio-input w-radio-input"></div>
+                        <input type="radio" name="corePackage" id="core-both" style="opacity:0;position:absolute;z-index:-1" value="both">
+                        <div class="radio-circle-box"></div>
+                        <span for="core-both" class="radio-main-text w-form-label">Both Photo &amp; Video</span>
                       </label>
                     </div>
 
@@ -551,8 +558,9 @@
           var routeChoice = getSelectedRadioValue('routeChoice');
           var customLocationDetails = (qs('#custom-location-details', form) || {}).value ? qs('#custom-location-details', form).value.trim() : '';
 
-          var coreStills = !!(qs('#core-stills', form) && qs('#core-stills', form).checked);
-          var coreVideo = !!(qs('#core-video', form) && qs('#core-video', form).checked);
+          var corePackage = getSelectedRadioValue('corePackage');
+          var coreStills = (corePackage === 'photo' || corePackage === 'both');
+          var coreVideo = (corePackage === 'video' || corePackage === 'both');
 
           var rawFootage = !!(qs('#addon-raw-footage', form) && qs('#addon-raw-footage', form).checked);
           var rushDelivery = !!(qs('#addon-rush', form) && qs('#addon-rush', form).checked);
@@ -585,6 +593,7 @@
             vehicleCount: vehicleCount,
             routeChoice: routeChoice,
             customLocationDetails: customLocationDetails,
+            corePackage: corePackage,
             coreStills: coreStills,
             coreVideo: coreVideo,
             rawFootage: rawFootage,
@@ -711,8 +720,7 @@
           }
 
           var estimatedTotal = coreTotal + addOnsTotal + customLocationFee;
-          var depositDue = Math.max(100, estimatedTotal * 0.30);
-          depositDue = Math.ceil(depositDue / 10) * 10;
+          var depositDue = 100;
 
           breakdown.coreTotal = coreTotal;
           breakdown.customLocationFee = customLocationFee;
@@ -739,66 +747,26 @@
           var customWrap = qs('#custom-location-wrap', form);
           if (customWrap) customWrap.style.display = (state.routeChoice === 'custom') ? 'block' : 'none';
 
-          // Step 4 core deliverables rules
-          var coreStillsEl = qs('#core-stills', form);
-          var coreVideoEl = qs('#core-video', form);
-
-          if (coreStillsEl && coreVideoEl) {
-            if (state.sessionType === 'STATIC') {
-              // STATIC = stationary locations; deliverables can be photos, video, or both.
-              coreVideoEl.disabled = false;
-              coreVideoEl.checked = coreVideoEl.checked; // keep user selection
-              if (coreVideoEl.closest('label')) coreVideoEl.closest('label').style.display = 'block';
-              if (coreStillsEl.closest('label')) coreStillsEl.closest('label').style.display = 'block';
-
-              // rawFootage + customVideoEdit depend on coreVideo
-              var rawEl = qs('#addon-raw-footage', form);
-              if (rawEl) {
-                rawEl.disabled = !coreVideoEl.checked;
-                if (rawEl.disabled) rawEl.checked = false;
-                if (rawEl.closest('label')) rawEl.closest('label').style.display = coreVideoEl.checked ? 'block' : 'none';
-              }
-              var customEditEl = qs('#addon-custom-edit', form);
-              if (customEditEl) {
-                customEditEl.disabled = !coreVideoEl.checked;
-                if (customEditEl.disabled) customEditEl.checked = false;
-                if (customEditEl.closest('label')) customEditEl.closest('label').style.display = coreVideoEl.checked ? 'block' : 'none';
-              }
-
-              // calendar depends on stills
-              var calendarEl = qs('#addon-calendar', form);
-              if (calendarEl) {
-                calendarEl.disabled = !coreStillsEl.checked;
-                if (calendarEl.disabled) calendarEl.checked = false;
-                if (calendarEl.closest('label')) calendarEl.closest('label').style.display = coreStillsEl.checked ? 'block' : 'none';
-              }
-            } else if (state.sessionType === 'ROLLERS') {
-              // Restore visibility and enable core-video
-              coreVideoEl.disabled = false;
-              coreVideoEl.closest('label').style.display = 'block';
-              // Allow stills selection; do not force
-
-              var rawEl = qs('#addon-raw-footage', form);
-              if (rawEl) {
-                rawEl.disabled = !coreVideoEl.checked;
-                if (rawEl.disabled) rawEl.checked = false;
-                if (rawEl.closest('label')) rawEl.closest('label').style.display = coreVideoEl.checked ? 'block' : 'none';
-              }
-
-              var customEditEl = qs('#addon-custom-edit', form);
-              if (customEditEl) {
-                customEditEl.disabled = !coreVideoEl.checked;
-                if (customEditEl.disabled) customEditEl.checked = false;
-                if (customEditEl.closest('label')) customEditEl.closest('label').style.display = coreVideoEl.checked ? 'block' : 'none';
-              }
-
-              // calendar enabled only when stills checked
-              var calendarEl = qs('#addon-calendar', form);
-              if (calendarEl) {
-                calendarEl.disabled = !coreStillsEl.checked;
-                if (calendarEl.disabled) calendarEl.checked = false;
-              }
-            }
+          // Step 4 add-on visibility based on selected core package.
+          var hasStills = !!state.coreStills;
+          var hasVideo = !!state.coreVideo;
+          var rawEl = qs('#addon-raw-footage', form);
+          if (rawEl) {
+            rawEl.disabled = !hasVideo;
+            if (rawEl.disabled) rawEl.checked = false;
+            if (rawEl.closest('label')) rawEl.closest('label').style.display = hasVideo ? 'block' : 'none';
+          }
+          var customEditEl = qs('#addon-custom-edit', form);
+          if (customEditEl) {
+            customEditEl.disabled = !hasVideo;
+            if (customEditEl.disabled) customEditEl.checked = false;
+            if (customEditEl.closest('label')) customEditEl.closest('label').style.display = hasVideo ? 'block' : 'none';
+          }
+          var calendarEl = qs('#addon-calendar', form);
+          if (calendarEl) {
+            calendarEl.disabled = !hasStills;
+            if (calendarEl.disabled) calendarEl.checked = false;
+            if (calendarEl.closest('label')) calendarEl.closest('label').style.display = hasStills ? 'block' : 'none';
           }
 
           // posters behavior
@@ -899,8 +867,8 @@
 
           if (summaryPackageType) {
             summaryPackageType.textContent = state.sessionType === 'STATIC'
-              ? 'Stationary locations'
-              : (state.sessionType === 'ROLLERS' ? 'Moving shots + stationary locations' : '');
+              ? 'Static shots (stationary location)'
+              : (state.sessionType === 'ROLLERS' ? 'Rollers (moving road/highway shots)' : '');
           }
           summaryRiderCount.textContent = state.riderCount ? ('Riders: ' + state.riderCount) : '';
           summaryVehicleType.textContent = state.vehicleType ? ('Vehicle: ' + state.vehicleType) : '';
@@ -955,8 +923,8 @@
           var depositLine = qs('#review-line-deposit');
 
           var sessionLabel = state.sessionType === 'STATIC'
-            ? 'Stationary locations'
-            : (state.sessionType === 'ROLLERS' ? 'Moving shots + stationary locations' : state.sessionType);
+            ? 'Static shots (stationary location)'
+            : (state.sessionType === 'ROLLERS' ? 'Rollers (moving road/highway shots)' : state.sessionType);
           var ridersLabel = String(state.riderCount || '');
 
           var routeLabel = getRadioLabel('routeChoice');
@@ -1182,7 +1150,7 @@
         if (customLocation) customLocation.addEventListener('input', handleEstimateUpdate);
 
         // Core + add-ons
-        qsa('#core-stills,#core-video,#addon-raw-footage,#addon-rush,#addon-posters,#addon-calendar,#addon-custom-edit').forEach(function(el) {
+        qsa('input[name="corePackage"],#addon-raw-footage,#addon-rush,#addon-posters,#addon-calendar,#addon-custom-edit').forEach(function(el) {
           el.addEventListener('change', handleEstimateUpdate);
         });
 
@@ -1222,8 +1190,8 @@
           function formatMoney(n) { return '$' + String(Math.round(n || 0)); }
           function buildSummaryLine() {
             var session = state.sessionType === 'STATIC'
-              ? 'Stationary locations'
-              : (state.sessionType === 'ROLLERS' ? 'Moving shots + stationary locations' : state.sessionType);
+              ? 'Static shots (stationary location)'
+              : (state.sessionType === 'ROLLERS' ? 'Rollers (moving road/highway shots)' : state.sessionType);
             var riders = state.riderCount;
             var vehicle = state.vehicleType + (state.vehicleYearMakeModel ? (' | ' + state.vehicleYearMakeModel) : '');
             var route = getRadioLabel('routeChoice');

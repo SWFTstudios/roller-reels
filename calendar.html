@@ -114,11 +114,9 @@
   <script>
 (function() {
   var summary = '';
-  var depositParam = '';
   try {
     var params = new URLSearchParams(window.location.search);
     summary = params.get('summary') ? decodeURIComponent(params.get('summary')) : '';
-    depositParam = params.get('deposit') ? decodeURIComponent(params.get('deposit')) : '';
     if (!summary) summary = sessionStorage.getItem('bookingSummary') || '';
   } catch (e) {}
 
@@ -145,20 +143,8 @@
 
   if (textEl) textEl.textContent = summary;
 
-  // Dynamic deposit rendering (fallback to a generic message).
-  try {
-    var depositDueStr = depositParam || sessionStorage.getItem('bookingDepositDue') || '';
-    var depositDueNum = parseFloat(depositDueStr);
-    if (depositCopy) {
-      if (!isNaN(depositDueNum) && depositDueNum > 0) {
-        var depositDueRounded = Math.round(depositDueNum);
-        depositCopy.innerHTML = '<strong>$' + depositDueRounded + ' non-refundable deposit</strong> required to confirm.';
-      } else {
-        depositCopy.textContent = 'A non-refundable deposit is required to confirm your session.';
-      }
-    }
-  } catch (e) {
-    if (depositCopy) depositCopy.textContent = 'A non-refundable deposit is required to confirm your session.';
+  if (depositCopy) {
+    depositCopy.innerHTML = '<strong>$100 to book your shoot.</strong>';
   }
 
   if (copyBtn) {
