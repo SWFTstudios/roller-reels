@@ -49,22 +49,16 @@
           <p style="margin:0 0 0.75rem;font-size:0.9rem;"><strong>$100 non-refundable deposit</strong> required to confirm.</p>
           <button type="button" id="booking-copy-btn" class="blocs-link" style="cursor:pointer;background:none;border:none;padding:0;font:inherit;text-decoration:underline;">Copy details</button>
         </div>
+        <div id="booking-gated" style="display:none;padding:0 1.5rem 0.5rem;text-align:center;font-size:0.9rem;opacity:0.9;">
+          <p style="margin:0 0 0.5rem;">Please complete the booking form first to choose a date and time.</p>
+          <a href="bookings.html" class="blocs-link">Go to booking form</a>
+        </div>
         <div id="booking-no-summary" style="display:none;padding:0 1.5rem 0.5rem;text-align:center;font-size:0.9rem;opacity:0.85;">
           <p style="margin:0;">No booking details from intake—continue to pick a time below.</p>
         </div>
-        <div class="calendar-embed w-embed w-script"><!--  Cal inline embed code begins  -->
-          <div style="width:100%;height:100%;overflow:scroll" id="my-cal-inline"></div>
-          <script type="text/javascript">
-  (function (C, A, L) { let p = function (a, ar) { a.q.push(ar); }; let d = C.document; C.Cal = C.Cal || function () { let cal = C.Cal; let ar = arguments; if (!cal.loaded) { cal.ns = {}; cal.q = cal.q || []; d.head.appendChild(d.createElement("script")).src = A; cal.loaded = true; } if (ar[0] === L) { const api = function () { p(api, arguments); }; const namespace = ar[1]; api.q = api.q || []; if(typeof namespace === "string"){cal.ns[namespace] = cal.ns[namespace] || api;p(cal.ns[namespace], ar);p(cal, ["initNamespace", namespace]);} else p(cal, ar); return;} p(cal, ar); }; })(window, "https://app.cal.com/embed/embed.js", "init");
-Cal("init", "rr-shoot", {origin:"https://cal.com"});
-  Cal.ns["rr-shoot"]("inline", {
-    elementOrSelector:"#my-cal-inline",
-    config: {"layout":"month_view"},
-    calLink: "elombe/rr-shoot",
-  });
-  Cal.ns["rr-shoot"]("ui", {"hideEventTypeDetails":false,"layout":"month_view"});
-  </script>
-          <!--  Cal inline embed code ends  -->
+        <div id="calendar-wrapper" class="calendar-embed w-embed w-script" style="display:none;"><!--  Cal inline embed code begins  -->
+          <div style="width:100%;height:100%;overflow:scroll" id="my-cal-inline-rr-shoot"></div>
+          <!--  Cal inline embed code will be injected by script when summary exists -->
         </div>
       </div>
     </div>
@@ -79,27 +73,43 @@ Cal("init", "rr-shoot", {origin:"https://cal.com"});
     summary = params.get('summary') ? decodeURIComponent(params.get('summary')) : '';
     if (!summary) summary = sessionStorage.getItem('bookingSummary') || '';
   } catch (e) {}
+
   var panel = document.getElementById('booking-summary-panel');
+  var gated = document.getElementById('booking-gated');
   var noSummary = document.getElementById('booking-no-summary');
+  var calendarWrapper = document.getElementById('calendar-wrapper');
   var textEl = document.getElementById('booking-summary-text');
   var copyBtn = document.getElementById('booking-copy-btn');
-  if (summary) {
-    panel.style.display = 'block';
-    noSummary.style.display = 'none';
-    textEl.textContent = summary;
-    if (copyBtn) {
-      copyBtn.onclick = function() {
-        navigator.clipboard.writeText(summary).then(function() {
-          copyBtn.textContent = 'Copied!';
-          setTimeout(function() { copyBtn.textContent = 'Copy details'; }, 2000);
-        });
-      };
-    }
-  } else {
-    panel.style.display = 'none';
-    noSummary.style.display = 'block';
+
+  if (!summary) {
+    if (gated) gated.style.display = 'block';
+    if (panel) panel.style.display = 'none';
+    if (noSummary) noSummary.style.display = 'none';
+    if (calendarWrapper) calendarWrapper.style.display = 'none';
+    return;
   }
+
+  if (panel) panel.style.display = 'block';
+  if (gated) gated.style.display = 'none';
+  if (noSummary) noSummary.style.display = 'none';
+  if (calendarWrapper) calendarWrapper.style.display = 'block';
+
+  if (textEl) textEl.textContent = summary;
+  if (copyBtn) {
+    copyBtn.onclick = function() {
+      navigator.clipboard.writeText(summary).then(function() {
+        copyBtn.textContent = 'Copied!';
+        setTimeout(function() { copyBtn.textContent = 'Copy details'; }, 2000);
+      });
+    };
+  }
+
+  var calScript = document.createElement('script');
+  calScript.type = 'text/javascript';
+  calScript.text = '\n  (function (C, A, L) { let p = function (a, ar) { a.q.push(ar); }; let d = C.document; C.Cal = C.Cal || function () { let cal = C.Cal; let ar = arguments; if (!cal.loaded) { cal.ns = {}; cal.q = cal.q || []; d.head.appendChild(d.createElement(\"script\")).src = A; cal.loaded = true; } if (ar[0] === L) { const api = function () { p(api, arguments); }; const namespace = ar[1]; api.q = api.q || []; if(typeof namespace === \"string\"){cal.ns[namespace] = cal.ns[namespace] || api;p(cal.ns[namespace], ar);p(cal, [\"initNamespace\", namespace]);} else p(cal, ar); return;} p(cal, ar); }; })(window, \"https://app.cal.com/embed/embed.js\", \"init\");\nCal(\"init\", \"rr-shoot\", {origin:\"https://app.cal.com\"});\n  Cal.ns[\"rr-shoot\"](\"inline\", {\n    elementOrSelector:\"#my-cal-inline-rr-shoot\",\n    config: {\"layout\":\"month_view\",\"useSlotsViewOnSmallScreen\":\"true\"},\n    calLink: \"swftstudios/rr-shoot\",\n  });\n  Cal.ns[\"rr-shoot\"](\"ui\", {\"hideEventTypeDetails\":false,\"layout\":\"month_view\"});\n  ';
+  document.body.appendChild(calScript);
 })();
   </script>
 </body>
 </html>
+
