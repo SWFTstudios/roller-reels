@@ -431,7 +431,7 @@
                   </div>
 
                   <div class="booking-step-nav" style="justify-content:flex-start;">
-                    <button type="submit" id="booking-submit" class="submit-button w-button" data-wait="Please wait...">Confirm booking request</button>
+                    <button type="button" id="booking-submit" class="submit-button w-button">Continue to calendar</button>
                   </div>
                 </div>
               </section>
@@ -1208,15 +1208,15 @@
           });
         }
 
-        form.addEventListener('submit', function() {
-          // Always set redirect target first so a later JS error can't fall back.
-          try {
-            qs('#form-next-url', form).value = 'https://rollerreels.com/calendar';
-          } catch (e) {}
-
+        function finalizeToCalendar() {
           var state = getBookingState();
           syncConditionalUI(state);
+          if (!validateStep(6, state)) {
+            setStep(6);
+            return;
+          }
           var estimate = estimateBooking(state);
+          if (!estimate.canEstimate) return;
 
           // Build Booking-Summary from current state.
           function formatMoney(n) { return '$' + String(Math.round(n || 0)); }
@@ -1260,8 +1260,27 @@
             sessionStorage.setItem('bookingEstimatedTotal', String(estimate.estimatedTotal));
             sessionStorage.setItem('pricingBreakdownJson', qs('#pricing-breakdown-json-hidden', form).value);
           } catch (e) {}
+          try {
+            var redirectUrl = qs('#form-next-url', form).value || 'https://rollerreels.com/calendar';
+            window.location.href = redirectUrl;
+          } catch (e) {
+            window.location.href = 'https://rollerreels.com/calendar';
+          }
+        }
 
-          // Redirect already set above.
+        var bookingSubmitBtn = qs('#booking-submit', form);
+        if (bookingSubmitBtn) {
+          bookingSubmitBtn.addEventListener('click', function() {
+            if (currentStep !== 7) return;
+            finalizeToCalendar();
+          });
+        }
+
+        // Guard against Enter-key native form submits; keep flow Cal-first only.
+        form.addEventListener('submit', function(e) {
+          e.preventDefault();
+          if (currentStep !== 7) return;
+          finalizeToCalendar();
         });
 
         // Initial sync
