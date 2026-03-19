@@ -1,0 +1,27 @@
+## Roller Reels - robots.txt
+## Goal: allow major AI/search crawlers to access content for AI-powered search/citation.
+## Note: you mentioned robots are also managed via Cloudflare; ensure Cloudflare's served robots.txt matches this file.
+
+User-agent: *
+Content-Signal: search=yes,ai-train=no
+Allow: /
+
+# Keep truly sensitive/internal routes blocked (optional)
+Disallow: /admin
+Disallow: /api
+
+# Explicit allows (for clarity)
+User-agent: GPTBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: Amazonbot
+Allow: /
+
+Sitemap: https://rollerreels.com/sitemap.xml
+
