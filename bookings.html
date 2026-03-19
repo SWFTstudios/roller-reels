@@ -1218,7 +1218,7 @@
 
           // Source of truth for calendar handoff: URL params (survives FormSubmit redirect).
           try {
-            var nextUrl = 'https://rollerreels.com/calendar?summary=' + encodeURIComponent(summary) + '&deposit=' + encodeURIComponent(String(estimate.depositDue));
+            var nextUrl = 'https://rollerreels.com/calendar?summary=' + encodeURIComponent(summary) + '&deposit=' + encodeURIComponent(String(estimate.depositDue)) + '&name=' + encodeURIComponent(state.fullName || '') + '&email=' + encodeURIComponent(state.email || '');
             qs('#form-next-url', form).value = nextUrl;
           } catch (e) {}
 
@@ -1227,6 +1227,8 @@
             sessionStorage.setItem('bookingDepositDue', String(estimate.depositDue));
             sessionStorage.setItem('bookingEstimatedTotal', String(estimate.estimatedTotal));
             sessionStorage.setItem('pricingBreakdownJson', qs('#pricing-breakdown-json-hidden', form).value);
+            sessionStorage.setItem('bookingName', state.fullName || '');
+            sessionStorage.setItem('bookingEmail', state.email || '');
           } catch (e) {}
           try {
             var redirectUrl = qs('#form-next-url', form).value || 'https://rollerreels.com/calendar';
