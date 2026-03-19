@@ -32,9 +32,36 @@
 .route-grid { display: grid; grid-template-columns: 1fr; gap: 12px; }
 @media (min-width: 768px) { .route-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 .route-card { min-width: 0; width: 100%; box-sizing: border-box; }
-.booking-step-nav { margin-top: 1.5rem; display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+.booking-step-nav { margin-top: 1rem; display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
 .booking-step-nav .w-button { cursor: pointer; }
-.step-indicator { text-align: center; margin-bottom: 1rem; font-size: 0.9rem; opacity: 0.9; }</style>
+.step-indicator { text-align: center; margin-bottom: 0.5rem; font-size: 0.9rem; opacity: 0.9; }
+
+/* Estimator card: keep it small and out of the way of bottom navigation. */
+#booking-summary-card {
+  inset: 110px 16px auto auto !important; /* override .price-box fixed inset */
+  width: 240px !important;
+  max-width: 40vw !important;
+  padding: 18px 12px 22px !important;
+}
+
+#booking-summary-card .price-box-label { font-size: 11px; margin-bottom: 8px; }
+#booking-summary-card #summary-breakdown { display: none !important; }
+
+/* Next button should be visually distinct from Back. */
+#prev-step-btn { opacity: 0.75 !important; }
+#next-step-btn { background-color: var(--accent-color) !important; color: #141414 !important; }
+
+@media (max-width: 640px) {
+  #booking-summary-card {
+    position: relative !important;
+    inset: auto !important;
+    right: auto !important;
+    top: auto !important;
+    width: 100% !important;
+    max-width: none !important;
+    padding: 18px 12px 22px !important;
+  }
+}</style>
     </div>
     <div class="navigation">
       <div class="logotypes">
@@ -84,14 +111,14 @@
                         <input type="radio" name="sessionType" id="session-static" style="opacity:0;position:absolute;z-index:-1" value="STATIC">
                         <div class="radio-circle-box"></div>
                         <span for="session-static" class="radio-main-text w-form-label">STATIC</span>
-                        <div class="radio-sub-text">Stills-first</div>
+                        <div class="radio-sub-text">Stationary locations (photos + optional video at rest)</div>
                       </label>
                       <label class="radio-button w-radio">
                         <div class="w-form-formradioinput w-form-formradioinput--inputType-custom radio-input w-radio-input"></div>
                         <input type="radio" name="sessionType" id="session-rollers" style="opacity:0;position:absolute;z-index:-1" value="ROLLERS">
                         <div class="radio-circle-box"></div>
                         <span for="session-rollers" class="radio-main-text w-form-label">ROLLERS</span>
-                        <div class="radio-sub-text">Video coverage</div>
+                        <div class="radio-sub-text">Moving shots + stationary locations (photos/videos)</div>
                       </label>
                     </div>
                     <div id="error-sessionType" class="field-error"></div>
@@ -175,15 +202,13 @@
                     <div class="section-header small-header">
                       <h2 class="heading-2">Vehicle details</h2>
                     </div>
-                    <div class="input-box">
-                      <label class="price-box-label" for="vehicle-year-make-model">Year / Make / Model</label>
-                      <input class="text-field w-input" type="text" id="vehicle-year-make-model" name="vehicleYearMakeModel" maxlength="500" placeholder="e.g. 2023 Yamaha R7" value="">
-                    </div>
-                    <div id="error-vehicleYearMakeModel" class="field-error"></div>
-                    <div class="input-box" style="margin-top:0.75rem;">
+                    <div class="input-box" style="margin-top:0.25rem;">
                       <label class="price-box-label" for="vehicle-count">Number of vehicles</label>
-                      <input class="text-field w-input" type="number" id="vehicle-count" name="vehicleCount" min="1" step="1" placeholder="1" style="max-width:6rem;">
+                      <input class="text-field w-input" type="number" id="vehicle-count" name="vehicleCount" min="1" step="1" value="1" style="max-width:6rem;">
                     </div>
+                    <div id="vehicle-details-list" style="margin-top:0.75rem;"></div>
+                    <div class="price-box-label" style="margin-top:0.25rem;opacity:0.75;">Optional: add year/make/model for each vehicle.</div>
+                    <div id="error-vehicleYearMakeModel" class="field-error"></div>
                     <div id="error-vehicleCount" class="field-error"></div>
                   </div>
                 </div>
@@ -268,7 +293,7 @@
                       <label class="w-checkbox checkbox-field" style="margin:0;">
                         <div class="w-checkbox-input w-checkbox-input--inputType-custom checkbox"></div>
                         <input type="checkbox" id="core-video" name="coreVideo" style="opacity:0;position:absolute;z-index:-1">
-                        <span for="core-video" class="checkbox-label w-form-label">Rollers Video (Moving coverage)</span>
+                        <span for="core-video" class="checkbox-label w-form-label">Video coverage</span>
                       </label>
                     </div>
 
@@ -326,77 +351,25 @@
               <section class="booking-step" id="step-5" data-step="5">
                 <div class="question-2">
                   <div class="section-header medium-header">
-                    <h2 class="heading-2">Schedule & references</h2>
+                    <h2 class="heading-2">References</h2>
                   </div>
-
                   <div class="question-box">
-                    <div class="section-header small-header" style="margin-top:0;">
-                      <h2 class="heading-2" style="font-size:1.15rem;">Pick a date style</h2>
-                    </div>
-                    <div class="radio-buttons">
-                      <label class="radio-button w-radio">
-                        <div class="w-form-formradioinput w-form-formradioinput--inputType-custom radio-input w-radio-input"></div>
-                        <input type="radio" name="dateMode" id="date-mode-single" value="single" checked style="opacity:0;position:absolute;z-index:-1">
-                        <div class="radio-circle-box"></div>
-                        <span for="date-mode-single" class="radio-main-text w-form-label">Single date</span>
-                      </label>
-                      <label class="radio-button w-radio">
-                        <div class="w-form-formradioinput w-form-formradioinput--inputType-custom radio-input w-radio-input"></div>
-                        <input type="radio" name="dateMode" id="date-mode-range" value="range" style="opacity:0;position:absolute;z-index:-1">
-                        <div class="radio-circle-box"></div>
-                        <span for="date-mode-range" class="radio-main-text w-form-label">Date range</span>
-                      </label>
-                    </div>
-                  </div>
-
-                  <div id="single-date-wrap" class="question-2" style="margin-top:1rem;">
-                    <div class="input-box">
-                      <label class="price-box-label" for="preferred-date">Preferred date</label>
-                      <input class="text-field w-input" type="date" id="preferred-date" name="preferredDate">
-                    </div>
-                  </div>
-
-                  <div id="date-range-wrap" class="question-2" style="display:none;margin-top:1rem;">
-                    <div class="input-box">
-                      <label class="price-box-label" for="preferred-date-start">Start date</label>
-                      <input class="text-field w-input" type="date" id="preferred-date-start" name="preferredDateStart">
-                    </div>
-                    <div class="input-box" style="margin-top:0.75rem;">
-                      <label class="price-box-label" for="preferred-date-end">End date</label>
-                      <input class="text-field w-input" type="date" id="preferred-date-end" name="preferredDateEnd">
-                    </div>
-                  </div>
-
-                  <div class="question-2" style="margin-top:1rem;">
-                    <div class="section-header small-header">
-                      <h2 class="heading-2" style="font-size:1.15rem;">Time of day</h2>
-                    </div>
-                    <div class="input-box">
-                      <select id="time-of-day" name="timeOfDay" class="text-field w-input">
-                        <option value="Morning">Morning</option>
-                        <option value="Afternoon">Afternoon</option>
-                        <option value="Golden Hour / Sunset">Golden Hour / Sunset</option>
-                        <option value="Night">Night</option>
-                        <option value="Flexible" selected>Flexible</option>
-                      </select>
-                    </div>
-                  </div>
-
-                  <div class="question-2" style="margin-top:1rem;">
-                    <div class="section-header small-header">
-                      <h2 class="heading-2" style="font-size:1.15rem;">Optional references</h2>
-                    </div>
-                    <div class="input-box">
-                      <label class="price-box-label" for="instagram-handle">Instagram handle (optional)</label>
-                      <input class="text-field w-input" type="text" id="instagram-handle" name="instagramHandle" maxlength="120" placeholder="@yourname">
-                    </div>
-                    <div class="input-box" style="margin-top:0.75rem;">
-                      <label class="price-box-label" for="reference-link">Inspiration / reference link (optional)</label>
-                      <input class="text-field w-input" type="url" id="reference-link" name="referenceLink" maxlength="500" placeholder="https://...">
-                    </div>
-                    <div class="input-box" style="margin-top:0.75rem;">
-                      <label class="price-box-label" for="extra-notes">Extra notes (optional)</label>
-                      <textarea class="text-field w-input" id="extra-notes" name="extraNotes" maxlength="2000" placeholder="Any must-have shots or specific vibes?"></textarea>
+                    <div class="question-2" style="margin-top:1rem;">
+                      <div class="section-header small-header">
+                        <h2 class="heading-2" style="font-size:1.15rem;">Optional references</h2>
+                      </div>
+                      <div class="input-box">
+                        <label class="price-box-label" for="instagram-handle">Instagram handle (optional)</label>
+                        <input class="text-field w-input" type="text" id="instagram-handle" name="instagramHandle" maxlength="120" placeholder="@yourname">
+                      </div>
+                      <div class="input-box" style="margin-top:0.75rem;">
+                        <label class="price-box-label" for="reference-link">Inspiration / reference link (optional)</label>
+                        <input class="text-field w-input" type="url" id="reference-link" name="referenceLink" maxlength="500" placeholder="https://...">
+                      </div>
+                      <div class="input-box" style="margin-top:0.75rem;">
+                        <label class="price-box-label" for="extra-notes">Extra notes (optional)</label>
+                        <textarea class="text-field w-input" id="extra-notes" name="extraNotes" maxlength="2000" placeholder="Any must-have shots or specific vibes?"></textarea>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -567,8 +540,13 @@
           else if (people === '3+') riderCount = isNaN(groupCount) ? 0 : groupCount;
 
           var vehicleType = getSelectedRadioValue('vehicleType');
-          var vehicleYearMakeModel = (qs('#vehicle-year-make-model', form) || {}).value ? qs('#vehicle-year-make-model', form).value.trim() : '';
           var vehicleCount = parseInt((qs('#vehicle-count', form) || {}).value || '', 10);
+          var vehicleYearMakeModel = '';
+          try {
+            var vehicleInputs = qsa('input[name="vehicleYearMakeModel[]"]', form);
+            var nonEmpty = vehicleInputs.map(function(el) { return (el.value || '').trim(); }).filter(function(v) { return !!v; });
+            vehicleYearMakeModel = nonEmpty.join('; ');
+          } catch (e) {}
 
           var routeChoice = getSelectedRadioValue('routeChoice');
           var customLocationDetails = (qs('#custom-location-details', form) || {}).value ? qs('#custom-location-details', form).value.trim() : '';
@@ -636,13 +614,12 @@
             !!state.people &&
             !((state.people === '3+' && state.riderCount < 3)) &&
             !!state.vehicleType &&
-            !!state.vehicleYearMakeModel &&
             !!state.vehicleCount &&
             state.vehicleCount >= 1 &&
             !!state.routeChoice &&
             !(state.routeChoice === 'custom' && !state.customLocationDetails) &&
             (
-              (state.sessionType === 'STATIC' && !!state.coreStills) ||
+              (state.sessionType === 'STATIC' && (state.coreStills || state.coreVideo)) ||
               (state.sessionType === 'ROLLERS' && (state.coreStills || state.coreVideo))
             );
 
@@ -674,11 +651,20 @@
 
           // Core pricing
           if (state.sessionType === 'STATIC') {
-            coreTotal = PRICING.staticCore;
-            breakdown.coreLabel = 'Stills session';
+            if (state.coreVideo && state.coreStills) {
+              coreTotal = PRICING.rollersVideoAndStills;
+              breakdown.coreLabel = 'Video + Photos session';
+            } else if (state.coreVideo) {
+              coreTotal = PRICING.rollersVideoOnly;
+              breakdown.coreLabel = 'Video-only session';
+            } else {
+              coreTotal = PRICING.staticCore;
+              breakdown.coreLabel = 'Photos session';
+            }
+
             if (riderCount >= 3) {
-              coreTotal = PRICING.staticCore + PRICING.extraRider * (riderCount - 3);
-              breakdown.coreLabel = 'Stills session (group)';
+              coreTotal = coreTotal + PRICING.extraRider * (riderCount - 3);
+              breakdown.coreLabel = breakdown.coreLabel + ' (group)';
             }
           } else if (state.sessionType === 'ROLLERS') {
             if (state.coreVideo && state.coreStills) coreTotal = PRICING.rollersVideoAndStills;
@@ -759,28 +745,33 @@
 
           if (coreStillsEl && coreVideoEl) {
             if (state.sessionType === 'STATIC') {
-              coreStillsEl.checked = true;
-              coreVideoEl.checked = false;
-              coreVideoEl.disabled = true;
-              coreVideoEl.closest('label').style.display = 'none';
+              // STATIC = stationary locations; deliverables can be photos, video, or both.
+              coreVideoEl.disabled = false;
+              coreVideoEl.checked = coreVideoEl.checked; // keep user selection
+              if (coreVideoEl.closest('label')) coreVideoEl.closest('label').style.display = 'block';
+              if (coreStillsEl.closest('label')) coreStillsEl.closest('label').style.display = 'block';
 
-              coreStillsEl.disabled = false;
-
-              // rawFootage + customVideoEdit hidden/disabled on STATIC
+              // rawFootage + customVideoEdit depend on coreVideo
               var rawEl = qs('#addon-raw-footage', form);
-              if (rawEl) { rawEl.checked = false; rawEl.disabled = true; rawEl.closest('label').style.display = 'none'; }
+              if (rawEl) {
+                rawEl.disabled = !coreVideoEl.checked;
+                if (rawEl.disabled) rawEl.checked = false;
+                if (rawEl.closest('label')) rawEl.closest('label').style.display = coreVideoEl.checked ? 'block' : 'none';
+              }
               var customEditEl = qs('#addon-custom-edit', form);
-              if (customEditEl) { customEditEl.checked = false; customEditEl.disabled = true; customEditEl.closest('label').style.display = 'none'; }
+              if (customEditEl) {
+                customEditEl.disabled = !coreVideoEl.checked;
+                if (customEditEl.disabled) customEditEl.checked = false;
+                if (customEditEl.closest('label')) customEditEl.closest('label').style.display = coreVideoEl.checked ? 'block' : 'none';
+              }
 
               // calendar depends on stills
               var calendarEl = qs('#addon-calendar', form);
               if (calendarEl) {
                 calendarEl.disabled = !coreStillsEl.checked;
-                calendarEl.checked = coreStillsEl.checked ? !!calendarEl.checked : false;
-                if (coreStillsEl.checked) calendarEl.closest('label').style.display = 'block';
-                else calendarEl.closest('label').style.display = 'none';
+                if (calendarEl.disabled) calendarEl.checked = false;
+                if (calendarEl.closest('label')) calendarEl.closest('label').style.display = coreStillsEl.checked ? 'block' : 'none';
               }
-
             } else if (state.sessionType === 'ROLLERS') {
               // Restore visibility and enable core-video
               coreVideoEl.disabled = false;
@@ -791,15 +782,14 @@
               if (rawEl) {
                 rawEl.disabled = !coreVideoEl.checked;
                 if (rawEl.disabled) rawEl.checked = false;
-                rawEl.closest('label').style.display = coreVideoEl.checked ? 'block' : 'block';
-                // Keep it visible but disabled; meets "enabled only when coreVideo checked"
+                if (rawEl.closest('label')) rawEl.closest('label').style.display = coreVideoEl.checked ? 'block' : 'none';
               }
 
               var customEditEl = qs('#addon-custom-edit', form);
               if (customEditEl) {
                 customEditEl.disabled = !coreVideoEl.checked;
                 if (customEditEl.disabled) customEditEl.checked = false;
-                customEditEl.closest('label').style.display = 'block';
+                if (customEditEl.closest('label')) customEditEl.closest('label').style.display = coreVideoEl.checked ? 'block' : 'none';
               }
 
               // calendar enabled only when stills checked
@@ -847,9 +837,8 @@
           }
 
           if (stepNumber === 2) {
-            clearErrors(['error-vehicleType', 'error-vehicleYearMakeModel', 'error-vehicleCount']);
+            clearErrors(['error-vehicleType', 'error-vehicleCount']);
             if (!state.vehicleType) { setError('error-vehicleType', 'Please choose what you will ride.'); valid = false; }
-            if (!state.vehicleYearMakeModel) { setError('error-vehicleYearMakeModel', 'Enter your vehicle year/make/model.'); valid = false; }
             if (!state.vehicleCount || state.vehicleCount < 1) { setError('error-vehicleCount', 'Enter at least 1 vehicle.'); valid = false; }
             return valid;
           }
@@ -866,11 +855,7 @@
 
           if (stepNumber === 4) {
             clearErrors(['error-coreDeliverables']);
-            if (state.sessionType === 'STATIC') {
-              if (!state.coreStills) { setError('error-coreDeliverables', 'Please select Photography (Stills).'); valid = false; }
-            } else if (state.sessionType === 'ROLLERS') {
-              if (!(state.coreStills || state.coreVideo)) { setError('error-coreDeliverables', 'Select at least one core deliverable.'); valid = false; }
-            }
+            if (!(state.coreStills || state.coreVideo)) { setError('error-coreDeliverables', 'Select at least one core deliverable.'); valid = false; }
             return valid;
           }
 
@@ -891,14 +876,17 @@
           var summaryEstimatedTotal = qs('#summary-estimated-total', form.parentElement) || qs('#summary-estimated-total');
           var summaryPriceRow = qs('#summary-price-row', form.parentElement) || qs('#summary-price-row');
           var summaryDeposit = qs('#summary-deposit-due', form.parentElement) || qs('#summary-deposit-due');
-          var summaryBreakdown = qs('#summary-breakdown', form.parentElement) || qs('#summary-breakdown');
           var summaryPackageType = qs('#summary-package-type', form.parentElement) || qs('#summary-package-type');
           var summaryRiderCount = qs('#summary-rider-count', form.parentElement) || qs('#summary-rider-count');
           var summaryVehicleType = qs('#summary-vehicle-type', form.parentElement) || qs('#summary-vehicle-type');
           var summaryRoute = qs('#summary-route', form.parentElement) || qs('#summary-route');
           var summaryDeliverables = qs('#summary-deliverables', form.parentElement) || qs('#summary-deliverables');
 
-          summaryPackageType.textContent = state.sessionType ? ('Session: ' + state.sessionType) : '';
+          if (summaryPackageType) {
+            summaryPackageType.textContent = state.sessionType === 'STATIC'
+              ? 'Stationary locations'
+              : (state.sessionType === 'ROLLERS' ? 'Moving shots + stationary locations' : '');
+          }
           summaryRiderCount.textContent = state.riderCount ? ('Riders: ' + state.riderCount) : '';
           summaryVehicleType.textContent = state.vehicleType ? ('Vehicle: ' + state.vehicleType) : '';
 
@@ -912,13 +900,13 @@
           }
 
           var deliverables = [];
-          if (state.coreStills) deliverables.push('Stills');
+          if (state.coreStills) deliverables.push('Photos');
           if (state.coreVideo) deliverables.push('Video');
-          if (state.rawFootage && state.coreVideo) deliverables.push('Raw Footage');
-          if (state.rushDelivery) deliverables.push('Rush Delivery');
+          if (state.rawFootage && state.coreVideo) deliverables.push('Raw');
+          if (state.rushDelivery) deliverables.push('Rush');
           if (state.posters) deliverables.push('Posters x' + (isNaN(state.posterQty) ? 1 : state.posterQty));
-          if (state.calendar12Month && state.coreStills) deliverables.push('12-Month Calendar');
-          if (state.customVideoEdit && state.coreVideo) deliverables.push('Custom Edit');
+          if (state.calendar12Month && state.coreStills) deliverables.push('Calendar');
+          if (state.customVideoEdit && state.coreVideo) deliverables.push('Alt cut');
           summaryDeliverables.textContent = deliverables.length ? ('Deliverables: ' + deliverables.join(' + ')) : '';
 
           if (!estimate || !estimate.canEstimate) {
@@ -926,7 +914,6 @@
             if (summaryEstimatedTotal) summaryEstimatedTotal.textContent = '';
             if (summaryPriceRow) summaryPriceRow.classList.add('is-hidden');
             if (summaryDeposit) { summaryDeposit.textContent = ''; summaryDeposit.classList.add('is-hidden'); }
-            if (summaryBreakdown) { summaryBreakdown.innerHTML = ''; summaryBreakdown.classList.add('is-hidden'); }
             return;
           }
 
@@ -940,14 +927,7 @@
             summaryDeposit.classList.remove('is-hidden');
           }
 
-          if (summaryBreakdown) {
-            var parts = [];
-            parts.push('Core (' + estimate.breakdown.coreLabel + '): $' + estimate.coreTotal);
-            if (estimate.breakdown.customLocationFee > 0) parts.push('Custom Location Setup: $' + estimate.breakdown.customLocationFee);
-            estimate.breakdown.addOns.forEach(function(a) { parts.push(a.label + ': $' + a.amount); });
-            summaryBreakdown.innerHTML = parts.join('<br>');
-            summaryBreakdown.classList.remove('is-hidden');
-          }
+          // Keep the live estimator card concise (no detailed breakdown).
         }
 
         function renderReviewSummary(state, estimate) {
@@ -959,7 +939,9 @@
           var totalLine = qs('#review-line-estimated-total');
           var depositLine = qs('#review-line-deposit');
 
-          var sessionLabel = state.sessionType === 'STATIC' ? 'STATIC' : 'ROLLERS';
+          var sessionLabel = state.sessionType === 'STATIC'
+            ? 'Stationary locations'
+            : (state.sessionType === 'ROLLERS' ? 'Moving shots + stationary locations' : state.sessionType);
           var ridersLabel = String(state.riderCount || '');
 
           var routeLabel = getRadioLabel('routeChoice');
@@ -968,13 +950,8 @@
           }
 
           var deliverables = [];
-          if (state.sessionType === 'STATIC') {
-            // stills forced
-            if (state.coreStills) deliverables.push('Stills');
-          } else {
-            if (state.coreVideo) deliverables.push('Video');
-            if (state.coreStills) deliverables.push('Stills');
-          }
+          if (state.coreVideo) deliverables.push('Video');
+          if (state.coreStills) deliverables.push('Stills');
           if (state.rawFootage && state.coreVideo) deliverables.push('Raw Footage');
           if (state.rushDelivery) deliverables.push('Rush Delivery');
           if (state.posters) deliverables.push('Posters x' + (isNaN(state.posterQty) ? 1 : state.posterQty));
@@ -983,7 +960,10 @@
 
           if (sessionLine) sessionLine.textContent = 'Session: ' + sessionLabel;
           if (ridersLine) ridersLine.textContent = 'Riders: ' + ridersLabel;
-          if (vehicleLine) vehicleLine.textContent = 'Vehicle: ' + state.vehicleType + ' | ' + state.vehicleYearMakeModel + ' | ' + state.vehicleCount + ' vehicle(s)';
+          if (vehicleLine) {
+            var details = state.vehicleYearMakeModel ? (' | ' + state.vehicleYearMakeModel) : '';
+            vehicleLine.textContent = 'Vehicle: ' + state.vehicleType + details + ' | ' + state.vehicleCount + ' vehicle(s)';
+          }
           if (routeLine) routeLine.textContent = 'Route: ' + routeLabel;
           if (deliverablesLine) deliverablesLine.textContent = 'Deliverables: ' + deliverables.join(' + ');
           if (totalLine) totalLine.textContent = 'Estimated Total: $' + estimate.estimatedTotal;
@@ -1081,20 +1061,106 @@
           });
         }
 
+        // Vehicle details list (optional) driven by rider count.
+        var vehicleDetailsList = qs('#vehicle-details-list', form);
+        var vehicleCountInput = qs('#vehicle-count', form);
+
+        function renderVehicleDetailsRows(count) {
+          if (!vehicleDetailsList) return;
+          count = parseInt(count, 10);
+          if (isNaN(count) || count < 1) count = 1;
+
+          var existing = qsa('input[name="vehicleYearMakeModel[]"]', vehicleDetailsList)
+            .map(function(el) { return (el.value || '').trim(); });
+
+          vehicleDetailsList.innerHTML = '';
+
+          for (var i = 1; i <= count; i++) {
+            var row = document.createElement('div');
+            row.className = 'question-2';
+            row.style.marginTop = (i === 1) ? '0' : '0.75rem';
+
+            var inputBox = document.createElement('div');
+            inputBox.className = 'input-box';
+            inputBox.style.marginBottom = '0';
+
+            var label = document.createElement('label');
+            label.className = 'price-box-label';
+            label.textContent = 'Vehicle ' + i + ' (optional)';
+            label.setAttribute('for', 'vehicle-year-make-model-' + i);
+
+            var input = document.createElement('input');
+            input.type = 'text';
+            input.className = 'text-field w-input';
+            input.id = 'vehicle-year-make-model-' + i;
+            input.name = 'vehicleYearMakeModel[]';
+            input.maxLength = 500;
+            input.placeholder = 'e.g. 2023 Yamaha R7';
+            input.value = existing[i - 1] ? existing[i - 1] : '';
+
+            inputBox.appendChild(label);
+            inputBox.appendChild(input);
+            row.appendChild(inputBox);
+            vehicleDetailsList.appendChild(row);
+          }
+        }
+
+        function getDerivedVehicleCountFromPeople() {
+          var peopleVal = getSelectedRadioValue('people');
+          if (peopleVal === '1') return 1;
+          if (peopleVal === '2') return 2;
+          if (peopleVal === '3+') {
+            var gc = parseInt((qs('#group-count', form) || {}).value || '', 10);
+            return (!isNaN(gc) && gc >= 3) ? gc : NaN;
+          }
+          return NaN;
+        }
+
+        function syncVehicleCountFromPeople() {
+          var derived = getDerivedVehicleCountFromPeople();
+          if (isNaN(derived)) return;
+          if (vehicleCountInput) vehicleCountInput.value = String(derived);
+          renderVehicleDetailsRows(derived);
+        }
+
+        // Initial render for vehicle details list.
+        if (vehicleCountInput) {
+          var initialCount = parseInt(vehicleCountInput.value || '1', 10);
+          renderVehicleDetailsRows(isNaN(initialCount) ? 1 : initialCount);
+          syncVehicleCountFromPeople();
+        } else {
+          renderVehicleDetailsRows(1);
+        }
+
         // Route + date mode UI toggles
         qsa('input[name="people"]').forEach(function(el) {
-          el.addEventListener('change', handleEstimateUpdate);
+          el.addEventListener('change', function() {
+            syncVehicleCountFromPeople();
+            handleEstimateUpdate();
+          });
         });
         var groupCountInput = qs('#group-count', form);
-        if (groupCountInput) groupCountInput.addEventListener('input', handleEstimateUpdate);
+        if (groupCountInput) groupCountInput.addEventListener('input', function() {
+          var peopleVal = getSelectedRadioValue('people');
+          if (peopleVal === '3+') {
+            var gc = parseInt(groupCountInput.value || '', 10);
+            if (!isNaN(gc) && gc >= 3) {
+              if (vehicleCountInput) vehicleCountInput.value = String(gc);
+              renderVehicleDetailsRows(gc);
+            }
+          }
+          handleEstimateUpdate();
+        });
 
         qsa('input[name="sessionType"]').forEach(function(el) { el.addEventListener('change', handleEstimateUpdate); });
 
         qsa('input[name="vehicleType"]').forEach(function(el) { el.addEventListener('change', handleEstimateUpdate); });
-        var vehicleYear = qs('#vehicle-year-make-model', form);
-        if (vehicleYear) vehicleYear.addEventListener('input', handleEstimateUpdate);
-        var vehicleCount = qs('#vehicle-count', form);
-        if (vehicleCount) vehicleCount.addEventListener('input', handleEstimateUpdate);
+        if (vehicleCountInput) {
+          vehicleCountInput.addEventListener('input', function() {
+            renderVehicleDetailsRows(vehicleCountInput.value);
+            handleEstimateUpdate();
+          });
+        }
 
         qsa('input[name="routeChoice"]').forEach(function(el) { el.addEventListener('change', handleEstimateUpdate); });
         var customLocation = qs('#custom-location-details', form);
@@ -1135,14 +1201,16 @@
           // Build Booking-Summary from current state.
           function formatMoney(n) { return '$' + String(Math.round(n || 0)); }
           function buildSummaryLine() {
-            var session = state.sessionType;
+            var session = state.sessionType === 'STATIC'
+              ? 'Stationary locations'
+              : (state.sessionType === 'ROLLERS' ? 'Moving shots + stationary locations' : state.sessionType);
             var riders = state.riderCount;
-            var vehicle = state.vehicleType + ' | ' + state.vehicleYearMakeModel + ' | ' + state.vehicleCount + ' vehicle(s)';
+            var vehicle = state.vehicleType + (state.vehicleYearMakeModel ? (' | ' + state.vehicleYearMakeModel) : '');
             var route = getRadioLabel('routeChoice');
             if (state.routeChoice === 'custom') route = state.customLocationDetails ? ('Custom - ' + state.customLocationDetails) : 'Custom Location';
 
             var deliverables = [];
-            if (state.coreStills) deliverables.push('Stills');
+            if (state.coreStills) deliverables.push('Photos');
             if (state.coreVideo) deliverables.push('Video');
             if (state.rawFootage && state.coreVideo) deliverables.push('Raw Footage');
             if (state.rushDelivery) deliverables.push('Rush Delivery');
@@ -1151,7 +1219,7 @@
             if (state.customVideoEdit && state.coreVideo) deliverables.push('Custom Edit');
 
             var deliverablesStr = deliverables.length ? deliverables.join(' + ') : '—';
-            return 'Session: ' + session + ' | Riders: ' + riders + ' | Vehicle: ' + state.vehicleType + ' | Route: ' + route + ' | Deliverables: ' + deliverablesStr + ' | Estimated Total: $' + estimate.estimatedTotal + ' | Deposit Due Today: $' + estimate.depositDue;
+            return 'Session: ' + session + ' | Riders: ' + riders + ' | Vehicle: ' + vehicle + ' | Route: ' + route + ' | Deliverables: ' + deliverablesStr + ' | Estimated Total: $' + estimate.estimatedTotal + ' | Deposit Due Today: $' + estimate.depositDue;
           }
 
           var summary = buildSummaryLine();
