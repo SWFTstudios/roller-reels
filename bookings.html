@@ -54,6 +54,26 @@
 #prev-step-btn { opacity: 0.75 !important; }
 #next-step-btn { background-color: var(--accent-color) !important; color: #141414 !important; }
 
+/* Progress dots */
+.step-dots { display: flex; gap: 10px; justify-content: center; align-items: center; margin-bottom: 0.75rem; }
+.step-dot { width: 9px; height: 9px; border-radius: 50%; background: rgba(255,255,255,0.18); transition: background 0.25s, width 0.25s, height 0.25s; flex-shrink: 0; }
+.step-dot.completed { background: rgba(255,255,255,0.45); }
+.step-dot.active { background: var(--accent-color); width: 11px; height: 11px; }
+#step-label { text-align: center; font-size: 0.78rem; letter-spacing: 0.1em; text-transform: uppercase; opacity: 0.65; margin-bottom: 1.5rem; }
+
+/* Deliverable option sub-text */
+.radio-sub-text.deliverable-hint { font-size: 0.8rem; opacity: 0.7; margin-top: 0.15rem; }
+
+/* Step 7 review card */
+#review-summary { background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1); border-radius: 10px; padding: 1.25rem 1.5rem; margin-top: 1rem; text-align: left; }
+#review-summary .review-row { display: flex; justify-content: space-between; align-items: baseline; gap: 1rem; padding: 0.35rem 0; border-bottom: 1px solid rgba(255,255,255,0.06); font-size: 0.92rem; }
+#review-summary .review-row:last-child { border-bottom: none; }
+#review-summary .review-total-row { padding: 0.6rem 0 0.35rem; font-weight: 600; font-size: 1rem; }
+#review-summary .review-deposit-row { font-weight: 700; font-size: 1.15rem; color: var(--accent-color); }
+.review-row-label { opacity: 0.7; white-space: nowrap; }
+.review-row-value { text-align: right; }
+#review-cta-note { margin-top: 1rem; font-size: 0.82rem; opacity: 0.65; line-height: 1.6; }
+
 @media (max-width: 640px) {
   #booking-summary-card {
     position: relative !important;
@@ -88,11 +108,10 @@
       <div bloc="question-container" class="container-3 w-container">
         <div class="form-block w-form">
           <div style="margin:0 0 1.25rem;max-width:720px;">
-            <h2 class="heading-2" style="margin:0 0 0.5rem;font-size:1.3rem;">Rolling vs static shoots (NJ/NYC)</h2>
+            <h2 class="heading-2" style="margin:0 0 0.5rem;font-size:1.3rem;">Build your shoot — lock in with $100</h2>
             <p style="margin:0;opacity:0.9;line-height:1.65;">
-              Rolling shots capture you while you’re moving on the road/highway for dynamic, cinematic coverage.
-              Static shoots capture you while stationary at a location for cleaner compositions and controlled setups.
-              Choose Photo Only, Video Only, or Both Photo &amp; Video, then lock in your date with a $100 deposit.
+              NYC/NJ motorcycle &amp; car photography and videography. Tell us what you want and we handle the rest.
+              Static shoots from <strong>$299</strong> &nbsp;·&nbsp; Rollers from <strong>$499</strong> &nbsp;·&nbsp; $100 deposit holds your date — balance due on shoot day.
             </p>
           </div>
           <form id="wf-form-Booking-Form" name="wf-form-Booking-Form" data-name="Booking Form" action="https://formsubmit.co/elombe@swftstudios.com" method="post" class="form" data-wf-page-id="692ebc79d55153a076f9bb67" data-wf-element-id="766d0790-9c06-6645-a2a9-1b15b0163512">
@@ -103,7 +122,16 @@
             <input type="hidden" id="pricing-breakdown-json-hidden" name="pricing-breakdown-json" value="">
 
             <div class="question-wrapper">
-              <div id="step-indicator" class="step-indicator">Step 1 of 7</div>
+              <div id="step-dots" class="step-dots">
+                <span class="step-dot active" data-dot="1"></span>
+                <span class="step-dot" data-dot="2"></span>
+                <span class="step-dot" data-dot="3"></span>
+                <span class="step-dot" data-dot="4"></span>
+                <span class="step-dot" data-dot="5"></span>
+                <span class="step-dot" data-dot="6"></span>
+                <span class="step-dot" data-dot="7"></span>
+              </div>
+              <div id="step-label" class="step-indicator">Session Type</div>
 
               <!-- Step 1 -->
               <section class="booking-step active" id="step-1" data-step="1">
@@ -122,14 +150,14 @@
                         <input type="radio" name="sessionType" id="session-static" style="opacity:0;position:absolute;z-index:-1" value="STATIC">
                         <div class="radio-circle-box"></div>
                         <span for="session-static" class="radio-main-text w-form-label">STATIC</span>
-                        <div class="radio-sub-text">Photo and/or video while stationary at a location.</div>
+                        <div class="radio-sub-text">Stationary at a location — clean compositions, controlled lighting, gallery-worthy shots. From $299.</div>
                       </label>
                       <label class="radio-button w-radio">
                         <div class="w-form-formradioinput w-form-formradioinput--inputType-custom radio-input w-radio-input"></div>
                         <input type="radio" name="sessionType" id="session-rollers" style="opacity:0;position:absolute;z-index:-1" value="ROLLERS">
                         <div class="radio-circle-box"></div>
                         <span for="session-rollers" class="radio-main-text w-form-label">ROLLERS</span>
-                        <div class="radio-sub-text">Photo and/or video while moving on the road/highway (rolling shots).</div>
+                        <div class="radio-sub-text">Moving shots on the road/highway — cinematic, dynamic, the kind of content people stop scrolling for. From $499.</div>
                       </label>
                     </div>
                     <div id="error-sessionType" class="field-error"></div>
@@ -182,7 +210,7 @@
               <section class="booking-step" id="step-2" data-step="2">
                 <div class="question-2">
                   <div class="section-header small-header">
-                    <h2 class="heading-2">What will you be riding?</h2>
+                    <h2 class="heading-2">Tell us about your ride</h2>
                   </div>
 
                   <div class="question-box">
@@ -300,18 +328,21 @@
                         <input type="radio" name="corePackage" id="core-photo-only" style="opacity:0;position:absolute;z-index:-1" value="photo">
                         <div class="radio-circle-box"></div>
                         <span for="core-photo-only" class="radio-main-text w-form-label">Photo Only</span>
+                        <div class="radio-sub-text deliverable-hint">20+ edited stills — color-graded and ready to post</div>
                       </label>
                       <label class="radio-button w-radio">
                         <div class="w-form-formradioinput w-form-formradioinput--inputType-custom radio-input w-radio-input"></div>
                         <input type="radio" name="corePackage" id="core-video-only" style="opacity:0;position:absolute;z-index:-1" value="video">
                         <div class="radio-circle-box"></div>
                         <span for="core-video-only" class="radio-main-text w-form-label">Video Only</span>
+                        <div class="radio-sub-text deliverable-hint">Cinematic edit — short-form reel + full cut, music synced</div>
                       </label>
                       <label class="radio-button w-radio">
                         <div class="w-form-formradioinput w-form-formradioinput--inputType-custom radio-input w-radio-input"></div>
                         <input type="radio" name="corePackage" id="core-both" style="opacity:0;position:absolute;z-index:-1" value="both">
                         <div class="radio-circle-box"></div>
                         <span for="core-both" class="radio-main-text w-form-label">Both Photo &amp; Video</span>
+                        <div class="radio-sub-text deliverable-hint">Best value — photos + video + social-ready content, all in one session</div>
                       </label>
                     </div>
 
@@ -333,13 +364,13 @@
                       <label class="w-checkbox checkbox-field" style="margin:0;">
                         <div class="w-checkbox-input w-checkbox-input--inputType-custom checkbox"></div>
                         <input type="checkbox" id="addon-rush" name="rushDelivery" style="opacity:0;position:absolute;z-index:-1">
-                        <span for="addon-rush" class="checkbox-label w-form-label">Rush Delivery (48–72 hrs) — $125</span>
+                        <span for="addon-rush" class="checkbox-label w-form-label">Rush Delivery (48–72 hrs) — $150</span>
                       </label>
 
                       <label class="w-checkbox checkbox-field" style="margin:0;">
                         <div class="w-checkbox-input w-checkbox-input--inputType-custom checkbox"></div>
                         <input type="checkbox" id="addon-posters" name="posters" style="opacity:0;position:absolute;z-index:-1">
-                        <span for="addon-posters" class="checkbox-label w-form-label">Signature Posters — $60 each</span>
+                        <span for="addon-posters" class="checkbox-label w-form-label">Signature Posters — $75 each</span>
                       </label>
 
                       <div id="poster-qty-wrap" style="display:none;align-items:center;gap:0.75rem;margin-top:0.25rem;">
@@ -352,13 +383,13 @@
                       <label class="w-checkbox checkbox-field" style="margin:0;">
                         <div class="w-checkbox-input w-checkbox-input--inputType-custom checkbox"></div>
                         <input type="checkbox" id="addon-calendar" name="calendar12Month" style="opacity:0;position:absolute;z-index:-1">
-                        <span for="addon-calendar" class="checkbox-label w-form-label">12-Month Photo Calendar — $95</span>
+                        <span for="addon-calendar" class="checkbox-label w-form-label">12-Month Photo Calendar — $120</span>
                       </label>
 
                       <label class="w-checkbox checkbox-field" style="margin:0;">
                         <div class="w-checkbox-input w-checkbox-input--inputType-custom checkbox"></div>
                         <input type="checkbox" id="addon-custom-edit" name="customVideoEdit" style="opacity:0;position:absolute;z-index:-1">
-                        <span for="addon-custom-edit" class="checkbox-label w-form-label">Custom Edit / Alternate Cut — $150</span>
+                        <span for="addon-custom-edit" class="checkbox-label w-form-label">Custom Edit / Alternate Cut — $200</span>
                       </label>
                     </div>
                   </div>
@@ -435,21 +466,25 @@
               <section class="booking-step" id="step-7" data-step="7">
                 <div class="question-2">
                   <div class="section-header medium-header">
-                    <h2 class="heading-2">Review deposit today</h2>
+                    <h2 class="heading-2">Your shoot — lock it in</h2>
+                    <p style="margin:0.35rem 0 0;opacity:0.75;font-size:0.92rem;">Review your selections below. Pay $100 today to secure your spot — the rest is due on shoot day.</p>
                   </div>
 
-                  <div id="review-summary" style="background:rgba(255,255,255,0.06);border-radius:8px;padding:1rem 1.25rem;margin-top:1rem;text-align:left;">
-                    <div id="review-line-session" style="margin-bottom:0.5rem;"></div>
-                    <div id="review-line-riders" style="margin-bottom:0.5rem;"></div>
-                    <div id="review-line-vehicle" style="margin-bottom:0.5rem;"></div>
-                    <div id="review-line-route" style="margin-bottom:0.5rem;"></div>
-                    <div id="review-line-deliverables" style="margin-bottom:0.75rem;"></div>
-                    <div id="review-line-estimated-total" style="margin-bottom:0.5rem;font-weight:600;"></div>
-                    <div id="review-line-deposit" style="font-weight:600;"></div>
+                  <div id="review-summary">
+                    <div class="review-row"><span class="review-row-label">Session</span><span id="review-line-session" class="review-row-value"></span></div>
+                    <div class="review-row"><span class="review-row-label">Riders</span><span id="review-line-riders" class="review-row-value"></span></div>
+                    <div class="review-row"><span class="review-row-label">Vehicle</span><span id="review-line-vehicle" class="review-row-value"></span></div>
+                    <div class="review-row"><span class="review-row-label">Route</span><span id="review-line-route" class="review-row-value"></span></div>
+                    <div class="review-row"><span class="review-row-label">Deliverables</span><span id="review-line-deliverables" class="review-row-value"></span></div>
+                    <div class="review-row review-total-row"><span class="review-row-label">Estimated total</span><span id="review-line-estimated-total" class="review-row-value"></span></div>
+                    <div class="review-row review-deposit-row"><span class="review-row-label">Deposit due today</span><span id="review-line-deposit" class="review-row-value"></span></div>
+                    <div class="review-row" style="border-bottom:none;"><span class="review-row-label" style="opacity:0.6;">Balance due on shoot day</span><span id="review-line-balance" class="review-row-value" style="opacity:0.6;"></span></div>
                   </div>
+
+                  <p id="review-cta-note">After paying your deposit you'll pick your date on our calendar. Your shoot details are sent to the team — we'll be ready for you.</p>
 
                   <div class="booking-step-nav" style="justify-content:flex-start;">
-                    <button type="button" id="booking-submit" class="submit-button w-button">Continue to calendar</button>
+                    <button type="button" id="booking-submit" class="submit-button w-button" style="background-color:var(--accent-color)!important;color:#141414!important;font-weight:700;">Pay $100 Deposit — Pick My Date</button>
                   </div>
                 </div>
               </section>
@@ -502,17 +537,23 @@
         var frozenReview = null;
 
         var PRICING = {
+          // Static sessions (stationary location, 1–2 crew)
+          staticStillsOnly: 299,
+          staticVideoOnly: 349,
+          staticVideoAndStills: 449,
+          // Rollers sessions (moving road/highway, full crew)
+          rollersStillsOnly: 499,
+          rollersVideoOnly: 549,
+          rollersVideoAndStills: 749,
+          // Group upcharge per rider beyond the 2nd
+          extraRider: 75,
+          // Add-ons
           rawFootage: 150,
-          rushDelivery: 125,
-          customLocation: 75,
-          posterEach: 60,
-          calendar12Month: 95,
-          customVideoEdit: 150,
-          staticCore: 200,
-          rollersVideoOnly: 300,
-          rollersStillsOnly: 300,
-          rollersVideoAndStills: 400,
-          extraRider: 50
+          rushDelivery: 150,
+          customLocation: 100,
+          posterEach: 75,
+          calendar12Month: 120,
+          customVideoEdit: 200
         };
 
         function qs(sel, root) { return (root || document).querySelector(sel); }
@@ -672,29 +713,34 @@
           // Core pricing
           if (state.sessionType === 'STATIC') {
             if (state.coreVideo && state.coreStills) {
-              coreTotal = PRICING.rollersVideoAndStills;
-              breakdown.coreLabel = 'Video + Photos session';
+              coreTotal = PRICING.staticVideoAndStills;
+              breakdown.coreLabel = 'Static: Photos + Video';
             } else if (state.coreVideo) {
-              coreTotal = PRICING.rollersVideoOnly;
-              breakdown.coreLabel = 'Video-only session';
+              coreTotal = PRICING.staticVideoOnly;
+              breakdown.coreLabel = 'Static: Video session';
             } else {
-              coreTotal = PRICING.staticCore;
-              breakdown.coreLabel = 'Photos session';
+              coreTotal = PRICING.staticStillsOnly;
+              breakdown.coreLabel = 'Static: Photos session';
             }
-
             if (riderCount >= 3) {
-              coreTotal = coreTotal + PRICING.extraRider * (riderCount - 3);
-              breakdown.coreLabel = breakdown.coreLabel + ' (group)';
+              coreTotal += PRICING.extraRider * (riderCount - 2);
+              breakdown.coreLabel += ' (group)';
             }
           } else if (state.sessionType === 'ROLLERS') {
-            if (state.coreVideo && state.coreStills) coreTotal = PRICING.rollersVideoAndStills;
-            else if (state.coreVideo) coreTotal = PRICING.rollersVideoOnly;
-            else if (state.coreStills) coreTotal = PRICING.rollersStillsOnly;
-
-            if (riderCount >= 3) {
-              coreTotal += PRICING.extraRider * (riderCount - 3);
+            if (state.coreVideo && state.coreStills) {
+              coreTotal = PRICING.rollersVideoAndStills;
+              breakdown.coreLabel = 'Rollers: Photos + Video';
+            } else if (state.coreVideo) {
+              coreTotal = PRICING.rollersVideoOnly;
+              breakdown.coreLabel = 'Rollers: Video session';
+            } else {
+              coreTotal = PRICING.rollersStillsOnly;
+              breakdown.coreLabel = 'Rollers: Photos session';
             }
-            breakdown.coreLabel = 'Crew coverage included';
+            if (riderCount >= 3) {
+              coreTotal += PRICING.extraRider * (riderCount - 2);
+            }
+            breakdown.coreLabel += ' (full crew)';
           }
 
           // Add-ons
@@ -952,17 +998,24 @@
           if (state.calendar12Month && state.coreStills) deliverables.push('12-Month Calendar');
           if (state.customVideoEdit && state.coreVideo) deliverables.push('Custom Edit');
 
-          if (sessionLine) sessionLine.textContent = 'Session: ' + sessionLabel;
-          if (ridersLine) ridersLine.textContent = 'Riders: ' + ridersLabel;
+          if (sessionLine) sessionLine.textContent = sessionLabel;
+          if (ridersLine) ridersLine.textContent = ridersLabel + (ridersLabel === '1' ? ' rider' : ' riders');
           if (vehicleLine) {
-            var details = state.vehicleYearMakeModel ? (' | ' + state.vehicleYearMakeModel) : '';
-            vehicleLine.textContent = 'Vehicle: ' + state.vehicleType + details + ' | ' + state.vehicleCount + ' vehicle(s)';
+            var details = state.vehicleYearMakeModel ? (' · ' + state.vehicleYearMakeModel) : '';
+            vehicleLine.textContent = state.vehicleType + details + ' · ' + state.vehicleCount + (state.vehicleCount === 1 ? ' vehicle' : ' vehicles');
           }
-          if (routeLine) routeLine.textContent = 'Route: ' + routeLabel;
-          if (deliverablesLine) deliverablesLine.textContent = 'Deliverables: ' + deliverables.join(' + ');
-          if (totalLine) totalLine.textContent = 'Estimated Total: $' + estimate.estimatedTotal;
-          if (depositLine) depositLine.textContent = 'Deposit Due Today: $' + estimate.depositDue;
+          if (routeLine) routeLine.textContent = routeLabel;
+          if (deliverablesLine) deliverablesLine.textContent = deliverables.join(' + ');
+          if (totalLine) totalLine.textContent = '$' + estimate.estimatedTotal;
+          if (depositLine) depositLine.textContent = '$' + estimate.depositDue;
+          var balanceLine = qs('#review-line-balance');
+          if (balanceLine) {
+            var bal = estimate.estimatedTotal - estimate.depositDue;
+            balanceLine.textContent = bal > 0 ? '$' + bal : '';
+          }
         }
+
+        var STEP_LABELS = ['Session Type', 'Your Ride', 'Route', 'Deliverables', 'Your Vision', 'Contact', 'Review & Deposit'];
 
         function setStep(step) {
           currentStep = step;
@@ -971,7 +1024,15 @@
           var active = qs('#step-' + step, form);
           if (active) active.classList.add('active');
 
-          qs('#step-indicator').textContent = 'Step ' + step + ' of ' + totalSteps;
+          // Update progress dots
+          qsa('.step-dot').forEach(function(dot, i) {
+            var ds = i + 1;
+            dot.classList.remove('active', 'completed');
+            if (ds === step) dot.classList.add('active');
+            else if (ds < step) dot.classList.add('completed');
+          });
+          var stepLabel = qs('#step-label');
+          if (stepLabel) stepLabel.textContent = STEP_LABELS[step - 1] || '';
 
           var prevBtn = qs('#prev-step-btn');
           var nextBtn = qs('#next-step-btn');
