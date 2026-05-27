@@ -604,7 +604,178 @@ textarea.w-input {
   /* Route cards: tighter */
   .route-card.radio-button.w-radio { min-height: 90px !important; }
   .route-card .radio-main-text.w-form-label { font-size: 1rem !important; padding-top: 0.9rem !important; }
-}</style>
+}
+
+/* ═══ REDESIGN: Compact Cards + Upgrade Tiles + Mission Build ═══ */
+
+/* Compact icon-card layout */
+.card-compact {
+  display: flex !important;
+  align-items: center !important;
+  min-height: 62px !important;
+}
+.card-compact .card-icon-wrap {
+  width: 54px !important;
+  min-height: 62px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  font-size: 1.35rem !important;
+  flex-shrink: 0 !important;
+  background: rgba(255,255,255,0.025) !important;
+  border-right: 1px solid var(--me-ghost) !important;
+}
+.card-compact .radio-main-text.w-form-label {
+  font-size: 1rem !important;
+  padding: 0.65rem 0.75rem !important;
+  flex: 1 !important;
+  line-height: 1.2 !important;
+}
+.card-compact .radio-sub-text {
+  font-size: 0.7rem !important;
+  padding: 0 0.75rem 0 0 !important;
+  margin: 0 !important;
+  line-height: 1.35 !important;
+  opacity: 0.65 !important;
+  display: none !important;
+}
+@media (min-width: 480px) {
+  .card-compact .radio-sub-text { display: block !important; }
+}
+.card-compact .card-badge {
+  font-family: var(--font-ui) !important;
+  font-size: 9px !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.12em !important;
+  text-transform: uppercase !important;
+  color: var(--me-primary) !important;
+  padding: 0 0.75rem !important;
+  white-space: nowrap !important;
+  flex-shrink: 0 !important;
+}
+
+/* Sub-section label */
+.question-box-label {
+  font-family: var(--font-ui) !important;
+  font-size: 9px !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.14em !important;
+  text-transform: uppercase !important;
+  color: rgba(226,226,226,0.45) !important;
+  margin-bottom: 0.45rem !important;
+}
+
+/* Upgrade tiles */
+.upgrade-tiles {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 2px !important;
+}
+.upgrade-tile {
+  display: flex !important;
+  align-items: center !important;
+  gap: 0.7rem !important;
+  padding: 0.65rem 0.875rem !important;
+  background: var(--me-surface) !important;
+  border: 1px solid var(--me-ghost) !important;
+  cursor: pointer !important;
+  transition: border-color 0.2s, background 0.2s, box-shadow 0.2s !important;
+  user-select: none !important;
+  position: relative !important;
+  overflow: hidden !important;
+}
+.upgrade-tile::before {
+  content: '' !important;
+  position: absolute !important;
+  left: 0 !important; top: 0 !important; bottom: 0 !important;
+  width: 3px !important;
+  background: var(--me-primary) !important;
+  transform: scaleY(0) !important;
+  transform-origin: bottom !important;
+  transition: transform 0.22s cubic-bezier(0.22, 1, 0.36, 1) !important;
+}
+.upgrade-tile.is-active {
+  background: var(--me-surface-low) !important;
+  border-color: var(--me-primary) !important;
+  box-shadow: inset 3px 0 0 var(--me-primary), 0 0 0 1px rgba(255,140,0,0.18) !important;
+}
+.upgrade-tile.is-active::before { transform: scaleY(1) !important; }
+.upgrade-tile.is-disabled-tile {
+  opacity: 0.28 !important;
+  pointer-events: none !important;
+}
+.upgrade-check {
+  width: 18px !important;
+  height: 18px !important;
+  border: 1px solid rgba(226,226,226,0.28) !important;
+  flex-shrink: 0 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  transition: background 0.15s, border-color 0.15s !important;
+  font-size: 10px !important;
+  color: transparent !important;
+  font-weight: 700 !important;
+}
+.upgrade-tile.is-active .upgrade-check {
+  background: var(--me-primary) !important;
+  border-color: var(--me-primary) !important;
+  color: #000 !important;
+}
+.upgrade-tile-body { flex: 1 !important; min-width: 0 !important; }
+.upgrade-tile-label {
+  font-family: var(--font-ui) !important;
+  font-size: 0.84rem !important;
+  font-weight: 600 !important;
+  color: var(--me-text) !important;
+  line-height: 1.2 !important;
+}
+.upgrade-tile-desc {
+  font-family: var(--font-ui) !important;
+  font-size: 0.68rem !important;
+  color: var(--me-text-muted) !important;
+  line-height: 1.35 !important;
+  margin-top: 0.1rem !important;
+}
+.upgrade-tile-price {
+  font-family: var(--font-ui) !important;
+  font-size: 0.8rem !important;
+  font-weight: 700 !important;
+  color: var(--me-primary) !important;
+  white-space: nowrap !important;
+  flex-shrink: 0 !important;
+}
+
+/* Mission Build bar */
+#mission-build-bar {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  padding: 0.5rem 0.875rem !important;
+  background: rgba(255,140,0,0.05) !important;
+  border: 1px solid rgba(255,140,0,0.14) !important;
+  margin-bottom: 0.4rem !important;
+  transition: opacity 0.3s !important;
+}
+#mission-build-bar.is-empty { opacity: 0.38 !important; }
+.mission-build-label {
+  font-family: var(--font-ui) !important;
+  font-size: 9px !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.14em !important;
+  text-transform: uppercase !important;
+  color: rgba(226,226,226,0.5) !important;
+}
+.mission-build-total {
+  font-family: var(--font-ui) !important;
+  font-size: 0.92rem !important;
+  font-weight: 700 !important;
+  color: var(--me-primary) !important;
+}
+
+/* Vision fields */
+.vision-fields { display: flex; flex-direction: column; gap: 0.7rem; }
+.vision-fields .input-box { margin: 0; }</style>
     </div>
     <!-- Race progress bar + step counter -->
     <div id="race-progress-track"></div>
