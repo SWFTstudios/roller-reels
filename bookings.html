@@ -1265,312 +1265,163 @@ textarea.w-input {
           return checked ? checked.value : '';
         }
 
-        function getRadioLabel(name) {
-          var checked = form.querySelector('input[name="' + name + '"]:checked');
-          if (!checked) return '';
-          var label = checked.closest('label');
-          if (!label) return '';
-          var textEl = label.querySelector('.radio-main-text');
-          return textEl ? textEl.textContent.trim() : '';
-        }
-
         function isValidEmail(value) {
-          return /^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/.test(String(value || '').trim());
+          return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(String(value || '').trim());
         }
 
         function getBookingState() {
-          var sessionType = getSelectedRadioValue('sessionType');
-          var people = getSelectedRadioValue('people');
-          var groupCount = parseInt((qs('#group-count', form) || {}).value || '', 10);
+          var rideType = getSelectedRadioValue('rideType');
+          var crewSize = parseInt((qs('#crew-size', form) || {}).value || '', 10);
 
-          var riderCount = 0;
-          if (people === '1') riderCount = 1;
-          else if (people === '2') riderCount = 2;
-          else if (people === '3+') riderCount = isNaN(groupCount) ? 0 : groupCount;
-
-          var vehicleType = getSelectedRadioValue('vehicleType');
-          var vehicleCount = parseInt((qs('#vehicle-count', form) || {}).value || '', 10);
-          var vehicleYearMakeModel = '';
-          try {
-            var vehicleInputs = qsa('input[name="vehicleYearMakeModel[]"]', form);
-            var nonEmpty = vehicleInputs.map(function(el) { return (el.value || '').trim(); }).filter(function(v) { return !!v; });
-            vehicleYearMakeModel = nonEmpty.join('; ');
-          } catch (e) {}
-
-          var routeChoice = getSelectedRadioValue('routeChoice');
-          var customLocationDetails = (qs('#custom-location-details', form) || {}).value ? qs('#custom-location-details', form).value.trim() : '';
-
-          var corePackage = getSelectedRadioValue('corePackage');
-          var coreStills = (corePackage === 'photo' || corePackage === 'both');
-          var coreVideo = (corePackage === 'video' || corePackage === 'both');
-
+          var shootStyle = getSelectedRadioValue('shootStyle');
+          var sceneChoice = getSelectedRadioValue('sceneChoice');
+          var customSceneDetails = (qs('#custom-scene-details', form) || {}).value ? qs('#custom-scene-details', form).value.trim() : '';
+          var coreDeliverables = getSelectedRadioValue('coreDeliverables');
+          var hasPhotos = (coreDeliverables === 'photos' || coreDeliverables === 'both');
+          var hasVideo = (coreDeliverables === 'video' || coreDeliverables === 'both');
           var rawFootage = !!(qs('#addon-raw-footage', form) && qs('#addon-raw-footage', form).checked);
           var rushDelivery = !!(qs('#addon-rush', form) && qs('#addon-rush', form).checked);
           var posters = !!(qs('#addon-posters', form) && qs('#addon-posters', form).checked);
           var posterQty = parseInt((qs('#poster-qty', form) || {}).value || '', 10);
           var calendar12Month = !!(qs('#addon-calendar', form) && qs('#addon-calendar', form).checked);
-          var customVideoEdit = !!(qs('#addon-custom-edit', form) && qs('#addon-custom-edit', form).checked);
-
-          var dateMode = getSelectedRadioValue('dateMode');
-          var preferredDate = (qs('#preferred-date', form) || {}).value ? qs('#preferred-date', form).value : '';
-          var preferredDateStart = (qs('#preferred-date-start', form) || {}).value ? qs('#preferred-date-start', form).value : '';
-          var preferredDateEnd = (qs('#preferred-date-end', form) || {}).value ? qs('#preferred-date-end', form).value : '';
-          var timeOfDay = (qs('#time-of-day', form) || {}).value ? qs('#time-of-day', form).value : '';
-
+          var altCut = !!(qs('#addon-custom-edit', form) && qs('#addon-custom-edit', form).checked);
           var instagramHandle = (qs('#instagram-handle', form) || {}).value ? qs('#instagram-handle', form).value.trim() : '';
-          var referenceLink = (qs('#reference-link', form) || {}).value ? qs('#reference-link', form).value.trim() : '';
-          var extraNotes = (qs('#extra-notes', form) || {}).value ? qs('#extra-notes', form).value.trim() : '';
-
+          var referenceLinks = (qs('#reference-links', form) || {}).value ? qs('#reference-links', form).value.trim() : '';
+          var shootNotes = (qs('#shoot-notes', form) || {}).value ? qs('#shoot-notes', form).value.trim() : '';
+          var modDetails = (qs('#mod-details', form) || {}).value ? qs('#mod-details', form).value.trim() : '';
           var fullName = (qs('#full-name', form) || {}).value ? qs('#full-name', form).value.trim() : '';
           var email = (qs('#email', form) || {}).value ? qs('#email', form).value.trim() : '';
           var phone = (qs('#phone', form) || {}).value ? qs('#phone', form).value.trim() : '';
+          var datePreference = (qs('#date-preference', form) || {}).value ? qs('#date-preference', form).value.trim() : '';
           var agreement = !!(qs('#agreement', form) && qs('#agreement', form).checked);
 
           return {
-            sessionType: sessionType,
-            people: people,
-            riderCount: riderCount,
-            vehicleType: vehicleType,
-            vehicleYearMakeModel: vehicleYearMakeModel,
-            vehicleCount: vehicleCount,
-            routeChoice: routeChoice,
-            customLocationDetails: customLocationDetails,
-            corePackage: corePackage,
-            coreStills: coreStills,
-            coreVideo: coreVideo,
-            rawFootage: rawFootage,
-            rushDelivery: rushDelivery,
-            posters: posters,
-            posterQty: posterQty,
-            calendar12Month: calendar12Month,
-            customVideoEdit: customVideoEdit,
-            dateMode: dateMode,
-            preferredDate: preferredDate,
-            preferredDateStart: preferredDateStart,
-            preferredDateEnd: preferredDateEnd,
-            timeOfDay: timeOfDay,
-            instagramHandle: instagramHandle,
-            referenceLink: referenceLink,
-            extraNotes: extraNotes,
-            fullName: fullName,
-            email: email,
-            phone: phone,
-            agreement: agreement
+            rideType: rideType, crewSize: crewSize,
+            shootStyle: shootStyle,
+            sceneChoice: sceneChoice, customSceneDetails: customSceneDetails,
+            coreDeliverables: coreDeliverables, hasPhotos: hasPhotos, hasVideo: hasVideo,
+            rawFootage: rawFootage, rushDelivery: rushDelivery,
+            posters: posters, posterQty: posterQty,
+            calendar12Month: calendar12Month, altCut: altCut,
+            instagramHandle: instagramHandle, referenceLinks: referenceLinks,
+            shootNotes: shootNotes, modDetails: modDetails,
+            fullName: fullName, email: email, phone: phone,
+            datePreference: datePreference, agreement: agreement
           };
         }
 
         function estimateBooking(state) {
-          var canEstimate =
-            !!state.sessionType &&
-            !!state.people &&
-            !((state.people === '3+' && state.riderCount < 3)) &&
-            !!state.vehicleType &&
-            !!state.vehicleCount &&
-            state.vehicleCount >= 1 &&
-            !!state.routeChoice &&
-            !(state.routeChoice === 'custom' && !state.customLocationDetails) &&
-            (
-              (state.sessionType === 'STATIC' && (state.coreStills || state.coreVideo)) ||
-              (state.sessionType === 'ROLLERS' && (state.coreStills || state.coreVideo))
-            );
+          var canEstimate = !!state.shootStyle && !!state.coreDeliverables;
+          var breakdown = { coreLabel: '', coreTotal: 0, addOns: [], sceneFee: 0, estimatedTotal: 0, depositDue: 0 };
+
+          if (!canEstimate) return { canEstimate: false, coreTotal: 0, addOnsTotal: 0, sceneFee: 0, estimatedTotal: 0, depositDue: 0, breakdown: breakdown };
 
           var coreTotal = 0;
+          var style = state.shootStyle;
+          var delivs = state.coreDeliverables;
+
+          if (style === 'static') {
+            if (delivs === 'both') { coreTotal = PRICING.staticBoth; breakdown.coreLabel = 'Static: Photos + Video'; }
+            else if (delivs === 'video') { coreTotal = PRICING.staticVideo; breakdown.coreLabel = 'Static: Video'; }
+            else { coreTotal = PRICING.staticPhotos; breakdown.coreLabel = 'Static: Photos'; }
+          } else if (style === 'rollers') {
+            if (delivs === 'both') { coreTotal = PRICING.rollersBoth; breakdown.coreLabel = 'Rollers: Photos + Video'; }
+            else if (delivs === 'video') { coreTotal = PRICING.rollersVideo; breakdown.coreLabel = 'Rollers: Video'; }
+            else { coreTotal = PRICING.rollersPhotos; breakdown.coreLabel = 'Rollers: Photos'; }
+          } else if (style === 'cinematic') {
+            if (delivs === 'both') { coreTotal = PRICING.cinematicBoth; breakdown.coreLabel = 'Full Cinematic: Photos + Video'; }
+            else if (delivs === 'video') { coreTotal = PRICING.cinematicVideo; breakdown.coreLabel = 'Full Cinematic: Video'; }
+            else { coreTotal = PRICING.cinematicPhotos; breakdown.coreLabel = 'Full Cinematic: Photos'; }
+          }
+
+          if (state.rideType === 'duo' && PRICING.duoUpcharge > 0) {
+            coreTotal += PRICING.duoUpcharge;
+            breakdown.coreLabel += ' (Duo)';
+          }
+          if (state.rideType === 'crew') {
+            var cs = (!isNaN(state.crewSize) && state.crewSize >= 3) ? state.crewSize : 3;
+            coreTotal += PRICING.crewUpchargePerRider * Math.max(0, cs - 2);
+            breakdown.coreLabel += ' (Crew x' + cs + ')';
+          }
+          breakdown.coreTotal = coreTotal;
+
           var addOnsTotal = 0;
-          var customLocationFee = 0;
-          var breakdown = {
-            coreLabel: '',
-            coreTotal: 0,
-            addOns: [],
-            customLocationFee: 0,
-            estimatedTotal: 0,
-            depositDue: 0
-          };
-
-          if (!canEstimate) {
-            return {
-              canEstimate: false,
-              coreTotal: 0,
-              addOnsTotal: 0,
-              customLocationFee: 0,
-              estimatedTotal: 0,
-              depositDue: 0,
-              breakdown: breakdown
-            };
-          }
-
-          var riderCount = state.riderCount;
-
-          // Core pricing
-          if (state.sessionType === 'STATIC') {
-            if (state.coreVideo && state.coreStills) {
-              coreTotal = PRICING.staticVideoAndStills;
-              breakdown.coreLabel = 'Static: Photos + Video';
-            } else if (state.coreVideo) {
-              coreTotal = PRICING.staticVideoOnly;
-              breakdown.coreLabel = 'Static: Video session';
-            } else {
-              coreTotal = PRICING.staticStillsOnly;
-              breakdown.coreLabel = 'Static: Photos session';
-            }
-            if (riderCount >= 3) {
-              coreTotal += PRICING.extraRider * (riderCount - 2);
-              breakdown.coreLabel += ' (group)';
-            }
-          } else if (state.sessionType === 'ROLLERS') {
-            if (state.coreVideo && state.coreStills) {
-              coreTotal = PRICING.rollersVideoAndStills;
-              breakdown.coreLabel = 'Rollers: Photos + Video';
-            } else if (state.coreVideo) {
-              coreTotal = PRICING.rollersVideoOnly;
-              breakdown.coreLabel = 'Rollers: Video session';
-            } else {
-              coreTotal = PRICING.rollersStillsOnly;
-              breakdown.coreLabel = 'Rollers: Photos session';
-            }
-            if (riderCount >= 3) {
-              coreTotal += PRICING.extraRider * (riderCount - 2);
-            }
-            breakdown.coreLabel += ' (full crew)';
-          }
-
-          // Add-ons
           function addAddon(label, amount) {
             if (amount <= 0) return;
             addOnsTotal += amount;
             breakdown.addOns.push({ label: label, amount: amount });
           }
 
-          if (state.rawFootage && state.coreVideo) {
-            addAddon('Raw Footage Archive', PRICING.rawFootage);
-          }
-
-          if (state.rushDelivery && (state.coreStills || state.coreVideo)) {
-            addAddon('Rush Delivery (48–72 hrs)', PRICING.rushDelivery);
-          }
-
+          if (state.rawFootage && state.hasVideo) addAddon('Raw Footage Archive', PRICING.rawFootage);
+          if (state.rushDelivery) addAddon('Rush Delivery (48-72 hrs)', PRICING.rushDelivery);
           if (state.posters) {
-            var qty = state.posterQty;
-            if (isNaN(qty) || qty < 1) qty = 1;
-            addAddon('Signature Posters', PRICING.posterEach * qty);
+            var qty = (!isNaN(state.posterQty) && state.posterQty >= 1) ? state.posterQty : 1;
+            addAddon('Signature Posters x' + qty, PRICING.posterEach * qty);
           }
+          if (state.calendar12Month && state.hasPhotos) addAddon('12-Month Photo Calendar', PRICING.calendar12Month);
+          if (state.altCut && state.hasVideo) addAddon('Alternate Cut', PRICING.altCut);
 
-          if (state.calendar12Month && state.coreStills) {
-            addAddon('12-Month Photo Calendar', PRICING.calendar12Month);
-          }
+          var sceneFee = (state.sceneChoice === 'custom') ? PRICING.customScene : 0;
+          if (sceneFee > 0) breakdown.addOns.push({ label: 'Custom Scene', amount: sceneFee });
 
-          if (state.customVideoEdit && state.coreVideo) {
-            addAddon('Custom Edit / Alternate Cut', PRICING.customVideoEdit);
-          }
-
-          if (state.routeChoice === 'custom') {
-            customLocationFee = PRICING.customLocation;
-          }
-
-          var estimatedTotal = coreTotal + addOnsTotal + customLocationFee;
-          var depositDue = 100;
-
-          breakdown.coreTotal = coreTotal;
-          breakdown.customLocationFee = customLocationFee;
+          var estimatedTotal = coreTotal + addOnsTotal + sceneFee;
+          breakdown.sceneFee = sceneFee;
           breakdown.estimatedTotal = estimatedTotal;
-          breakdown.depositDue = depositDue;
+          breakdown.depositDue = 100;
 
-          return {
-            canEstimate: true,
-            coreTotal: coreTotal,
-            addOnsTotal: addOnsTotal,
-            customLocationFee: customLocationFee,
-            estimatedTotal: estimatedTotal,
-            depositDue: depositDue,
-            breakdown: breakdown
-          };
+          return { canEstimate: true, coreTotal: coreTotal, addOnsTotal: addOnsTotal, sceneFee: sceneFee, estimatedTotal: estimatedTotal, depositDue: 100, breakdown: breakdown };
         }
 
         function syncConditionalUI(state) {
-          // Step 1
-          var groupCountWrap = qs('#group-count-wrap', form);
-          if (groupCountWrap) groupCountWrap.style.display = (state.people === '3+') ? 'block' : 'none';
+          var crewSizeWrap = qs('#crew-size-wrap', form);
+          if (crewSizeWrap) crewSizeWrap.style.display = (state.rideType === 'crew') ? 'block' : 'none';
 
-          // Step 3
-          var customWrap = qs('#custom-location-wrap', form);
-          if (customWrap) customWrap.style.display = (state.routeChoice === 'custom') ? 'block' : 'none';
+          var customSceneWrap = qs('#custom-scene-wrap', form);
+          if (customSceneWrap) customSceneWrap.style.display = (state.sceneChoice === 'custom') ? 'block' : 'none';
 
-          // Step 4 add-on visibility based on selected core package.
-          var hasStills = !!state.coreStills;
-          var hasVideo = !!state.coreVideo;
-          var rawEl = qs('#addon-raw-footage', form);
-          if (rawEl) {
-            rawEl.disabled = !hasVideo;
-            if (rawEl.disabled) rawEl.checked = false;
-            if (rawEl.closest('label')) rawEl.closest('label').style.display = hasVideo ? 'block' : 'none';
-          }
-          var customEditEl = qs('#addon-custom-edit', form);
-          if (customEditEl) {
-            customEditEl.disabled = !hasVideo;
-            if (customEditEl.disabled) customEditEl.checked = false;
-            if (customEditEl.closest('label')) customEditEl.closest('label').style.display = hasVideo ? 'block' : 'none';
-          }
-          var calendarEl = qs('#addon-calendar', form);
-          if (calendarEl) {
-            calendarEl.disabled = !hasStills;
-            if (calendarEl.disabled) calendarEl.checked = false;
-            if (calendarEl.closest('label')) calendarEl.closest('label').style.display = hasStills ? 'block' : 'none';
-          }
-
-          // posters behavior
-          var postersEl = qs('#addon-posters', form);
-          var posterQtyWrap = qs('#poster-qty-wrap', form);
-          var posterQtyEl = qs('#poster-qty', form);
-          if (postersEl && posterQtyWrap) {
-            var selected = postersEl.checked;
-            posterQtyWrap.style.display = selected ? 'flex' : 'none';
-            if (selected) {
-              if (!posterQtyEl) return;
-              var qty = parseInt(posterQtyEl.value, 10);
-              if (isNaN(qty) || qty < 1) posterQtyEl.value = '1';
+          qsa('.upgrade-tile[data-requires]', form).forEach(function(tile) {
+            var req = tile.getAttribute('data-requires');
+            var available = (req === 'video' && state.hasVideo) || (req === 'photos' && state.hasPhotos);
+            if (!available) {
+              tile.classList.add('is-disabled-tile');
+              var cb = tile.querySelector('input[type="checkbox"]');
+              if (cb) cb.checked = false;
+              tile.classList.remove('is-active');
+              tile.setAttribute('aria-checked', 'false');
             } else {
-              // When posters are off, keep qty but hidden.
+              tile.classList.remove('is-disabled-tile');
             }
-          }
+          });
 
-          // Step 5
-          var singleWrap = qs('#single-date-wrap', form);
-          var rangeWrap = qs('#date-range-wrap', form);
-          if (singleWrap && rangeWrap) {
-            singleWrap.style.display = (state.dateMode === 'single') ? 'block' : 'none';
-            rangeWrap.style.display = (state.dateMode === 'range') ? 'block' : 'none';
+          var posterTileWrap = qs('#poster-qty-tile', form);
+          if (posterTileWrap) {
+            var postersActive = qs('.upgrade-tile[data-addon="posters"]', form);
+            posterTileWrap.style.display = (postersActive && postersActive.classList.contains('is-active')) ? 'block' : 'none';
           }
         }
 
         function validateStep(stepNumber, state) {
           var valid = true;
           if (stepNumber === 1) {
-            clearErrors(['error-sessionType', 'error-people', 'error-group-count']);
-            if (!state.sessionType) { setError('error-sessionType', 'Please select a session type.'); valid = false; }
-            if (!state.people) { setError('error-people', 'Please select how many riders are coming.'); valid = false; }
-            if (state.people === '3+' && state.riderCount < 3) { setError('error-group-count', 'Group size must be at least 3.'); valid = false; }
+            clearErrors(['error-rideType', 'error-crewSize']);
+            if (!state.rideType) { setError('error-rideType', 'Choose your ride type.'); valid = false; }
+            if (state.rideType === 'crew' && (!state.crewSize || state.crewSize < 3)) { setError('error-crewSize', 'Crew size must be at least 3.'); valid = false; }
             return valid;
           }
-
           if (stepNumber === 2) {
-            clearErrors(['error-vehicleType', 'error-vehicleCount']);
-            if (!state.vehicleType) { setError('error-vehicleType', 'Please choose what you will ride.'); valid = false; }
-            if (!state.vehicleCount || state.vehicleCount < 1) { setError('error-vehicleCount', 'Enter at least 1 vehicle.'); valid = false; }
+            clearErrors(['error-shootStyle']);
+            if (!state.shootStyle) { setError('error-shootStyle', 'Choose a shoot style.'); valid = false; }
             return valid;
           }
-
           if (stepNumber === 3) {
-            clearErrors(['error-routeChoice', 'error-customLocationDetails']);
-            if (!state.routeChoice) { setError('error-routeChoice', 'Choose a route.'); valid = false; }
-            if (state.routeChoice === 'custom' && !state.customLocationDetails) {
-              setError('error-customLocationDetails', 'Please add custom location details.');
-              valid = false;
-            }
+            clearErrors(['error-sceneChoice', 'error-customSceneDetails']);
+            if (!state.sceneChoice) { setError('error-sceneChoice', 'Pick your scene.'); valid = false; }
+            if (state.sceneChoice === 'custom' && !state.customSceneDetails) { setError('error-customSceneDetails', 'Please describe your custom location.'); valid = false; }
             return valid;
           }
-
           if (stepNumber === 4) {
             clearErrors(['error-coreDeliverables']);
-            if (!(state.coreStills || state.coreVideo)) { setError('error-coreDeliverables', 'Select at least one core deliverable.'); valid = false; }
+            if (!state.coreDeliverables) { setError('error-coreDeliverables', 'Select your core format.'); valid = false; }
             return valid;
           }
 
@@ -1601,24 +1452,35 @@ textarea.w-input {
           return true;
         }
 
-        function renderLiveSummary(state, estimate) {
-          var summaryUnavailable = qs('#summary-unavailable', form.parentElement) || qs('#summary-unavailable');
-          var summaryEstimatedTotal = qs('#summary-estimated-total', form.parentElement) || qs('#summary-estimated-total');
-          var summaryPriceRow = qs('#summary-price-row', form.parentElement) || qs('#summary-price-row');
-          var summaryDeposit = qs('#summary-deposit-due', form.parentElement) || qs('#summary-deposit-due');
-          var summaryPackageType = qs('#summary-package-type', form.parentElement) || qs('#summary-package-type');
-          var summaryRiderCount = qs('#summary-rider-count', form.parentElement) || qs('#summary-rider-count');
-          var summaryVehicleType = qs('#summary-vehicle-type', form.parentElement) || qs('#summary-vehicle-type');
-          var summaryRoute = qs('#summary-route', form.parentElement) || qs('#summary-route');
-          var summaryDeliverables = qs('#summary-deliverables', form.parentElement) || qs('#summary-deliverables');
-
-          if (summaryPackageType) {
-            summaryPackageType.textContent = state.sessionType === 'STATIC'
-              ? 'Static shots (stationary location)'
-              : (state.sessionType === 'ROLLERS' ? 'Rollers (moving road/highway shots)' : '');
+        function updateMissionBuildBar(estimate) {
+          var bar = qs('#mission-build-bar');
+          var amount = qs('#mission-build-amount');
+          if (!bar || !amount) return;
+          if (estimate && estimate.canEstimate) {
+            bar.classList.remove('is-empty');
+            amount.textContent = '$' + estimate.estimatedTotal;
+          } else {
+            bar.classList.add('is-empty');
+            amount.textContent = '—';
           }
-          summaryRiderCount.textContent = state.riderCount ? ('Riders: ' + state.riderCount) : '';
-          summaryVehicleType.textContent = state.vehicleType ? ('Vehicle: ' + state.vehicleType) : '';
+        }
+
+        function renderLiveSummary(state, estimate) {
+          updateMissionBuildBar(estimate);
+          var summaryUnavailable = qs('#summary-unavailable');
+          var summaryEstimatedTotal = qs('#summary-estimated-total');
+          var summaryPriceRow = qs('#summary-price-row');
+          var summaryDeposit = qs('#summary-deposit-due');
+          var summaryPackageType = qs('#summary-package-type');
+          var summaryRiderCount = qs('#summary-rider-count');
+          var summaryVehicleType = qs('#summary-vehicle-type');
+          var summaryRoute = qs('#summary-route');
+          var summaryDeliverables = qs('#summary-deliverables');
+          var styleLabels = { static: 'Static', rollers: 'Rollers', cinematic: 'Full Cinematic' };
+          if (summaryPackageType) summaryPackageType.textContent = state.shootStyle ? (styleLabels[state.shootStyle] || '') : '';
+          if (summaryRiderCount) summaryRiderCount.textContent = state.rideType ? ('Ride: ' + state.rideType) : '';
+          if (summaryVehicleType) summaryVehicleType.textContent = '';
+          if (summaryRoute) summaryRoute.textContent = state.sceneChoice ? ('Scene: ' + state.sceneChoice.replace(/-/g, ' ')) : '';
 
           var routeLabel = '';
           if (state.routeChoice) {
@@ -1630,14 +1492,14 @@ textarea.w-input {
           }
 
           var deliverables = [];
-          if (state.coreStills) deliverables.push('Photos');
-          if (state.coreVideo) deliverables.push('Video');
-          if (state.rawFootage && state.coreVideo) deliverables.push('Raw');
+          if (state.coreDeliverables === 'photos' || state.coreDeliverables === 'both') deliverables.push('Photos');
+          if (state.coreDeliverables === 'video' || state.coreDeliverables === 'both') deliverables.push('Video');
+          if (state.rawFootage && state.hasVideo) deliverables.push('Raw');
           if (state.rushDelivery) deliverables.push('Rush');
-          if (state.posters) deliverables.push('Posters x' + (isNaN(state.posterQty) ? 1 : state.posterQty));
-          if (state.calendar12Month && state.coreStills) deliverables.push('Calendar');
-          if (state.customVideoEdit && state.coreVideo) deliverables.push('Alt cut');
-          summaryDeliverables.textContent = deliverables.length ? ('Deliverables: ' + deliverables.join(' + ')) : '';
+          if (state.posters) deliverables.push('Posters');
+          if (state.calendar12Month) deliverables.push('Calendar');
+          if (state.altCut && state.hasVideo) deliverables.push('Alt Cut');
+          if (summaryDeliverables) summaryDeliverables.textContent = deliverables.length ? deliverables.join(' + ') : '';
 
           if (!estimate || !estimate.canEstimate) {
             if (summaryUnavailable) summaryUnavailable.classList.remove('is-hidden');
@@ -1646,66 +1508,49 @@ textarea.w-input {
             if (summaryDeposit) { summaryDeposit.textContent = ''; summaryDeposit.classList.add('is-hidden'); }
             return;
           }
-
           if (summaryUnavailable) summaryUnavailable.classList.add('is-hidden');
-
           if (summaryEstimatedTotal) summaryEstimatedTotal.textContent = '$' + estimate.estimatedTotal;
           if (summaryPriceRow) summaryPriceRow.classList.remove('is-hidden');
-
-          if (summaryDeposit) {
-            summaryDeposit.textContent = 'Deposit due today: $' + estimate.depositDue;
-            summaryDeposit.classList.remove('is-hidden');
-          }
-
-          // Keep the live estimator card concise (no detailed breakdown).
+          if (summaryDeposit) { summaryDeposit.textContent = 'Deposit due today: $' + estimate.depositDue; summaryDeposit.classList.remove('is-hidden'); }
         }
 
         function renderReviewSummary(state, estimate) {
-          var sessionLine = qs('#review-line-session');
-          var ridersLine = qs('#review-line-riders');
-          var vehicleLine = qs('#review-line-vehicle');
-          var routeLine = qs('#review-line-route');
-          var deliverablesLine = qs('#review-line-deliverables');
+          var rideLine = qs('#review-line-ride');
+          var styleLine = qs('#review-line-style');
+          var sceneLine = qs('#review-line-scene');
+          var formatLine = qs('#review-line-format');
+          var upgradesLine = qs('#review-line-upgrades');
           var totalLine = qs('#review-line-estimated-total');
           var depositLine = qs('#review-line-deposit');
-
-          var sessionLabel = state.sessionType === 'STATIC'
-            ? 'Static shots (stationary location)'
-            : (state.sessionType === 'ROLLERS' ? 'Rollers (moving road/highway shots)' : state.sessionType);
-          var ridersLabel = String(state.riderCount || '');
-
-          var routeLabel = getRadioLabel('routeChoice');
-          if (state.routeChoice === 'custom') {
-            routeLabel = state.customLocationDetails ? ('Custom - ' + state.customLocationDetails) : 'Custom Location';
-          }
+          var balanceLine = qs('#review-line-balance');
+          var rideLabels = { car: 'Car', motorcycle: 'Motorcycle', duo: 'Duo (2 riders)', crew: 'Crew' };
+          var styleLabels = { static: 'Static', rollers: 'Rollers', cinematic: 'Full Cinematic' };
+          var sceneLabels = { 'city-night': 'City Night', 'mountain-road': 'Mountain Road', 'industrial-lot': 'Industrial Lot', 'highway-motion': 'Highway Motion', 'custom': state.customSceneDetails ? ('Custom — ' + state.customSceneDetails) : 'Custom Spot' };
+          var formatLabels = { photos: 'Photos', video: 'Video', both: 'Photos + Video' };
 
           var deliverables = [];
           if (state.coreVideo) deliverables.push('Video');
           if (state.coreStills) deliverables.push('Stills');
           if (state.rawFootage && state.coreVideo) deliverables.push('Raw Footage');
-          if (state.rushDelivery) deliverables.push('Rush Delivery');
-          if (state.posters) deliverables.push('Posters x' + (isNaN(state.posterQty) ? 1 : state.posterQty));
-          if (state.calendar12Month && state.coreStills) deliverables.push('12-Month Calendar');
-          if (state.customVideoEdit && state.coreVideo) deliverables.push('Custom Edit');
-
-          if (sessionLine) sessionLine.textContent = sessionLabel;
-          if (ridersLine) ridersLine.textContent = ridersLabel + (ridersLabel === '1' ? ' rider' : ' riders');
-          if (vehicleLine) {
-            var details = state.vehicleYearMakeModel ? (' · ' + state.vehicleYearMakeModel) : '';
-            vehicleLine.textContent = state.vehicleType + details + ' · ' + state.vehicleCount + (state.vehicleCount === 1 ? ' vehicle' : ' vehicles');
-          }
-          if (routeLine) routeLine.textContent = routeLabel;
-          if (deliverablesLine) deliverablesLine.textContent = deliverables.join(' + ');
-          if (totalLine) totalLine.textContent = '$' + estimate.estimatedTotal;
-          if (depositLine) depositLine.textContent = '$' + estimate.depositDue;
-          var balanceLine = qs('#review-line-balance');
-          if (balanceLine) {
-            var bal = estimate.estimatedTotal - estimate.depositDue;
-            balanceLine.textContent = bal > 0 ? '$' + bal : '';
+          if (rideLine) rideLine.textContent = rideLabels[state.rideType] || state.rideType || '—';
+          if (styleLine) styleLine.textContent = styleLabels[state.shootStyle] || state.shootStyle || '—';
+          if (sceneLine) sceneLine.textContent = sceneLabels[state.sceneChoice] || state.sceneChoice || '—';
+          if (formatLine) formatLine.textContent = formatLabels[state.coreDeliverables] || '—';
+          var upgrades = [];
+          if (state.rawFootage && state.hasVideo) upgrades.push('Raw Footage');
+          if (state.rushDelivery) upgrades.push('Rush Delivery');
+          if (state.posters) upgrades.push('Posters x' + (isNaN(state.posterQty) ? 1 : state.posterQty));
+          if (state.calendar12Month && state.hasPhotos) upgrades.push('12-Mo Calendar');
+          if (state.altCut && state.hasVideo) upgrades.push('Alt Cut');
+          if (upgradesLine) upgradesLine.textContent = upgrades.length ? upgrades.join(' + ') : 'None';
+          if (estimate && estimate.canEstimate) {
+            if (totalLine) totalLine.textContent = '$' + estimate.estimatedTotal;
+            if (depositLine) depositLine.textContent = '$' + estimate.depositDue;
+            if (balanceLine) { var bal = estimate.estimatedTotal - estimate.depositDue; balanceLine.textContent = bal > 0 ? '$' + bal : ''; }
           }
         }
 
-        var STEP_LABELS = ['Session Type', 'Your Ride', 'Route', 'Deliverables', 'Your Vision', 'Contact', 'Review & Deposit'];
+        var STEP_LABELS = ['Your Ride', 'Shoot Style', 'The Scene', 'Content Loadout', 'The Vision', 'Your Details', 'Mission Review'];
         var isAnimating = false;
 
         function updateStepNavUI(step) {
@@ -1753,21 +1598,20 @@ textarea.w-input {
           if (bookingSubmit) bookingSubmit.style.display = (step === totalSteps) ? '' : 'none';
         }
 
-        // ── Step completion + auto-advance ─────────────────────────────────
         function isStepComplete(stepNum) {
           var state = getBookingState();
           switch (stepNum) {
             case 1:
-              if (!state.sessionType || !state.people) return false;
-              if (state.people === '3+' && (!state.riderCount || state.riderCount < 3)) return false;
+              if (!state.rideType) return false;
+              if (state.rideType === 'crew' && (!state.crewSize || state.crewSize < 3)) return false;
               return true;
-            case 2: return !!state.vehicleType;
+            case 2: return !!state.shootStyle;
             case 3:
-              if (!state.routeChoice) return false;
-              if (state.routeChoice === 'custom' && !state.customLocationDetails) return false;
+              if (!state.sceneChoice) return false;
+              if (state.sceneChoice === 'custom' && !state.customSceneDetails) return false;
               return true;
-            case 4: return !!(state.coreStills || state.coreVideo);
-            case 5: return true; // optional step — always passable
+            case 4: return !!state.coreDeliverables;
+            case 5: return true;
             case 6: {
               var em = (state.email || '').trim();
               return !!state.fullName && !!state.phone && !!state.agreement && !!em && isValidEmail(em);
@@ -1909,9 +1753,8 @@ textarea.w-input {
         if (posterQtyEl) {
           posterQtyEl.addEventListener('input', function() {
             var v = parseInt(posterQtyEl.value, 10);
-            if (qs('#addon-posters', form) && qs('#addon-posters', form).checked) {
-              if (isNaN(v) || v < 1) posterQtyEl.value = '1';
-            }
+            if (isNaN(v) || v < 1) posterQtyEl.value = '1';
+            handleEstimateUpdate();
           });
         }
 
@@ -1936,195 +1779,82 @@ textarea.w-input {
           });
         }
 
-        // Vehicle details list (optional) driven by rider count.
-        var vehicleDetailsList = qs('#vehicle-details-list', form);
-        var vehicleCountInput = qs('#vehicle-count', form);
-
-        function renderVehicleDetailsRows(count) {
-          if (!vehicleDetailsList) return;
-          count = parseInt(count, 10);
-          if (isNaN(count) || count < 1) count = 1;
-
-          var existing = qsa('input[name="vehicleYearMakeModel[]"]', vehicleDetailsList)
-            .map(function(el) { return (el.value || '').trim(); });
-
-          vehicleDetailsList.innerHTML = '';
-
-          for (var i = 1; i <= count; i++) {
-            var row = document.createElement('div');
-            row.className = 'question-2';
-            row.style.marginTop = (i === 1) ? '0' : '0.75rem';
-
-            var inputBox = document.createElement('div');
-            inputBox.className = 'input-box';
-            inputBox.style.marginBottom = '0';
-
-            var label = document.createElement('label');
-            label.className = 'price-box-label';
-            label.textContent = 'Vehicle ' + i + ' (optional)';
-            label.setAttribute('for', 'vehicle-year-make-model-' + i);
-
-            var input = document.createElement('input');
-            input.type = 'text';
-            input.className = 'text-field w-input';
-            input.id = 'vehicle-year-make-model-' + i;
-            input.name = 'vehicleYearMakeModel[]';
-            input.maxLength = 500;
-            input.placeholder = 'e.g. 2023 Yamaha R7';
-            input.value = existing[i - 1] ? existing[i - 1] : '';
-
-            inputBox.appendChild(label);
-            inputBox.appendChild(input);
-            row.appendChild(inputBox);
-            vehicleDetailsList.appendChild(row);
-          }
-        }
-
-        function getDerivedVehicleCountFromPeople() {
-          var peopleVal = getSelectedRadioValue('people');
-          if (peopleVal === '1') return 1;
-          if (peopleVal === '2') return 2;
-          if (peopleVal === '3+') {
-            var gc = parseInt((qs('#group-count', form) || {}).value || '', 10);
-            return (!isNaN(gc) && gc >= 3) ? gc : NaN;
-          }
-          return NaN;
-        }
-
-        function syncVehicleCountFromPeople() {
-          var derived = getDerivedVehicleCountFromPeople();
-          if (isNaN(derived)) return;
-          if (vehicleCountInput) vehicleCountInput.value = String(derived);
-          renderVehicleDetailsRows(derived);
-        }
-
-        // Initial render for vehicle details list.
-        if (vehicleCountInput) {
-          var initialCount = parseInt(vehicleCountInput.value || '1', 10);
-          renderVehicleDetailsRows(isNaN(initialCount) ? 1 : initialCount);
-          syncVehicleCountFromPeople();
-        } else {
-          renderVehicleDetailsRows(1);
-        }
-
-        // Route + date mode UI toggles
-        qsa('input[name="people"]').forEach(function(el) {
-          el.addEventListener('change', function() {
-            syncVehicleCountFromPeople();
-            handleEstimateUpdate();
-          });
-        });
-        var groupCountInput = qs('#group-count', form);
-        if (groupCountInput) groupCountInput.addEventListener('input', function() {
-          var peopleVal = getSelectedRadioValue('people');
-          if (peopleVal === '3+') {
-            var gc = parseInt(groupCountInput.value || '', 10);
-            if (!isNaN(gc) && gc >= 3) {
-              if (vehicleCountInput) vehicleCountInput.value = String(gc);
-              renderVehicleDetailsRows(gc);
+        qsa('.upgrade-tile', form).forEach(function(tile) {
+          function toggleTile() {
+            var isActive = tile.classList.contains('is-active');
+            tile.classList.toggle('is-active', !isActive);
+            tile.setAttribute('aria-checked', String(!isActive));
+            var cb = tile.querySelector('input[type="checkbox"]');
+            if (cb) cb.checked = !isActive;
+            if (typeof gsap !== 'undefined') {
+              gsap.fromTo(tile, { scale: 0.985 }, { scale: 1, duration: 0.3, ease: 'back.out(2.5)' });
             }
+            handleEstimateUpdate();
+            syncNextButtonState(currentStep);
           }
-          handleEstimateUpdate();
-        });
-
-        qsa('input[name="sessionType"]').forEach(function(el) { el.addEventListener('change', handleEstimateUpdate); });
-
-        qsa('input[name="vehicleType"]').forEach(function(el) { el.addEventListener('change', handleEstimateUpdate); });
-        if (vehicleCountInput) {
-          vehicleCountInput.addEventListener('input', function() {
-            renderVehicleDetailsRows(vehicleCountInput.value);
-            handleEstimateUpdate();
-          });
-        }
-
-        qsa('input[name="routeChoice"]').forEach(function(el) { el.addEventListener('change', handleEstimateUpdate); });
-        var customLocation = qs('#custom-location-details', form);
-        if (customLocation) customLocation.addEventListener('input', handleEstimateUpdate);
-
-        // Core + add-ons
-        qsa('input[name="corePackage"],#addon-raw-footage,#addon-rush,#addon-posters,#addon-calendar,#addon-custom-edit').forEach(function(el) {
-          el.addEventListener('change', handleEstimateUpdate);
-        });
-
-        // Date mode UI visibility
-        qsa('input[name="dateMode"]').forEach(function(el) {
-          el.addEventListener('change', function() {
-            var state = getBookingState();
-            var singleWrap = qs('#single-date-wrap', form);
-            var rangeWrap = qs('#date-range-wrap', form);
-            if (singleWrap) singleWrap.style.display = (state.dateMode === 'single') ? 'block' : 'none';
-            if (rangeWrap) rangeWrap.style.display = (state.dateMode === 'range') ? 'block' : 'none';
+          tile.addEventListener('click', toggleTile);
+          tile.addEventListener('keydown', function(e) {
+            if (e.key === ' ' || e.key === 'Enter') { e.preventDefault(); toggleTile(); }
           });
         });
-
-        // Poster checkbox toggles qty wrap
-        var postersEl = qs('#addon-posters', form);
-        if (postersEl) {
-          postersEl.addEventListener('change', function() {
-            if (posterQtyEl && postersEl.checked) posterQtyEl.value = '1';
-            var state = getBookingState();
-            syncConditionalUI(state);
-            handleEstimateUpdate();
-          });
-        }
 
         function finalizeToCalendar() {
           var state = getBookingState();
           syncConditionalUI(state);
-          if (!validateStep(6, state)) {
-            setStep(6);
-            return;
-          }
+          if (!validateStep(6, state)) { setStep(6); return; }
           var estimate = estimateBooking(state);
           if (!estimate.canEstimate) return;
 
-          // Build Booking-Summary from current state.
           function formatMoney(n) { return '$' + String(Math.round(n || 0)); }
-          function buildSummaryLine() {
-            var session = state.sessionType === 'STATIC'
-              ? 'Static shots (stationary location)'
-              : (state.sessionType === 'ROLLERS' ? 'Rollers (moving road/highway shots)' : state.sessionType);
-            var riders = state.riderCount;
-            var vehicle = state.vehicleType + (state.vehicleYearMakeModel ? (' | ' + state.vehicleYearMakeModel) : '');
-            var route = getRadioLabel('routeChoice');
-            if (state.routeChoice === 'custom') route = state.customLocationDetails ? ('Custom - ' + state.customLocationDetails) : 'Custom Location';
+          var styleLabels = { static: 'Static', rollers: 'Rollers', cinematic: 'Full Cinematic' };
+          var rideLabels = { car: 'Car', motorcycle: 'Motorcycle', duo: 'Duo', crew: 'Crew' };
+          var sceneLabels = { 'city-night': 'City Night', 'mountain-road': 'Mountain Road', 'industrial-lot': 'Industrial Lot', 'highway-motion': 'Highway Motion', 'custom': state.customSceneDetails ? ('Custom - ' + state.customSceneDetails) : 'Custom Spot' };
+          var formatLabels = { photos: 'Photos', video: 'Video', both: 'Photos + Video' };
+          var upgrades = [];
+          if (state.rawFootage && state.hasVideo) upgrades.push('Raw Footage');
+          if (state.rushDelivery) upgrades.push('Rush Delivery');
+          if (state.posters) upgrades.push('Posters x' + (isNaN(state.posterQty) ? 1 : state.posterQty));
+          if (state.calendar12Month && state.hasPhotos) upgrades.push('12-Mo Calendar');
+          if (state.altCut && state.hasVideo) upgrades.push('Alt Cut');
 
-            var deliverables = [];
-            if (state.coreStills) deliverables.push('Photos');
-            if (state.coreVideo) deliverables.push('Video');
-            if (state.rawFootage && state.coreVideo) deliverables.push('Raw Footage');
-            if (state.rushDelivery) deliverables.push('Rush Delivery');
-            if (state.posters) deliverables.push('Posters x' + (isNaN(state.posterQty) ? 1 : state.posterQty));
-            if (state.calendar12Month && state.coreStills) deliverables.push('12-Month Calendar');
-            if (state.customVideoEdit && state.coreVideo) deliverables.push('Custom Edit');
+          var summary = [
+            'Ride: ' + (rideLabels[state.rideType] || state.rideType),
+            'Style: ' + (styleLabels[state.shootStyle] || state.shootStyle),
+            'Scene: ' + (sceneLabels[state.sceneChoice] || state.sceneChoice),
+            'Format: ' + (formatLabels[state.coreDeliverables] || state.coreDeliverables),
+            'Upgrades: ' + (upgrades.length ? upgrades.join(', ') : 'None'),
+            'Date Pref: ' + (state.datePreference || 'Flexible'),
+            'Est. Total: ' + formatMoney(estimate.estimatedTotal),
+            'Deposit: ' + formatMoney(estimate.depositDue)
+          ].join(' | ');
 
-            var deliverablesStr = deliverables.length ? deliverables.join(' + ') : '—';
-            return 'Session: ' + session + ' | Riders: ' + riders + ' | Vehicle: ' + vehicle + ' | Route: ' + route + ' | Deliverables: ' + deliverablesStr + ' | Estimated Total: $' + estimate.estimatedTotal + ' | Deposit Due Today: $' + estimate.depositDue;
-          }
+          var summaryHidden = qs('#booking-summary-hidden', form);
+          var estimatedHidden = qs('#estimated-total-hidden', form);
+          var depositHidden = qs('#deposit-due-hidden', form);
+          var pricingJsonEl = qs('#pricing-breakdown-json-hidden', form);
+          if (summaryHidden) summaryHidden.value = summary;
+          if (estimatedHidden) estimatedHidden.value = String(estimate.estimatedTotal);
+          if (depositHidden) depositHidden.value = String(estimate.depositDue);
+          if (pricingJsonEl) pricingJsonEl.value = JSON.stringify(estimate.breakdown || {});
 
-          var summary = buildSummaryLine();
-          qs('#booking-summary-hidden', form).value = summary;
-          qs('#estimated-total-hidden', form).value = String(estimate.estimatedTotal);
-          qs('#deposit-due-hidden', form).value = String(estimate.depositDue);
-          qs('#pricing-breakdown-json-hidden', form).value = JSON.stringify(estimate.breakdown || {});
-
-          // Source of truth for calendar handoff: URL params (survives FormSubmit redirect).
           try {
             var nextUrl = 'https://rollerreels.com/calendar?summary=' + encodeURIComponent(summary) + '&deposit=' + encodeURIComponent(String(estimate.depositDue)) + '&name=' + encodeURIComponent(state.fullName || '') + '&email=' + encodeURIComponent(state.email || '');
-            qs('#form-next-url', form).value = nextUrl;
+            var formNextUrl = qs('#form-next-url', form);
+            if (formNextUrl) formNextUrl.value = nextUrl;
           } catch (e) {}
 
           try {
             sessionStorage.setItem('bookingSummary', summary);
             sessionStorage.setItem('bookingDepositDue', String(estimate.depositDue));
             sessionStorage.setItem('bookingEstimatedTotal', String(estimate.estimatedTotal));
-            sessionStorage.setItem('pricingBreakdownJson', qs('#pricing-breakdown-json-hidden', form).value);
+            sessionStorage.setItem('pricingBreakdownJson', pricingJsonEl ? pricingJsonEl.value : '');
             sessionStorage.setItem('bookingName', state.fullName || '');
             sessionStorage.setItem('bookingEmail', state.email || '');
           } catch (e) {}
+
           try {
-            var redirectUrl = qs('#form-next-url', form).value || 'https://rollerreels.com/calendar';
-            window.location.href = redirectUrl;
+            var formNextUrlEl = qs('#form-next-url', form);
+            window.location.href = (formNextUrlEl && formNextUrlEl.value) ? formNextUrlEl.value : 'https://rollerreels.com/calendar';
           } catch (e) {
             window.location.href = 'https://rollerreels.com/calendar';
           }
@@ -2138,14 +1868,12 @@ textarea.w-input {
           });
         }
 
-        // Guard against Enter-key native form submits; keep flow Cal-first only.
         form.addEventListener('submit', function(e) {
           e.preventDefault();
           if (currentStep !== 7) return;
           finalizeToCalendar();
         });
 
-        // Initial sync
         syncConditionalUI(getBookingState());
         handleEstimateUpdate();
         setStep(1);
@@ -2236,9 +1964,12 @@ textarea.w-input {
           if (input.type === 'radio') maybeAutoAdvance();
         });
 
-        // Text input changes also gate the Next button
+        // Text input changes also gate the Next button and update estimate
         document.addEventListener('input', function(e) {
-          if (form.contains(e.target)) syncNextButtonState(currentStep);
+          if (form.contains(e.target)) {
+            syncNextButtonState(currentStep);
+            handleEstimateUpdate();
+          }
         });
 
         // ── Lenis smooth scroll ─────────────────────────────────────────────
