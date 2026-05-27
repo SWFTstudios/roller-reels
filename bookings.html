@@ -552,11 +552,64 @@ textarea.w-input {
 }
 
 /* JS fallback: .is-selected toggled in script */
-</style>
+
+/* ── Step counter (beside race bar) ── */
+#step-counter {
+  position: fixed; top: 7px; right: 14px; z-index: 9999;
+  font-family: var(--font-ui); font-size: 10px; font-weight: 700;
+  letter-spacing: 0.12em; color: rgba(226,226,226,0.55); pointer-events: none;
+}
+
+/* ── Disabled Next button ── */
+#next-step-btn:disabled,
+#next-step-btn.is-disabled {
+  opacity: 0.28 !important;
+  cursor: not-allowed !important;
+  pointer-events: none !important;
+  box-shadow: none !important;
+}
+
+/* ── Mobile: compact everything so each step fits in view ── */
+@media (max-width: 640px) {
+  /* Hide page intro — each step has its own headline */
+  .booking-page-intro { display: none !important; }
+  /* Compact step hero */
+  .booking-step .question-2 > .section-header:first-child .heading-2 {
+    font-size: clamp(1.8rem, 7vw, 2.4rem) !important;
+    margin-bottom: 0.2rem !important;
+    line-height: 0.95 !important;
+  }
+  .step-phase-label { font-size: 9px !important; margin-bottom: 0.15rem !important; }
+  /* Descriptor is self-evident from card text — hide to save ~50px */
+  .step-hero-desc { display: none !important; }
+  /* Compact radio cards */
+  .radio-button.w-radio .radio-main-text.w-form-label {
+    font-size: 1.1rem !important;
+    padding: 0.65rem 1rem 0.1rem 1.1rem !important;
+  }
+  .radio-button.w-radio .radio-sub-text {
+    padding: 0 1rem 0.6rem 1.1rem !important;
+    font-size: 0.72rem !important;
+    line-height: 1.45 !important;
+  }
+  .radio-buttons { gap: 2px !important; }
+  /* Sub-heading labels above card groups */
+  .question-box { margin-top: 0.6rem !important; }
+  .question-box .section-header .heading-2 {
+    font-size: 0.6rem !important;
+    margin-bottom: 0.3rem !important;
+    letter-spacing: 0.16em !important;
+    opacity: 0.55 !important;
+  }
+  /* Route cards: tighter */
+  .route-card.radio-button.w-radio { min-height: 90px !important; }
+  .route-card .radio-main-text.w-form-label { font-size: 1rem !important; padding-top: 0.9rem !important; }
+}</style>
     </div>
-    <!-- Race progress bar -->
+    <!-- Race progress bar + step counter -->
     <div id="race-progress-track"></div>
     <div id="race-progress-bar"></div>
+    <div id="step-counter">1 / 7</div>
     <div class="navigation">
       <div class="logotypes">
         <a href="index.html" class="nav-logo-link w-inline-block"><img loading="lazy" src="images/Roller-Reels-Logo-RR-favicon-256.webp" alt="" class="weblocs-logo"></a>
@@ -1529,13 +1582,69 @@ textarea.w-input {
               stepLabel.textContent = STEP_LABELS[step - 1] || '';
             }
           }
+          // Step counter
+          var counter = qs('#step-counter');
+          if (counter) counter.textContent = step + ' / ' + totalSteps;
           // Nav buttons
           var prevBtn = qs('#prev-step-btn');
           var nextBtn = qs('#next-step-btn');
           var bookingSubmit = qs('#booking-submit');
-          if (prevBtn) prevBtn.style.display = (step === 1) ? 'none' : '';
+          // Back: always visible, dimmed on step 1 (nowhere to go back to)
+          if (prevBtn) {
+            prevBtn.style.display = '';
+            prevBtn.disabled = (step === 1);
+            if (step === 1) prevBtn.classList.add('is-disabled');
+            else prevBtn.classList.remove('is-disabled');
+          }
           if (nextBtn) nextBtn.style.display = (step === totalSteps) ? 'none' : '';
           if (bookingSubmit) bookingSubmit.style.display = (step === totalSteps) ? '' : 'none';
+        }
+
+        // ── Step completion + auto-advance ─────────────────────────────────
+        function isStepComplete(stepNum) {
+          var state = getBookingState();
+          switch (stepNum) {
+            case 1:
+              if (!state.sessionType || !state.people) return false;
+              if (state.people === '3+' && (!state.riderCount || state.riderCount < 3)) return false;
+              return true;
+            case 2: return !!state.vehicleType;
+            case 3:
+              if (!state.routeChoice) return false;
+              if (state.routeChoice === 'custom' && !state.customLocationDetails) return false;
+              return true;
+            case 4: return !!(state.coreStills || state.coreVideo);
+            case 5: return true; // optional step — always passable
+            case 6: {
+              var em = (state.email || '').trim();
+              return !!state.fullName && !!state.phone && !!state.agreement && !!em && isValidEmail(em);
+            }
+            default: return true;
+          }
+        }
+
+        function syncNextButtonState(stepNum) {
+          var btn = qs('#next-step-btn');
+          if (!btn) return;
+          var ok = isStepComplete(stepNum);
+          btn.disabled = !ok;
+          if (ok) btn.classList.remove('is-disabled');
+          else btn.classList.add('is-disabled');
+        }
+
+        // Auto-advance steps: complete when user picks the last required radio
+        var AUTO_ADVANCE_STEPS = [1, 2, 3, 4];
+        var autoAdvanceTimer = null;
+        function maybeAutoAdvance() {
+          if (AUTO_ADVANCE_STEPS.indexOf(currentStep) === -1) return;
+          if (!isStepComplete(currentStep)) return;
+          if (isAnimating) return;
+          clearTimeout(autoAdvanceTimer);
+          autoAdvanceTimer = setTimeout(function() {
+            if (!isAnimating && currentStep < totalSteps && isStepComplete(currentStep)) {
+              setStep(currentStep + 1, 'forward');
+            }
+          }, 460);
         }
 
         function handleArrival(step) {
@@ -1547,6 +1656,8 @@ textarea.w-input {
             renderReviewSummary(state, estimate);
             renderLiveSummary(state, estimate);
           }
+          // Sync Next button state for this step
+          syncNextButtonState(step);
           // Scroll to form top on mobile after step change
           if (window.innerWidth <= 768) {
             var target = qs('.section-5') || form;
@@ -1926,7 +2037,7 @@ textarea.w-input {
             }, { passive: true });
           });
 
-          // Radio selection: small spring-bounce on the label
+          // Radio selection: small spring-bounce on the label (GSAP only — logic handled centrally above)
           qsa('input[type="radio"]', form).forEach(function(radio) {
             radio.addEventListener('change', function() {
               var label = this.closest('label');
@@ -1944,31 +2055,38 @@ textarea.w-input {
           gsap.from('.form-block', { y: 28, opacity: 0, duration: 0.7, delay: 0.15, ease: 'power3.out', clearProps: 'all' });
         }
 
-        // ── Card selection: .is-selected fallback (for :has() on older iOS) ──
+        // ── Unified change handler: card selection + button state + auto-advance ──
         document.addEventListener('change', function(e) {
           var input = e.target;
-          if (input.type !== 'radio') return;
-          var name = input.name;
-          // Deselect all cards in this group
-          document.querySelectorAll('input[name="' + name + '"]').forEach(function(r) {
-            var card = r.closest('.radio-button.w-radio');
-            if (card) card.classList.remove('is-selected');
-          });
-          // Select the active card
-          var activeCard = input.closest('.radio-button.w-radio');
-          if (activeCard) {
-            activeCard.classList.add('is-selected');
-            // GSAP micro-punch — feels like locking in a gear
-            if (typeof gsap !== 'undefined') {
-              gsap.fromTo(activeCard,
-                { scale: 0.982 },
-                { scale: 1, duration: 0.35, ease: 'back.out(2.5)' }
-              );
+          if (!form.contains(input)) return;
+
+          if (input.type === 'radio') {
+            // .is-selected fallback for :has() on older iOS
+            var name = input.name;
+            document.querySelectorAll('input[name="' + name + '"]').forEach(function(r) {
+              var card = r.closest('.radio-button.w-radio');
+              if (card) card.classList.remove('is-selected');
+            });
+            var activeCard = input.closest('.radio-button.w-radio');
+            if (activeCard) {
+              activeCard.classList.add('is-selected');
+              if (typeof gsap !== 'undefined') {
+                gsap.fromTo(activeCard, { scale: 0.982 }, { scale: 1, duration: 0.35, ease: 'back.out(2.5)' });
+              }
             }
           }
+
+          // Re-evaluate Next button after any selection/input
+          syncNextButtonState(currentStep);
+
+          // Auto-advance on radio steps once all required fields are filled
+          if (input.type === 'radio') maybeAutoAdvance();
         });
-        // Restore .is-selected state after GSAP step transitions clear props
-        document.addEventListener('change', function() {}, true);
+
+        // Text input changes also gate the Next button
+        document.addEventListener('input', function(e) {
+          if (form.contains(e.target)) syncNextButtonState(currentStep);
+        });
 
         // ── Lenis smooth scroll ─────────────────────────────────────────────
         if (typeof Lenis !== 'undefined') {
