@@ -833,72 +833,52 @@ textarea.w-input {
                 <div class="question-2">
                   <div class="section-header small-header">
                     <div class="step-phase-label">Step 1 / The Mission</div>
-                    <h2 class="heading-2">Ready</h2>
-                    <p class="step-hero-desc">Select your formation and visual payload. Precision planning dictates the outcome on the asphalt.</p>
+                    <h2 class="heading-2">Choose Your Ride</h2>
+                    <p class="step-hero-desc">Your ride deserves more than parking lot pics.</p>
                   </div>
-
-                  <div class="question-box">
-                    <div class="section-header small-header" style="margin-top:0;">
-                      <h2 class="heading-2" style="font-size:1.15rem;">Session type</h2>
-                    </div>
-                    <div class="radio-buttons">
-                      <label class="radio-button w-radio">
-                        <div class="w-form-formradioinput w-form-formradioinput--inputType-custom radio-input w-radio-input"></div>
-                        <input type="radio" name="sessionType" id="session-static" style="opacity:0;position:absolute;z-index:-1" value="STATIC">
-                        <div class="radio-circle-box"></div>
-                        <span for="session-static" class="radio-main-text w-form-label">STATIC</span>
-                        <div class="radio-sub-text">Stationary at a location — clean compositions, controlled lighting, gallery-worthy shots. From $299.</div>
-                      </label>
-                      <label class="radio-button w-radio">
-                        <div class="w-form-formradioinput w-form-formradioinput--inputType-custom radio-input w-radio-input"></div>
-                        <input type="radio" name="sessionType" id="session-rollers" style="opacity:0;position:absolute;z-index:-1" value="ROLLERS">
-                        <div class="radio-circle-box"></div>
-                        <span for="session-rollers" class="radio-main-text w-form-label">ROLLERS</span>
-                        <div class="radio-sub-text">Moving shots on the road/highway — cinematic, dynamic, the kind of content people stop scrolling for. From $499.</div>
-                      </label>
-                    </div>
-                    <div id="error-sessionType" class="field-error"></div>
+                  <div class="radio-buttons">
+                    <label class="radio-button w-radio card-compact">
+                      <div class="w-form-formradioinput w-form-formradioinput--inputType-custom radio-input w-radio-input"></div>
+                      <input type="radio" name="rideType" id="ride-car" style="opacity:0;position:absolute;z-index:-1" value="car">
+                      <div class="radio-circle-box"></div>
+                      <div class="card-icon-wrap">🚗</div>
+                      <span for="ride-car" class="radio-main-text w-form-label">Car</span>
+                      <div class="radio-sub-text">Solo vehicle — full focus on your machine</div>
+                      <div class="card-badge">Solo</div>
+                    </label>
+                    <label class="radio-button w-radio card-compact">
+                      <div class="w-form-formradioinput w-form-formradioinput--inputType-custom radio-input w-radio-input"></div>
+                      <input type="radio" name="rideType" id="ride-motorcycle" style="opacity:0;position:absolute;z-index:-1" value="motorcycle">
+                      <div class="radio-circle-box"></div>
+                      <div class="card-icon-wrap">🏍</div>
+                      <span for="ride-motorcycle" class="radio-main-text w-form-label">Motorcycle</span>
+                      <div class="radio-sub-text">Solo moto — every angle covered</div>
+                      <div class="card-badge">Solo</div>
+                    </label>
+                    <label class="radio-button w-radio card-compact">
+                      <div class="w-form-formradioinput w-form-formradioinput--inputType-custom radio-input w-radio-input"></div>
+                      <input type="radio" name="rideType" id="ride-duo" style="opacity:0;position:absolute;z-index:-1" value="duo">
+                      <div class="radio-circle-box"></div>
+                      <div class="card-icon-wrap">⚡</div>
+                      <span for="ride-duo" class="radio-main-text w-form-label">Duo</span>
+                      <div class="radio-sub-text">Two riders shooting together</div>
+                      <div class="card-badge">2 Riders</div>
+                    </label>
+                    <label class="radio-button w-radio card-compact">
+                      <div class="w-form-formradioinput w-form-formradioinput--inputType-custom radio-input w-radio-input"></div>
+                      <input type="radio" name="rideType" id="ride-crew" style="opacity:0;position:absolute;z-index:-1" value="crew">
+                      <div class="radio-circle-box"></div>
+                      <div class="card-icon-wrap">🔥</div>
+                      <span for="ride-crew" class="radio-main-text w-form-label">Crew</span>
+                      <div class="radio-sub-text">3+ vehicles — full formation session</div>
+                      <div class="card-badge">Group</div>
+                    </label>
                   </div>
-
-                  <div class="question-box" style="margin-top:1rem;">
-                    <div class="section-header small-header" style="margin-top:0;">
-                      <h2 class="heading-2" style="font-size:1.15rem;">How many riders?</h2>
-                    </div>
-                    <div class="radio-buttons">
-                      <label class="radio-button w-radio">
-                        <div class="w-form-formradioinput w-form-formradioinput--inputType-custom radio-input w-radio-input"></div>
-                        <input type="radio" name="people" id="people-1" style="opacity:0;position:absolute;z-index:-1" value="1">
-                        <div class="radio-circle-box"></div>
-                        <span for="people-1" class="radio-main-text w-form-label">1</span>
-                        <div class="radio-sub-text">Solo</div>
-                      </label>
-                      <label class="radio-button w-radio">
-                        <div class="w-form-formradioinput w-form-formradioinput--inputType-custom radio-input w-radio-input"></div>
-                        <input type="radio" name="people" id="people-2" style="opacity:0;position:absolute;z-index:-1" value="2">
-                        <div class="radio-circle-box"></div>
-                        <span for="people-2" class="radio-main-text w-form-label">2</span>
-                        <div class="radio-sub-text">Friends</div>
-                      </label>
-                      <label class="radio-button w-radio">
-                        <div class="w-form-formradioinput w-form-formradioinput--inputType-custom radio-input w-radio-input"></div>
-                        <input type="radio" name="people" id="people-3plus" style="opacity:0;position:absolute;z-index:-1" value="3+">
-                        <div class="radio-circle-box"></div>
-                        <span for="people-3plus" class="radio-main-text w-form-label">3+</span>
-                        <div class="radio-sub-text">Group</div>
-                      </label>
-                    </div>
-                    <div id="error-people" class="field-error"></div>
-                  </div>
-
-                  <div class="question-2" id="group-count-wrap" style="display:none;">
-                    <div class="section-header small-header">
-                      <h2 class="heading-2">How many in your group?</h2>
-                    </div>
-                    <div class="input-box">
-                      <label class="price-box-label" for="group-count">Group size</label>
-                      <input class="text-field w-input" type="number" name="groupCount" id="group-count" data-name="groupCount" min="3" step="1" placeholder="3" style="max-width:6rem;">
-                    </div>
-                    <div id="error-group-count" class="field-error"></div>
+                  <div id="error-rideType" class="field-error"></div>
+                  <div id="crew-size-wrap" style="display:none;margin-top:0.75rem;">
+                    <label class="price-box-label" for="crew-size">How many vehicles in your crew?</label>
+                    <input class="text-field w-input" type="number" id="crew-size" name="crewSize" min="3" step="1" placeholder="3" style="max-width:6rem;margin-top:0.35rem;">
+                    <div id="error-crewSize" class="field-error"></div>
                   </div>
                 </div>
               </section>
@@ -907,48 +887,40 @@ textarea.w-input {
               <section class="booking-step" id="step-2" data-step="2">
                 <div class="question-2">
                   <div class="section-header small-header">
-                    <div class="step-phase-label">Step 2 / The Machine</div>
-                    <h2 class="heading-2">Your Ride</h2>
-                    <p class="step-hero-desc">Tell us what we're working with. Make, model, year — the machine sets the tone.</p>
+                    <div class="step-phase-label">Step 2 / The Style</div>
+                    <h2 class="heading-2">Shoot Style</h2>
+                    <p class="step-hero-desc">Built different? Shoot it different.</p>
                   </div>
-
-                  <div class="question-box">
-                    <div class="radio-buttons">
-                      <label class="radio-button w-radio">
-                        <div class="w-form-formradioinput w-form-formradioinput--inputType-custom radio-input w-radio-input"></div>
-                        <input type="radio" name="vehicleType" id="vehicle-motorcycle" style="opacity:0;position:absolute;z-index:-1" value="Motorcycle">
-                        <div class="radio-circle-box"></div>
-                        <span for="vehicle-motorcycle" class="radio-main-text w-form-label">Motorcycle</span>
-                      </label>
-                      <label class="radio-button w-radio">
-                        <div class="w-form-formradioinput w-form-formradioinput--inputType-custom radio-input w-radio-input"></div>
-                        <input type="radio" name="vehicleType" id="vehicle-car" style="opacity:0;position:absolute;z-index:-1" value="Car">
-                        <div class="radio-circle-box"></div>
-                        <span for="vehicle-car" class="radio-main-text w-form-label">Car</span>
-                      </label>
-                      <label class="radio-button w-radio">
-                        <div class="w-form-formradioinput w-form-formradioinput--inputType-custom radio-input w-radio-input"></div>
-                        <input type="radio" name="vehicleType" id="vehicle-both" style="opacity:0;position:absolute;z-index:-1" value="Both">
-                        <div class="radio-circle-box"></div>
-                        <span for="vehicle-both" class="radio-main-text w-form-label">Both</span>
-                      </label>
-                    </div>
-                    <div id="error-vehicleType" class="field-error"></div>
+                  <div class="radio-buttons">
+                    <label class="radio-button w-radio card-compact">
+                      <div class="w-form-formradioinput w-form-formradioinput--inputType-custom radio-input w-radio-input"></div>
+                      <input type="radio" name="shootStyle" id="style-static" style="opacity:0;position:absolute;z-index:-1" value="static">
+                      <div class="radio-circle-box"></div>
+                      <div class="card-icon-wrap">📸</div>
+                      <span for="style-static" class="radio-main-text w-form-label">Static</span>
+                      <div class="radio-sub-text">Parked at a location — clean compositions, controlled lighting</div>
+                      <div class="card-badge">From $299</div>
+                    </label>
+                    <label class="radio-button w-radio card-compact">
+                      <div class="w-form-formradioinput w-form-formradioinput--inputType-custom radio-input w-radio-input"></div>
+                      <input type="radio" name="shootStyle" id="style-rollers" style="opacity:0;position:absolute;z-index:-1" value="rollers">
+                      <div class="radio-circle-box"></div>
+                      <div class="card-icon-wrap">🎬</div>
+                      <span for="style-rollers" class="radio-main-text w-form-label">Rollers</span>
+                      <div class="radio-sub-text">Moving highway shots — cinematic, dynamic, stops the scroll</div>
+                      <div class="card-badge">From $499</div>
+                    </label>
+                    <label class="radio-button w-radio card-compact">
+                      <div class="w-form-formradioinput w-form-formradioinput--inputType-custom radio-input w-radio-input"></div>
+                      <input type="radio" name="shootStyle" id="style-cinematic" style="opacity:0;position:absolute;z-index:-1" value="cinematic">
+                      <div class="radio-circle-box"></div>
+                      <div class="card-icon-wrap">🎥</div>
+                      <span for="style-cinematic" class="radio-main-text w-form-label">Full Cinematic</span>
+                      <div class="radio-sub-text">Static + rollers + multiple setups. Full production day.</div>
+                      <div class="card-badge">From $899</div>
+                    </label>
                   </div>
-
-                  <div class="question-2" style="margin-top:1rem;">
-                    <div class="section-header small-header">
-                      <h2 class="heading-2">Vehicle details</h2>
-                    </div>
-                    <div class="input-box" style="margin-top:0.25rem;">
-                      <label class="price-box-label" for="vehicle-count">Number of vehicles</label>
-                      <input class="text-field w-input" type="number" id="vehicle-count" name="vehicleCount" min="1" step="1" value="1" style="max-width:6rem;">
-                    </div>
-                    <div id="vehicle-details-list" style="margin-top:0.75rem;"></div>
-                    <div class="price-box-label" style="margin-top:0.25rem;opacity:0.75;">Optional: add year/make/model for each vehicle.</div>
-                    <div id="error-vehicleYearMakeModel" class="field-error"></div>
-                    <div id="error-vehicleCount" class="field-error"></div>
-                  </div>
+                  <div id="error-shootStyle" class="field-error"></div>
                 </div>
               </section>
 
@@ -957,57 +929,53 @@ textarea.w-input {
                 <div class="question-2">
                   <div class="section-header small-header">
                     <div class="step-phase-label">Step 3 / The Set</div>
-                    <h2 class="heading-2">The Course</h2>
-                    <p class="step-hero-desc">Select a pre-scouted route engineered for maximum visual impact, or chart your own trajectory through the night.</p>
+                    <h2 class="heading-2">Pick Your Scene</h2>
+                    <p class="step-hero-desc">Location sets the mood. Pick your backdrop.</p>
                   </div>
-
                   <div class="question-box">
                     <div id="route-grid" class="route-grid">
                       <label class="route-card radio-button w-radio">
                         <div class="w-form-formradioinput w-form-formradioinput--inputType-custom radio-input w-radio-input"></div>
-                        <input type="radio" name="routeChoice" id="route-autobahn-80" style="opacity:0;position:absolute;z-index:-1" value="autobahn-80">
+                        <input type="radio" name="sceneChoice" id="scene-city-night" style="opacity:0;position:absolute;z-index:-1" value="city-night">
                         <div class="radio-circle-box"></div>
-                        <span for="route-autobahn-80" class="radio-main-text w-form-label">Autobahn 80</span>
-                        <a href="https://maps.app.goo.gl/3DUNGfH6iWVvEadd6" target="_blank" class="course-link">Link To Course</a>
-                        <div class="radio-sub-text">4 Lane Highway, Mild Turns</div>
+                        <span for="scene-city-night" class="radio-main-text w-form-label">City Night</span>
+                        <div class="radio-sub-text">NYC skyline + street glow. Night energy only.</div>
                       </label>
                       <label class="route-card radio-button w-radio">
                         <div class="w-form-formradioinput w-form-formradioinput--inputType-custom radio-input w-radio-input"></div>
-                        <input type="radio" name="routeChoice" id="route-winding-mountains" style="opacity:0;position:absolute;z-index:-1" value="winding-mountains">
+                        <input type="radio" name="sceneChoice" id="scene-mountain-road" style="opacity:0;position:absolute;z-index:-1" value="mountain-road">
                         <div class="radio-circle-box"></div>
-                        <span for="route-winding-mountains" class="radio-main-text w-form-label">Winding Mountains</span>
-                        <a href="https://maps.app.goo.gl/aEqvvc6V5b8mWsnA6" target="_blank" class="course-link">Link To Course</a>
-                        <div class="radio-sub-text">Highway plus mix of windy roads with nature in the background</div>
+                        <span for="scene-mountain-road" class="radio-main-text w-form-label">Mountain Road</span>
+                        <div class="radio-sub-text">Winding roads + nature. Cinematic wide angles.</div>
                       </label>
                       <label class="route-card radio-button w-radio">
                         <div class="w-form-formradioinput w-form-formradioinput--inputType-custom radio-input w-radio-input"></div>
-                        <input type="radio" name="routeChoice" id="route-nyc-skyline-views" style="opacity:0;position:absolute;z-index:-1" value="nyc-skyline-views">
+                        <input type="radio" name="sceneChoice" id="scene-industrial-lot" style="opacity:0;position:absolute;z-index:-1" value="industrial-lot">
                         <div class="radio-circle-box"></div>
-                        <span for="route-nyc-skyline-views" class="radio-main-text w-form-label">NYC Skyline Views</span>
-                        <a href="https://maps.app.goo.gl/wvMpe1VVAtAW9BS48" target="_blank" class="course-link">Link To Course</a>
-                        <div class="radio-sub-text">Highway and narrow streets with NYC in the background</div>
+                        <span for="scene-industrial-lot" class="radio-main-text w-form-label">Industrial Lot</span>
+                        <div class="radio-sub-text">Urban concrete + texture. Gritty garage aesthetic.</div>
                       </label>
                       <label class="route-card radio-button w-radio">
                         <div class="w-form-formradioinput w-form-formradioinput--inputType-custom radio-input w-radio-input"></div>
-                        <input type="radio" name="routeChoice" id="route-custom" style="opacity:0;position:absolute;z-index:-1" value="custom">
+                        <input type="radio" name="sceneChoice" id="scene-highway-motion" style="opacity:0;position:absolute;z-index:-1" value="highway-motion">
                         <div class="radio-circle-box"></div>
-                        <span for="route-custom" class="radio-main-text w-form-label">Custom Location</span>
-                        <div class="radio-sub-text">Tell us where you want to go</div>
+                        <span for="scene-highway-motion" class="radio-main-text w-form-label">Highway Motion</span>
+                        <div class="radio-sub-text">4-lane speed runs. All movement, no mercy.</div>
+                      </label>
+                      <label class="route-card radio-button w-radio">
+                        <div class="w-form-formradioinput w-form-formradioinput--inputType-custom radio-input w-radio-input"></div>
+                        <input type="radio" name="sceneChoice" id="scene-custom" style="opacity:0;position:absolute;z-index:-1" value="custom">
+                        <div class="radio-circle-box"></div>
+                        <span for="scene-custom" class="radio-main-text w-form-label">Custom Spot</span>
+                        <div class="radio-sub-text">You pick the location, we make it cinematic. +$100</div>
                       </label>
                     </div>
-                    <div id="error-routeChoice" class="field-error"></div>
+                    <div id="error-sceneChoice" class="field-error"></div>
                   </div>
-
-                  <div class="question-2" id="custom-location-wrap" style="display:none;margin-top:1rem;">
-                    <div class="section-header small-header">
-                      <h2 class="heading-2">Custom location details</h2>
-                      <p class="radio-sub-text">Additional cost applies for custom setups.</p>
-                    </div>
-                    <div class="input-box">
-                      <label class="price-box-label" for="custom-location-details">Where should we shoot?</label>
-                      <textarea class="text-field w-input" id="custom-location-details" name="customLocationDetails" maxlength="500" placeholder="Neighborhood, address, or exact spot(s)..." style="min-height:96px;"></textarea>
-                    </div>
-                    <div id="error-customLocationDetails" class="field-error"></div>
+                  <div id="custom-scene-wrap" style="display:none;margin-top:0.75rem;">
+                    <label class="price-box-label" for="custom-scene-details">Where should we shoot?</label>
+                    <textarea class="text-field w-input" id="custom-scene-details" name="customSceneDetails" maxlength="500" placeholder="Neighborhood, address, or exact spot(s)..." style="min-height:76px;margin-top:0.35rem;"></textarea>
+                    <div id="error-customSceneDetails" class="field-error"></div>
                   </div>
                 </div>
               </section>
@@ -1015,85 +983,97 @@ textarea.w-input {
               <!-- Step 4 -->
               <section class="booking-step" id="step-4" data-step="4">
                 <div class="question-2">
-                  <div class="section-header medium-header">
+                  <div class="section-header small-header">
                     <div class="step-phase-label">Step 4 / Payload</div>
-                    <h2 class="heading-2">Payload</h2>
-                    <p class="step-hero-desc">Define your content package. Photos, video, or both — plus any physical upgrades.</p>
+                    <h2 class="heading-2">Content Loadout</h2>
+                    <p class="step-hero-desc">What goes in the memory card?</p>
                   </div>
-
                   <div class="question-box">
-                    <div class="section-header small-header" style="margin-top:0;">
-                      <h2 class="heading-2" style="font-size:1.15rem;">Core deliverables</h2>
-                    </div>
+                    <div class="question-box-label">Core Format</div>
                     <div class="radio-buttons">
-                      <label class="radio-button w-radio">
+                      <label class="radio-button w-radio card-compact">
                         <div class="w-form-formradioinput w-form-formradioinput--inputType-custom radio-input w-radio-input"></div>
-                        <input type="radio" name="corePackage" id="core-photo-only" style="opacity:0;position:absolute;z-index:-1" value="photo">
+                        <input type="radio" name="coreDeliverables" id="core-photos" style="opacity:0;position:absolute;z-index:-1" value="photos">
                         <div class="radio-circle-box"></div>
-                        <span for="core-photo-only" class="radio-main-text w-form-label">Photo Only</span>
-                        <div class="radio-sub-text deliverable-hint">20+ edited stills — color-graded and ready to post</div>
+                        <div class="card-icon-wrap">📷</div>
+                        <span for="core-photos" class="radio-main-text w-form-label">Photos</span>
+                        <div class="radio-sub-text">20+ edited stills, color-graded, gallery-ready</div>
                       </label>
-                      <label class="radio-button w-radio">
+                      <label class="radio-button w-radio card-compact">
                         <div class="w-form-formradioinput w-form-formradioinput--inputType-custom radio-input w-radio-input"></div>
-                        <input type="radio" name="corePackage" id="core-video-only" style="opacity:0;position:absolute;z-index:-1" value="video">
+                        <input type="radio" name="coreDeliverables" id="core-video" style="opacity:0;position:absolute;z-index:-1" value="video">
                         <div class="radio-circle-box"></div>
-                        <span for="core-video-only" class="radio-main-text w-form-label">Video Only</span>
-                        <div class="radio-sub-text deliverable-hint">Cinematic edit — short-form reel + full cut, music synced</div>
+                        <div class="card-icon-wrap">🎬</div>
+                        <span for="core-video" class="radio-main-text w-form-label">Video</span>
+                        <div class="radio-sub-text">Short-form reel + full cut, music synced</div>
                       </label>
-                      <label class="radio-button w-radio">
+                      <label class="radio-button w-radio card-compact">
                         <div class="w-form-formradioinput w-form-formradioinput--inputType-custom radio-input w-radio-input"></div>
-                        <input type="radio" name="corePackage" id="core-both" style="opacity:0;position:absolute;z-index:-1" value="both">
+                        <input type="radio" name="coreDeliverables" id="core-both" style="opacity:0;position:absolute;z-index:-1" value="both">
                         <div class="radio-circle-box"></div>
-                        <span for="core-both" class="radio-main-text w-form-label">Both Photo &amp; Video</span>
-                        <div class="radio-sub-text deliverable-hint">Best value — photos + video + social-ready content, all in one session</div>
+                        <div class="card-icon-wrap">🎯</div>
+                        <span for="core-both" class="radio-main-text w-form-label">Both</span>
+                        <div class="radio-sub-text">Photos + video — best value, everything in one session</div>
                       </label>
                     </div>
-
                     <div id="error-coreDeliverables" class="field-error" style="margin-top:0.5rem;"></div>
                   </div>
-
-                  <div class="question-box" style="margin-top:1rem;">
-                    <div class="section-header small-header" style="margin-top:0;">
-                      <h2 class="heading-2" style="font-size:1.15rem;">Add-ons</h2>
-                    </div>
-
-                    <div class="radio-buttons" style="display:flex;flex-direction:column;gap:0.5rem;">
-                      <label class="w-checkbox checkbox-field" style="margin:0;">
-                        <div class="w-checkbox-input w-checkbox-input--inputType-custom checkbox"></div>
-                        <input type="checkbox" id="addon-raw-footage" name="rawFootage" style="opacity:0;position:absolute;z-index:-1">
-                        <span for="addon-raw-footage" class="checkbox-label w-form-label">Raw Footage Archive — $150</span>
-                      </label>
-
-                      <label class="w-checkbox checkbox-field" style="margin:0;">
-                        <div class="w-checkbox-input w-checkbox-input--inputType-custom checkbox"></div>
-                        <input type="checkbox" id="addon-rush" name="rushDelivery" style="opacity:0;position:absolute;z-index:-1">
-                        <span for="addon-rush" class="checkbox-label w-form-label">Rush Delivery (48–72 hrs) — $150</span>
-                      </label>
-
-                      <label class="w-checkbox checkbox-field" style="margin:0;">
-                        <div class="w-checkbox-input w-checkbox-input--inputType-custom checkbox"></div>
-                        <input type="checkbox" id="addon-posters" name="posters" style="opacity:0;position:absolute;z-index:-1">
-                        <span for="addon-posters" class="checkbox-label w-form-label">Signature Posters — $75 each</span>
-                      </label>
-
-                      <div id="poster-qty-wrap" style="display:none;align-items:center;gap:0.75rem;margin-top:0.25rem;">
-                        <button type="button" id="poster-qty-minus" class="submit-button w-button" style="min-width:44px;">-</button>
-                        <div class="price-box-label" style="margin:0;">Qty</div>
-                        <input type="number" id="poster-qty" name="posterQty" min="1" step="1" value="1" class="text-field w-input" style="max-width:6rem;">
-                        <button type="button" id="poster-qty-plus" class="submit-button w-button" style="min-width:44px;">+</button>
+                  <div class="question-box" style="margin-top:0.875rem;">
+                    <div class="question-box-label">Upgrade Your Loadout <span style="font-weight:400;opacity:0.65;">(Optional)</span></div>
+                    <div class="upgrade-tiles" id="upgrade-tiles">
+                      <div class="upgrade-tile" data-addon="rawFootage" data-requires="video" role="checkbox" aria-checked="false" tabindex="0">
+                        <div class="upgrade-check">✓</div>
+                        <div class="upgrade-tile-body">
+                          <div class="upgrade-tile-label">Raw Footage Archive</div>
+                          <div class="upgrade-tile-desc">Keep the unedited files. Your backup, forever.</div>
+                        </div>
+                        <div class="upgrade-tile-price">+$150</div>
+                        <input type="checkbox" name="rawFootage" id="addon-raw-footage" style="display:none;">
                       </div>
-
-                      <label class="w-checkbox checkbox-field" style="margin:0;">
-                        <div class="w-checkbox-input w-checkbox-input--inputType-custom checkbox"></div>
-                        <input type="checkbox" id="addon-calendar" name="calendar12Month" style="opacity:0;position:absolute;z-index:-1">
-                        <span for="addon-calendar" class="checkbox-label w-form-label">12-Month Photo Calendar — $120</span>
-                      </label>
-
-                      <label class="w-checkbox checkbox-field" style="margin:0;">
-                        <div class="w-checkbox-input w-checkbox-input--inputType-custom checkbox"></div>
-                        <input type="checkbox" id="addon-custom-edit" name="customVideoEdit" style="opacity:0;position:absolute;z-index:-1">
-                        <span for="addon-custom-edit" class="checkbox-label w-form-label">Custom Edit / Alternate Cut — $200</span>
-                      </label>
+                      <div class="upgrade-tile" data-addon="rushDelivery" role="checkbox" aria-checked="false" tabindex="0">
+                        <div class="upgrade-check">✓</div>
+                        <div class="upgrade-tile-body">
+                          <div class="upgrade-tile-label">Rush Delivery</div>
+                          <div class="upgrade-tile-desc">Turnaround in 48–72 hrs instead of 7–10 days.</div>
+                        </div>
+                        <div class="upgrade-tile-price">+$150</div>
+                        <input type="checkbox" name="rushDelivery" id="addon-rush" style="display:none;">
+                      </div>
+                      <div class="upgrade-tile" data-addon="posters" data-requires="photos" role="checkbox" aria-checked="false" tabindex="0">
+                        <div class="upgrade-check">✓</div>
+                        <div class="upgrade-tile-body">
+                          <div class="upgrade-tile-label">Signature Poster</div>
+                          <div class="upgrade-tile-desc">Print-ready cinematic poster of your build. $75 each.</div>
+                        </div>
+                        <div class="upgrade-tile-price">+$75</div>
+                        <input type="checkbox" name="posters" id="addon-posters" style="display:none;">
+                      </div>
+                      <div id="poster-qty-tile" style="display:none;padding:0.45rem 0.875rem 0.55rem 3rem;background:var(--me-surface-low);border:1px solid var(--me-ghost);border-top:none;margin-top:-2px;">
+                        <label class="price-box-label" for="poster-qty" style="font-size:9px;">How many posters?</label>
+                        <div style="display:flex;align-items:center;gap:0.5rem;margin-top:0.3rem;">
+                          <button type="button" id="poster-qty-minus" class="submit-button w-button" style="min-width:34px;min-height:34px;padding:0;font-size:1.1rem;line-height:1;">-</button>
+                          <input type="number" id="poster-qty" name="posterQty" min="1" step="1" value="1" class="text-field w-input" style="max-width:5rem;">
+                          <button type="button" id="poster-qty-plus" class="submit-button w-button" style="min-width:34px;min-height:34px;padding:0;font-size:1.1rem;line-height:1;">+</button>
+                        </div>
+                      </div>
+                      <div class="upgrade-tile" data-addon="calendar12Month" data-requires="photos" role="checkbox" aria-checked="false" tabindex="0">
+                        <div class="upgrade-check">✓</div>
+                        <div class="upgrade-tile-body">
+                          <div class="upgrade-tile-label">12-Month Photo Calendar</div>
+                          <div class="upgrade-tile-desc">Custom calendar printed with your shoot photos.</div>
+                        </div>
+                        <div class="upgrade-tile-price">+$120</div>
+                        <input type="checkbox" name="calendar12Month" id="addon-calendar" style="display:none;">
+                      </div>
+                      <div class="upgrade-tile" data-addon="altCut" data-requires="video" role="checkbox" aria-checked="false" tabindex="0">
+                        <div class="upgrade-check">✓</div>
+                        <div class="upgrade-tile-body">
+                          <div class="upgrade-tile-label">Alternate Cut</div>
+                          <div class="upgrade-tile-desc">Second edit — different vibe, same footage.</div>
+                        </div>
+                        <div class="upgrade-tile-price">+$200</div>
+                        <input type="checkbox" name="altCut" id="addon-custom-edit" style="display:none;">
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -1102,28 +1082,27 @@ textarea.w-input {
               <!-- Step 5 -->
               <section class="booking-step" id="step-5" data-step="5">
                 <div class="question-2">
-                  <div class="section-header medium-header">
-                    <div class="step-phase-label">Step 5 / Reference Inspo</div>
-                    <h2 class="heading-2">The Vision</h2>
-                    <p class="step-hero-desc">Optional — share reference shots, IG handles, or specific instructions. The more we know, the sharper the output.</p>
+                  <div class="section-header small-header">
+                    <div class="step-phase-label">Step 5 / The Vision</div>
+                    <h2 class="heading-2">Share The Vision</h2>
+                    <p class="step-hero-desc">Help us see what you see. More detail = better output. All optional.</p>
                   </div>
-                  <div class="question-box">
-                    <div class="question-2" style="margin-top:1rem;">
-                      <div class="section-header small-header">
-                        <h2 class="heading-2" style="font-size:1.15rem;">Optional references</h2>
-                      </div>
-                      <div class="input-box">
-                        <label class="price-box-label" for="instagram-handle">Instagram handle (optional)</label>
-                        <input class="text-field w-input" type="text" id="instagram-handle" name="instagramHandle" maxlength="120" placeholder="@yourname">
-                      </div>
-                      <div class="input-box" style="margin-top:0.75rem;">
-                        <label class="price-box-label" for="reference-link">Inspiration / reference link (optional)</label>
-                        <input class="text-field w-input" type="url" id="reference-link" name="referenceLink" maxlength="500" placeholder="https://...">
-                      </div>
-                      <div class="input-box" style="margin-top:0.75rem;">
-                        <label class="price-box-label" for="extra-notes">Extra notes (optional)</label>
-                        <textarea class="text-field w-input" id="extra-notes" name="extraNotes" maxlength="2000" placeholder="Any must-have shots or specific vibes?"></textarea>
-                      </div>
+                  <div class="vision-fields">
+                    <div class="input-box">
+                      <label class="price-box-label" for="instagram-handle">Instagram handle</label>
+                      <input class="text-field w-input" type="text" id="instagram-handle" name="instagramHandle" maxlength="120" placeholder="@yourname">
+                    </div>
+                    <div class="input-box">
+                      <label class="price-box-label" for="reference-links">Reference content (links, IG, Pinterest)</label>
+                      <input class="text-field w-input" type="text" id="reference-links" name="referenceLinks" maxlength="500" placeholder="YouTube, IG post URL, etc.">
+                    </div>
+                    <div class="input-box">
+                      <label class="price-box-label" for="shoot-notes">Shoot notes / vibe direction</label>
+                      <textarea class="text-field w-input" id="shoot-notes" name="shootNotes" maxlength="2000" placeholder="Must-have shots, specific angles, aesthetic direction..." style="min-height:72px;"></textarea>
+                    </div>
+                    <div class="input-box">
+                      <label class="price-box-label" for="mod-details">Vehicle mods / details to highlight</label>
+                      <input class="text-field w-input" type="text" id="mod-details" name="modDetails" maxlength="500" placeholder="Exhaust, wrap, wheels, body kit...">
                     </div>
                   </div>
                 </div>
@@ -1132,36 +1111,36 @@ textarea.w-input {
               <!-- Step 6 -->
               <section class="booking-step" id="step-6" data-step="6">
                 <div class="question-2">
-                  <div class="section-header medium-header">
+                  <div class="section-header small-header">
                     <div class="step-phase-label">Step 6 / Driver Info</div>
-                    <h2 class="heading-2">Driver Info</h2>
-                    <p class="step-hero-desc">Who's behind the wheel? We need your details to confirm the booking and send pre-shoot coordinates.</p>
+                    <h2 class="heading-2">Your Details</h2>
+                    <p class="step-hero-desc">Lock in your spot. We'll confirm everything before shoot day.</p>
                   </div>
-
                   <div class="question-center-box">
                     <div class="input-box">
                       <label class="price-box-label" for="full-name">Full name</label>
                       <input class="text-field w-input" type="text" id="full-name" name="fullName" maxlength="256" placeholder="John Doe">
                       <div id="error-fullName" class="field-error"></div>
                     </div>
-
                     <div class="input-box" style="margin-top:0.75rem;">
                       <label class="price-box-label" for="email">Email</label>
                       <input class="text-field w-input" type="email" id="email" name="email" maxlength="256" placeholder="johndoe@gmail.com">
                       <div id="error-email" class="field-error"></div>
                     </div>
-
                     <div class="input-box" style="margin-top:0.75rem;">
-                      <label class="price-box-label" for="phone">Phone number</label>
+                      <label class="price-box-label" for="phone">Phone</label>
                       <input class="text-field w-input" type="tel" id="phone" name="phone" maxlength="50" placeholder="000-000-0000">
                       <div id="error-phone" class="field-error"></div>
                     </div>
-
-                    <div class="text-block-46" style="margin-top:0.75rem;">
+                    <div class="input-box" style="margin-top:0.75rem;">
+                      <label class="price-box-label" for="date-preference">Preferred shoot date / window</label>
+                      <input class="text-field w-input" type="text" id="date-preference" name="datePreference" maxlength="256" placeholder="e.g. any weekend in July, or July 12">
+                    </div>
+                    <div class="text-block-46" style="margin-top:0.875rem;">
                       <label class="w-checkbox checkbox-field" style="display:flex;gap:0.75rem;align-items:flex-start;">
-                        <div class="w-checkbox-input w-checkbox-input--inputType-custom checkbox" style="margin-top:0.15rem;"></div>
+                        <div class="w-checkbox-input w-checkbox-input--inputType-custom checkbox" style="margin-top:0.15rem;flex-shrink:0;"></div>
                         <input type="checkbox" id="agreement" name="agreement" style="opacity:0;position:absolute;z-index:-1">
-                        <span for="agreement" class="checkbox-label w-form-label">I agree to the <a href="terms.html" class="blocs-link">Terms and Conditions</a> and <a href="privacy.html" class="blocs-link">Privacy Policy</a>.</span>
+                        <span for="agreement" class="checkbox-label w-form-label" style="font-size:0.82rem;">I agree to the <a href="terms.html" style="color:var(--me-primary);">Terms and Conditions</a> and <a href="privacy.html" style="color:var(--me-primary);">Privacy Policy</a>.</span>
                       </label>
                       <div id="error-agreement" class="field-error"></div>
                     </div>
@@ -1172,30 +1151,33 @@ textarea.w-input {
               <!-- Step 7 -->
               <section class="booking-step" id="step-7" data-step="7">
                 <div class="question-2">
-                  <div class="section-header medium-header">
+                  <div class="section-header small-header">
                     <div class="step-phase-label">Step 7 / Mission Review</div>
                     <h2 class="heading-2">Mission Summary</h2>
-                    <p class="step-hero-desc">Your deployment parameters are confirmed. Review below, then secure your date with a $100 deposit — balance due on shoot day.</p>
+                    <p class="step-hero-desc">Review your build, then lock in your date with a $100 deposit — balance due on shoot day.</p>
                   </div>
-
                   <div id="review-summary">
-                    <div class="review-row"><span class="review-row-label">Session</span><span id="review-line-session" class="review-row-value"></span></div>
-                    <div class="review-row"><span class="review-row-label">Riders</span><span id="review-line-riders" class="review-row-value"></span></div>
-                    <div class="review-row"><span class="review-row-label">Vehicle</span><span id="review-line-vehicle" class="review-row-value"></span></div>
-                    <div class="review-row"><span class="review-row-label">Route</span><span id="review-line-route" class="review-row-value"></span></div>
-                    <div class="review-row"><span class="review-row-label">Deliverables</span><span id="review-line-deliverables" class="review-row-value"></span></div>
+                    <div class="review-row"><span class="review-row-label">Ride</span><span id="review-line-ride" class="review-row-value"></span></div>
+                    <div class="review-row"><span class="review-row-label">Style</span><span id="review-line-style" class="review-row-value"></span></div>
+                    <div class="review-row"><span class="review-row-label">Scene</span><span id="review-line-scene" class="review-row-value"></span></div>
+                    <div class="review-row"><span class="review-row-label">Format</span><span id="review-line-format" class="review-row-value"></span></div>
+                    <div class="review-row"><span class="review-row-label">Upgrades</span><span id="review-line-upgrades" class="review-row-value"></span></div>
                     <div class="review-row review-total-row"><span class="review-row-label">Estimated total</span><span id="review-line-estimated-total" class="review-row-value"></span></div>
                     <div class="review-row review-deposit-row"><span class="review-row-label">Deposit due today</span><span id="review-line-deposit" class="review-row-value"></span></div>
                     <div class="review-row" style="border-bottom:none;"><span class="review-row-label" style="opacity:0.6;">Balance due on shoot day</span><span id="review-line-balance" class="review-row-value" style="opacity:0.6;"></span></div>
                   </div>
-
-                  <p id="review-cta-note">After paying your deposit you'll pick your date on our calendar. Your shoot details are sent to the team — we'll be ready for you.</p>
-
+                  <p id="review-cta-note">After deposit, you'll pick your date on our calendar. Shoot details go to the team — we'll be ready.</p>
                   <div class="booking-step-nav" style="justify-content:flex-start;">
-                    <button type="button" id="booking-submit" class="submit-button w-button" style="background-color:var(--accent-color)!important;color:#141414!important;font-weight:700;">Pay $100 Deposit — Pick My Date</button>
+                    <button type="button" id="booking-submit" class="submit-button w-button" style="background-color:var(--accent-color)!important;color:#000!important;font-weight:700;">Lock In My Shoot — $100 Deposit</button>
                   </div>
                 </div>
               </section>
+
+              <!-- Mission Build bar -->
+              <div id="mission-build-bar" class="is-empty">
+                <div class="mission-build-label">Mission Build</div>
+                <div class="mission-build-total" id="mission-build-amount">—</div>
+              </div>
 
               <!-- Global step navigation -->
               <div class="booking-step-nav booking-global-nav">
@@ -1245,23 +1227,23 @@ textarea.w-input {
         var frozenReview = null;
 
         var PRICING = {
-          // Static sessions (stationary location, 1–2 crew)
-          staticStillsOnly: 299,
-          staticVideoOnly: 349,
-          staticVideoAndStills: 449,
-          // Rollers sessions (moving road/highway, full crew)
-          rollersStillsOnly: 499,
-          rollersVideoOnly: 549,
-          rollersVideoAndStills: 749,
-          // Group upcharge per rider beyond the 2nd
-          extraRider: 75,
-          // Add-ons
+          staticPhotos: 299,
+          staticVideo: 349,
+          staticBoth: 449,
+          rollersPhotos: 499,
+          rollersVideo: 549,
+          rollersBoth: 749,
+          cinematicPhotos: 899,
+          cinematicVideo: 999,
+          cinematicBoth: 1299,
+          duoUpcharge: 50,
+          crewUpchargePerRider: 75,
           rawFootage: 150,
           rushDelivery: 150,
-          customLocation: 100,
+          customScene: 100,
           posterEach: 75,
           calendar12Month: 120,
-          customVideoEdit: 200
+          altCut: 200
         };
 
         function qs(sel, root) { return (root || document).querySelector(sel); }
