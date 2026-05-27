@@ -38,7 +38,7 @@
 .route-grid { display: grid; grid-template-columns: 1fr; gap: 12px; }
 @media (min-width: 768px) { .route-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 .route-card { min-width: 0; width: 100%; box-sizing: border-box; }
-.booking-step-nav { margin-top: 1rem; display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+.booking-step-nav { margin-top: 1rem; display: flex; gap: 0.5rem; justify-content: stretch; flex-wrap: nowrap; }
 .booking-step-nav .w-button { cursor: pointer; }
 .step-indicator { text-align: center; margin-bottom: 0.5rem; font-size: 0.9rem; opacity: 0.9; }
 
@@ -97,12 +97,14 @@
     position: sticky; bottom: 0;
     background: rgba(14,14,14,0.97);
     backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
-    padding: 0.75rem 1rem 1.5rem; /* extra bottom padding for home indicator */
+    padding: 0.75rem 1rem 1.5rem;
     margin: 1.5rem -1rem -1rem;
     border-top: 1px solid rgba(255,255,255,0.09);
     gap: 0.5rem; z-index: 100;
+    flex-direction: row !important;
+    flex-wrap: nowrap !important;
   }
-  #prev-step-btn { flex: 0 0 auto !important; padding: 0.8rem 1.1rem !important; min-width: 0 !important; }
+  #prev-step-btn { flex: 0 0 auto !important; padding: 0.8rem 1.25rem !important; min-width: 0 !important; }
   #next-step-btn { flex: 1 !important; padding: 0.85rem 1rem !important; font-size: 1rem !important; font-weight: 700 !important; text-align: center !important; justify-content: center !important; }
   /* Hide floating summary card on mobile — step 7 review is comprehensive */
   #booking-summary-card { display: none !important; }
@@ -775,7 +777,29 @@ textarea.w-input {
 
 /* Vision fields */
 .vision-fields { display: flex; flex-direction: column; gap: 0.7rem; }
-.vision-fields .input-box { margin: 0; }</style>
+.vision-fields .input-box { margin: 0; }
+
+/* ── TOP PROGRESS BAR: hidden — dots replace it ── */
+#race-progress-track,
+#race-progress-bar { display: none !important; }
+#step-counter { display: none !important; }
+
+/* ── LEFT-ALIGN all card text ── */
+.radio-button.w-radio .radio-main-text.w-form-label,
+.radio-button.w-radio > span.w-form-label { text-align: left !important; }
+.radio-button.w-radio .radio-sub-text { text-align: left !important; }
+.section-header .heading-2,
+.step-phase-label,
+.step-hero-desc { text-align: left !important; }
+/* Step label (dots area) stays centered */
+#step-label { margin-bottom: 0.75rem !important; }
+
+/* ── Desktop nav: side-by-side too ── */
+@media (min-width: 641px) {
+  .booking-global-nav { flex-direction: row !important; flex-wrap: nowrap !important; }
+  #prev-step-btn { flex: 0 0 auto !important; }
+  #next-step-btn { flex: 1 !important; }
+}</style>
     </div>
     <!-- Race progress bar + step counter -->
     <div id="race-progress-track"></div>
@@ -825,7 +849,7 @@ textarea.w-input {
                 <span class="step-dot" data-dot="6"></span>
                 <span class="step-dot" data-dot="7"></span>
               </div>
-              <div id="step-label" class="step-indicator">Session Type</div>
+              <div id="step-label" class="step-indicator">Your Ride</div>
               <div id="swipe-hint">← swipe to navigate →</div>
 
               <!-- Step 1 -->
@@ -1555,12 +1579,7 @@ textarea.w-input {
 
         function updateStepNavUI(step) {
           // Race progress bar
-          if (typeof gsap !== 'undefined') {
-            gsap.to('#race-progress-bar', { width: (step / totalSteps * 100) + '%', duration: 0.6, ease: 'power2.out' });
-            if (step === totalSteps) {
-              gsap.to('#race-progress-bar', { boxShadow: '0 0 12px var(--accent-color, #e8d5a3)', duration: 0.28, yoyo: true, repeat: 4, ease: 'power1.inOut', delay: 0.6 });
-            }
-          }
+          /* progress bar removed — dots are the indicator */
           // Progress dots
           qsa('.step-dot').forEach(function(dot, i) {
             var ds = i + 1;
