@@ -39,10 +39,10 @@
     <div class="nav-button-wrap">
       <a href="index.html" class="blocs-link">Home</a>
       <a href="bookings.html" class="blocs-link">Booking</a>
-      <a href="team.html" class="blocs-link team-nav-active">Team</a>
+      <a href="team.html" class="blocs-link nav-active">Team</a>
       <a href="gallery.html" class="blocs-link">Reels</a>
       <a href="bookings.html" class="nav-button w-inline-block">
-        <div>Book A Shoot</div>
+        <div>Get In Touch</div>
       </a>
     </div>
   </div>
@@ -65,12 +65,14 @@
       .roller-reels { font-family: var(--font-display) !important; text-transform: uppercase !important; letter-spacing: 0.04em !important; }
 
       /* Nav overrides */
-      .nav-button { background: var(--me-primary) !important; color: #000 !important; border-radius: 0 !important; font-family: var(--font-ui) !important; font-weight: 700 !important; letter-spacing: 0.1em !important; text-transform: uppercase !important; transition: box-shadow 0.2s !important; font-size: 11px !important; }
-      .nav-button:hover { box-shadow: inset 0 0 20px rgba(255,219,60,0.35) !important; }
-      .blocs-link { font-family: var(--font-ui) !important; font-size: 11px !important; font-weight: 700 !important; letter-spacing: 0.1em !important; text-transform: uppercase !important; color: var(--me-text) !important; text-decoration: none !important; transition: color 0.2s !important; }
-      .blocs-link:hover { color: var(--me-primary) !important; }
-      .team-nav-active { color: var(--me-gold) !important; position: relative; }
-      .team-nav-active::after { content: ''; position: absolute; bottom: -4px; left: 50%; transform: translateX(-50%); width: 4px; height: 4px; background: var(--me-gold); border-radius: 50%; }
+      .navigation { background: #0a0a0a !important; border-bottom: 1px solid var(--me-ghost) !important; }
+      .navigation .roller-reels { color: var(--me-primary) !important; font-size: 1.15rem !important; letter-spacing: 0.06em !important; margin: 0 !important; }
+      .nav-button { background: transparent !important; color: var(--me-text) !important; border: 1px solid rgba(226,226,226,0.25) !important; border-radius: 0 !important; font-family: var(--font-ui) !important; font-weight: 700 !important; letter-spacing: 0.12em !important; text-transform: uppercase !important; font-size: 10px !important; transition: border-color 0.2s, color 0.2s !important; }
+      .nav-button:hover { border-color: var(--me-primary) !important; color: var(--me-primary) !important; box-shadow: none !important; }
+      .blocs-link { font-family: var(--font-ui) !important; font-size: 10px !important; font-weight: 700 !important; letter-spacing: 0.12em !important; text-transform: uppercase !important; color: rgba(226,226,226,0.7) !important; text-decoration: none !important; transition: color 0.2s !important; }
+      .blocs-link:hover { color: var(--me-text) !important; }
+      .nav-active { color: var(--me-text) !important; position: relative !important; }
+      .nav-active::after { content: '' !important; display: block !important; width: 4px !important; height: 4px !important; background: var(--me-gold) !important; border-radius: 50% !important; position: absolute !important; bottom: -5px !important; left: 50% !important; transform: translateX(-50%) !important; }
 
       /* ── Hero ── */
       .team-hero {

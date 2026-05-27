@@ -83,8 +83,9 @@
       <a href="index.html" class="blocs-link">Home</a>
       <a href="bookings.html" class="blocs-link">Booking</a>
       <a href="team.html" class="blocs-link">Team</a>
+      <a href="gallery.html" class="blocs-link nav-active">Reels</a>
       <a href="bookings.html" class="nav-button w-inline-block">
-        <div>Book A Shoot</div>
+        <div>Get In Touch</div>
       </a>
       <link rel="prefetch" href="bookings.html">
     </div>
@@ -93,9 +94,18 @@
     <div class="page_code_custom w-embed">
       <style>
 /* remove scroll bounce */
-body { 
-	overscroll-behavior: none;
-}
+body { overscroll-behavior: none; background: #131313; color: #e2e2e2; }
+
+/* Midnight Ember nav */
+:root { --me-primary:#ff8c00; --me-gold:#ffdb3c; --me-text:#e2e2e2; --me-ghost:#333; --font-display:'Anton','Audiowide',sans-serif; --font-ui:'Hanken Grotesk','Archivo',sans-serif; }
+.navigation { background: #0a0a0a !important; border-bottom: 1px solid var(--me-ghost) !important; }
+.roller-reels { font-family: var(--font-display) !important; color: var(--me-primary) !important; text-transform: uppercase !important; letter-spacing: 0.06em !important; font-size: 1.15rem !important; margin: 0 !important; }
+.blocs-link { font-family: var(--font-ui) !important; font-size: 10px !important; font-weight: 700 !important; letter-spacing: 0.12em !important; text-transform: uppercase !important; color: rgba(226,226,226,0.7) !important; text-decoration: none !important; transition: color 0.2s !important; }
+.blocs-link:hover { color: var(--me-text) !important; }
+.blocs-link.nav-active { color: var(--me-text) !important; position: relative !important; }
+.blocs-link.nav-active::after { content:'' !important; display:block !important; width:4px !important; height:4px !important; background:var(--me-gold) !important; border-radius:50% !important; position:absolute !important; bottom:-5px !important; left:50% !important; transform:translateX(-50%) !important; }
+.nav-button { background: transparent !important; color: var(--me-text) !important; border: 1px solid rgba(226,226,226,0.25) !important; border-radius: 0 !important; font-family: var(--font-ui) !important; font-weight: 700 !important; letter-spacing: 0.12em !important; text-transform: uppercase !important; font-size: 10px !important; transition: border-color 0.2s, color 0.2s !important; }
+.nav-button:hover { border-color: var(--me-primary) !important; color: var(--me-primary) !important; }
 [carousel="wrap"] {
 	will-change: contents;
 	--3d-carousel-item-width: 40vw;

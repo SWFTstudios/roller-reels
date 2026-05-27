@@ -198,8 +198,107 @@ p, span, label, li,
 }
 #prev-step-btn:hover { border-color: rgba(226,226,226,0.45) !important; color: #e2e2e2 !important; }
 
-/* Nav CTA */
-.nav-button { background-color: var(--me-primary) !important; color: #000 !important; border-radius: 0 !important; font-family: var(--font-ui) !important; font-weight: 700 !important; letter-spacing: 0.1em !important; text-transform: uppercase !important; font-size: 11px !important; }
+/* ── Stitch nav overrides ── */
+/* ROLLER REELS wordmark — orange, bigger */
+.navigation .roller-reels {
+  color: var(--me-primary) !important;
+  font-size: 1.15rem !important;
+  letter-spacing: 0.06em !important;
+  margin: 0 !important;
+}
+.navigation { background: #0a0a0a !important; border-bottom: 1px solid var(--me-ghost) !important; }
+.blocs-link { color: rgba(226,226,226,0.7) !important; transition: color 0.2s !important; }
+.blocs-link:hover { color: var(--me-text) !important; }
+/* Active nav link — gold dot below */
+.blocs-link.nav-active { color: var(--me-text) !important; position: relative !important; }
+.blocs-link.nav-active::after {
+  content: '' !important; display: block !important;
+  width: 4px !important; height: 4px !important;
+  background: var(--me-gold) !important; border-radius: 50% !important;
+  position: absolute !important; bottom: -5px !important;
+  left: 50% !important; transform: translateX(-50%) !important;
+}
+/* GET IN TOUCH — ghost button, no fill */
+.nav-button {
+  background: transparent !important;
+  color: var(--me-text) !important;
+  border: 1px solid rgba(226,226,226,0.25) !important;
+  border-radius: 0 !important;
+  font-family: var(--font-ui) !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.12em !important;
+  text-transform: uppercase !important;
+  font-size: 10px !important;
+  transition: border-color 0.2s, color 0.2s !important;
+}
+.nav-button:hover { border-color: var(--me-primary) !important; color: var(--me-primary) !important; box-shadow: none !important; }
+
+/* ── Giant step hero headlines ── */
+/* Target the first section-header inside each step's question-2 */
+.booking-step .question-2 > .section-header:first-child .heading-2 {
+  font-size: clamp(2.8rem, 10vw, 4.5rem) !important;
+  line-height: 0.92 !important;
+  letter-spacing: 0.02em !important;
+  margin-bottom: 0.75rem !important;
+  color: var(--me-text) !important;
+}
+/* Step phase label — appears above the giant headline */
+.step-phase-label {
+  font-family: var(--font-ui);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--me-primary);
+  opacity: 0.9;
+  margin-bottom: 0.4rem;
+}
+/* Sub-headline descriptor — sits below the giant headline */
+.step-hero-desc {
+  font-family: var(--font-ui) !important;
+  font-size: 0.85rem !important;
+  line-height: 1.65 !important;
+  color: var(--me-text-muted) !important;
+  max-width: 40ch !important;
+  margin: 0 0 1.75rem !important;
+}
+
+/* ── Route cards — dark cinematic overlay style ── */
+.route-card.radio-button.w-radio {
+  position: relative !important;
+  overflow: hidden !important;
+  min-height: 140px !important;
+  background:
+    linear-gradient(160deg, #1d1a15 0%, #111 60%, #0a0a0a 100%) !important;
+}
+/* Location name always large Anton in route cards */
+.route-card .radio-main-text.w-form-label {
+  font-size: clamp(1.3rem, 4vw, 1.7rem) !important;
+  padding-top: 1.6rem !important;
+}
+/* Sub-text in route cards is dimmer */
+.route-card .radio-sub-text { opacity: 0.55 !important; font-size: 0.75rem !important; }
+
+/* ── Page-level intro header ── */
+.booking-page-intro { margin: 0 0 2rem; }
+.booking-page-intro .booking-intro-headline {
+  font-family: var(--font-display) !important;
+  font-size: clamp(1.8rem, 6vw, 3rem) !important;
+  font-weight: 400 !important;
+  letter-spacing: 0.04em !important;
+  text-transform: uppercase !important;
+  color: var(--me-text) !important;
+  margin: 0 0 0.5rem !important;
+  line-height: 1 !important;
+}
+.booking-page-intro .booking-intro-sub {
+  font-family: var(--font-ui) !important;
+  font-size: 0.9rem !important;
+  line-height: 1.7 !important;
+  color: var(--me-text-muted) !important;
+  margin: 0 !important;
+  max-width: 52ch !important;
+}
 
 /* ── Inputs — bottom-border only ────────── */
 .text-field.w-input,
@@ -244,14 +343,216 @@ textarea.w-input {
 #review-summary { background: var(--me-surface-low) !important; border: 1px solid var(--me-ghost) !important; border-radius: 0 !important; }
 .review-deposit-row { color: var(--me-primary) !important; }
 
+/* ══════════════════════════════════════════
+   TOKYO DRIFT CARD SYSTEM
+   Full-bleed selection cards — sharp, dark,
+   ember-lit. Left-bar accent on selection.
+   ══════════════════════════════════════════ */
+
+/* Wipe out the default Webflow radio-button layout */
+.radio-button.w-radio {
+  display: block !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  cursor: pointer !important;
+  position: relative !important;
+  overflow: hidden !important;
+  /* Card shell */
+  background: var(--me-surface) !important;
+  border: 1px solid var(--me-ghost) !important;
+  border-radius: 0 !important;
+  transition: border-color 0.2s, background 0.2s, box-shadow 0.2s !important;
+}
+
+/* Left accent bar — hidden by default, slides in on hover/check */
+.radio-button.w-radio::before {
+  content: '' !important;
+  position: absolute !important;
+  left: 0 !important; top: 0 !important; bottom: 0 !important;
+  width: 3px !important;
+  background: var(--me-primary) !important;
+  transform: scaleY(0) !important;
+  transform-origin: bottom !important;
+  transition: transform 0.25s cubic-bezier(0.22, 1, 0.36, 1) !important;
+  z-index: 2 !important;
+}
+.radio-button.w-radio:hover::before { transform: scaleY(1) !important; }
+
+/* Diagonal speed-line texture on hover */
+.radio-button.w-radio::after {
+  content: '' !important;
+  position: absolute !important;
+  inset: 0 !important;
+  background: repeating-linear-gradient(
+    -55deg,
+    transparent,
+    transparent 18px,
+    rgba(255,140,0,0.022) 18px,
+    rgba(255,140,0,0.022) 19px
+  ) !important;
+  opacity: 0 !important;
+  transition: opacity 0.3s !important;
+  pointer-events: none !important;
+  z-index: 1 !important;
+}
+.radio-button.w-radio:hover::after { opacity: 1 !important; }
+
+/* Card hover state */
+.radio-button.w-radio:hover {
+  border-color: rgba(255,140,0,0.4) !important;
+  background: var(--me-surface-low) !important;
+}
+
+/* Hide the Webflow custom radio visual — we use the card border instead */
+.radio-input.w-radio-input,
+.w-form-formradioinput,
+.radio-circle-box {
+  display: none !important;
+}
+
+/* Inner card content */
+.radio-button.w-radio .radio-main-text.w-form-label,
+.radio-button.w-radio > span.w-form-label {
+  display: block !important;
+  font-family: var(--font-display) !important;
+  font-size: clamp(1.5rem, 5vw, 2rem) !important;
+  font-weight: 400 !important;
+  letter-spacing: 0.04em !important;
+  text-transform: uppercase !important;
+  color: var(--me-text) !important;
+  line-height: 1 !important;
+  padding: 1.4rem 1.25rem 0.35rem 1.4rem !important;
+  cursor: pointer !important;
+  position: relative !important;
+  z-index: 3 !important;
+}
+
+.radio-button.w-radio .radio-sub-text {
+  display: block !important;
+  font-family: var(--font-ui) !important;
+  font-size: 0.82rem !important;
+  line-height: 1.6 !important;
+  color: var(--me-text-muted) !important;
+  padding: 0 1.4rem 1.25rem 1.4rem !important;
+  margin: 0 !important;
+  cursor: pointer !important;
+  position: relative !important;
+  z-index: 3 !important;
+}
+
+/* Course link inside route cards */
+.radio-button.w-radio .course-link {
+  display: inline-block !important;
+  font-family: var(--font-ui) !important;
+  font-size: 10px !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.12em !important;
+  text-transform: uppercase !important;
+  color: var(--me-primary) !important;
+  text-decoration: none !important;
+  padding: 0 1.4rem 0.4rem 1.4rem !important;
+  position: relative !important;
+  z-index: 4 !important;
+  transition: color 0.2s !important;
+}
+.radio-button.w-radio .course-link:hover { color: var(--me-gold) !important; }
+
+/* ── CHECKED / SELECTED state ── */
+/* The native input checked state propagates via .w--redirected-checked on the
+   sibling .radio-input, which Webflow uses. We target the parent label via
+   the has() selector with a fallback using JS-toggled .is-selected class. */
+
+.radio-button.w-radio:has(input[type="radio"]:checked),
+.radio-button.w-radio.is-selected {
+  background: var(--me-surface-low) !important;
+  border-color: var(--me-primary) !important;
+  box-shadow:
+    inset 3px 0 0 var(--me-primary),
+    0 0 0 1px rgba(255,140,0,0.18),
+    0 4px 32px rgba(255,140,0,0.12) !important;
+}
+
+.radio-button.w-radio:has(input[type="radio"]:checked)::before,
+.radio-button.w-radio.is-selected::before {
+  transform: scaleY(1) !important;
+  background: var(--me-gold) !important;
+}
+
+.radio-button.w-radio:has(input[type="radio"]:checked)::after,
+.radio-button.w-radio.is-selected::after {
+  opacity: 1 !important;
+}
+
+.radio-button.w-radio:has(input[type="radio"]:checked) .radio-main-text,
+.radio-button.w-radio.is-selected .radio-main-text {
+  color: #fff !important;
+}
+
+/* Selected: status tag in top-right corner */
+.radio-button.w-radio:has(input[type="radio"]:checked)::after,
+.radio-button.w-radio.is-selected::after {
+  opacity: 1 !important;
+}
+
+/* Stack cards vertically with 2px gap (speed-gap aesthetic) */
+.radio-buttons {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 2px !important;
+}
+
+/* Route grid — 1 col mobile, 2 col desktop */
+.route-grid {
+  display: grid !important;
+  grid-template-columns: 1fr !important;
+  gap: 2px !important;
+}
+@media (min-width: 768px) {
+  .route-grid { grid-template-columns: repeat(2, 1fr) !important; }
+}
+.route-card { min-width: 0 !important; width: 100% !important; box-sizing: border-box !important; }
+
+/* Rider count cards — more compact, inline feel */
+.radio-buttons:has(input[name="people"]) .radio-button.w-radio,
+.radio-buttons:has(input[name="vehicleType"]) .radio-button.w-radio {
+  display: flex !important;
+  align-items: center !important;
+  gap: 0 !important;
+}
+.radio-buttons:has(input[name="people"]) .radio-main-text,
+.radio-buttons:has(input[name="vehicleType"]) .radio-main-text {
+  font-size: 1.1rem !important;
+  padding: 0.85rem 1.25rem !important;
+  flex: 1 !important;
+}
+.radio-buttons:has(input[name="people"]) .radio-sub-text,
+.radio-buttons:has(input[name="vehicleType"]) .radio-sub-text {
+  padding: 0 1.25rem 0 0 !important;
+  font-size: 0.75rem !important;
+  opacity: 0.6 !important;
+}
+
+/* Section headers above card groups */
+.question-box, .question-center-box {
+  border-radius: 0 !important;
+}
+.question-box .section-header .heading-2 {
+  font-size: 0.7rem !important;
+  letter-spacing: 0.14em !important;
+  opacity: 0.5 !important;
+  margin-bottom: 0.6rem !important;
+}
+
 /* ── Route cards / question boxes ── */
-.route-card, .question-box, .question-center-box { border-radius: 0 !important; }
 .course-link { color: var(--me-primary-dim) !important; }
 
 /* ── Mobile nav (sticky bottom) ── */
 @media (max-width: 640px) {
   .booking-global-nav { background: rgba(10,10,10,0.98) !important; border-top-color: var(--me-ghost) !important; }
-}</style>
+}
+
+/* JS fallback: .is-selected toggled in script */
+</style>
     </div>
     <!-- Race progress bar -->
     <div id="race-progress-track"></div>
@@ -266,10 +567,11 @@ textarea.w-input {
       </div>
       <div class="nav-button-wrap">
         <a href="index.html" class="blocs-link">Home</a>
-        <a href="gallery.html" class="blocs-link">Reels</a>
+        <a href="bookings.html" class="blocs-link nav-active">Booking</a>
         <a href="team.html" class="blocs-link">Team</a>
+        <a href="gallery.html" class="blocs-link">Reels</a>
         <a href="bookings.html" class="nav-button w-inline-block">
-          <div>Book A Shoot</div>
+          <div>Get In Touch</div>
         </a>
         <link rel="prefetch" href="bookings.html">
       </div>
@@ -277,12 +579,10 @@ textarea.w-input {
     <div class="section-5">
       <div bloc="question-container" class="container-3 w-container">
         <div class="form-block w-form">
-          <div style="margin:0 0 1.25rem;max-width:720px;">
-            <h2 class="heading-2" style="margin:0 0 0.5rem;font-size:1.3rem;">Build your shoot — lock in with $100</h2>
-            <p style="margin:0;opacity:0.9;line-height:1.65;">
-              NYC/NJ motorcycle &amp; car photography and videography. Tell us what you want and we handle the rest.
-              Static shoots from <strong>$299</strong> &nbsp;·&nbsp; Rollers from <strong>$499</strong> &nbsp;·&nbsp; $100 deposit holds your date — balance due on shoot day.
-            </p>
+          <div class="booking-page-intro">
+            <div style="font-family:var(--font-ui,sans-serif);font-size:10px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:var(--me-primary,#ff8c00);margin-bottom:0.5rem;">NJ / NYC</div>
+            <h1 class="booking-intro-headline">Initiate Mission</h1>
+            <p class="booking-intro-sub">Secure your time in the viewfinder. Precision data required for optimal cinematic output. $100 deposit holds your date — balance due on shoot day.</p>
           </div>
           <form id="wf-form-Booking-Form" name="wf-form-Booking-Form" data-name="Booking Form" action="https://formsubmit.co/elombe@swftstudios.com" method="post" class="form" data-wf-page-id="692ebc79d55153a076f9bb67" data-wf-element-id="766d0790-9c06-6645-a2a9-1b15b0163512">
             <input type="hidden" name="_next" id="form-next-url" value="https://rollerreels.com/calendar">
@@ -308,7 +608,9 @@ textarea.w-input {
               <section class="booking-step active" id="step-1" data-step="1">
                 <div class="question-2">
                   <div class="section-header small-header">
-                    <h2 class="heading-2">What kind of session are you booking?</h2>
+                    <div class="step-phase-label">Step 1 / The Mission</div>
+                    <h2 class="heading-2">Ready</h2>
+                    <p class="step-hero-desc">Select your formation and visual payload. Precision planning dictates the outcome on the asphalt.</p>
                   </div>
 
                   <div class="question-box">
@@ -381,7 +683,9 @@ textarea.w-input {
               <section class="booking-step" id="step-2" data-step="2">
                 <div class="question-2">
                   <div class="section-header small-header">
-                    <h2 class="heading-2">Tell us about your ride</h2>
+                    <div class="step-phase-label">Step 2 / The Machine</div>
+                    <h2 class="heading-2">Your Ride</h2>
+                    <p class="step-hero-desc">Tell us what we're working with. Make, model, year — the machine sets the tone.</p>
                   </div>
 
                   <div class="question-box">
@@ -428,7 +732,9 @@ textarea.w-input {
               <section class="booking-step" id="step-3" data-step="3">
                 <div class="question-2">
                   <div class="section-header small-header">
-                    <h2 class="heading-2">Choose your route</h2>
+                    <div class="step-phase-label">Step 3 / The Set</div>
+                    <h2 class="heading-2">The Course</h2>
+                    <p class="step-hero-desc">Select a pre-scouted route engineered for maximum visual impact, or chart your own trajectory through the night.</p>
                   </div>
 
                   <div class="question-box">
@@ -486,7 +792,9 @@ textarea.w-input {
               <section class="booking-step" id="step-4" data-step="4">
                 <div class="question-2">
                   <div class="section-header medium-header">
-                    <h2 class="heading-2">Deliverables & add-ons</h2>
+                    <div class="step-phase-label">Step 4 / Payload</div>
+                    <h2 class="heading-2">Payload</h2>
+                    <p class="step-hero-desc">Define your content package. Photos, video, or both — plus any physical upgrades.</p>
                   </div>
 
                   <div class="question-box">
@@ -571,7 +879,9 @@ textarea.w-input {
               <section class="booking-step" id="step-5" data-step="5">
                 <div class="question-2">
                   <div class="section-header medium-header">
-                    <h2 class="heading-2">References</h2>
+                    <div class="step-phase-label">Step 5 / Reference Inspo</div>
+                    <h2 class="heading-2">The Vision</h2>
+                    <p class="step-hero-desc">Optional — share reference shots, IG handles, or specific instructions. The more we know, the sharper the output.</p>
                   </div>
                   <div class="question-box">
                     <div class="question-2" style="margin-top:1rem;">
@@ -599,7 +909,9 @@ textarea.w-input {
               <section class="booking-step" id="step-6" data-step="6">
                 <div class="question-2">
                   <div class="section-header medium-header">
-                    <h2 class="heading-2">Contact & agreement</h2>
+                    <div class="step-phase-label">Step 6 / Driver Info</div>
+                    <h2 class="heading-2">Driver Info</h2>
+                    <p class="step-hero-desc">Who's behind the wheel? We need your details to confirm the booking and send pre-shoot coordinates.</p>
                   </div>
 
                   <div class="question-center-box">
@@ -637,8 +949,9 @@ textarea.w-input {
               <section class="booking-step" id="step-7" data-step="7">
                 <div class="question-2">
                   <div class="section-header medium-header">
-                    <h2 class="heading-2">Your shoot — lock it in</h2>
-                    <p style="margin:0.35rem 0 0;opacity:0.75;font-size:0.92rem;">Review your selections below. Pay $100 today to secure your spot — the rest is due on shoot day.</p>
+                    <div class="step-phase-label">Step 7 / Mission Review</div>
+                    <h2 class="heading-2">Mission Summary</h2>
+                    <p class="step-hero-desc">Your deployment parameters are confirmed. Review below, then secure your date with a $100 deposit — balance due on shoot day.</p>
                   </div>
 
                   <div id="review-summary">
@@ -1630,6 +1943,32 @@ textarea.w-input {
           // Form entrance animation on load
           gsap.from('.form-block', { y: 28, opacity: 0, duration: 0.7, delay: 0.15, ease: 'power3.out', clearProps: 'all' });
         }
+
+        // ── Card selection: .is-selected fallback (for :has() on older iOS) ──
+        document.addEventListener('change', function(e) {
+          var input = e.target;
+          if (input.type !== 'radio') return;
+          var name = input.name;
+          // Deselect all cards in this group
+          document.querySelectorAll('input[name="' + name + '"]').forEach(function(r) {
+            var card = r.closest('.radio-button.w-radio');
+            if (card) card.classList.remove('is-selected');
+          });
+          // Select the active card
+          var activeCard = input.closest('.radio-button.w-radio');
+          if (activeCard) {
+            activeCard.classList.add('is-selected');
+            // GSAP micro-punch — feels like locking in a gear
+            if (typeof gsap !== 'undefined') {
+              gsap.fromTo(activeCard,
+                { scale: 0.982 },
+                { scale: 1, duration: 0.35, ease: 'back.out(2.5)' }
+              );
+            }
+          }
+        });
+        // Restore .is-selected state after GSAP step transitions clear props
+        document.addEventListener('change', function() {}, true);
 
         // ── Lenis smooth scroll ─────────────────────────────────────────────
         if (typeof Lenis !== 'undefined') {
