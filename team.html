@@ -45,6 +45,14 @@
         <div>Get In Touch</div>
       </a>
     </div>
+    <button class="hamburger-btn" id="hamburger-btn" aria-label="Open menu" aria-expanded="false"><span></span><span></span><span></span></button>
+  </div>
+  <div class="mobile-nav-menu" id="mobile-nav-menu">
+    <a href="index.html" class="mobile-nav-link">Home</a>
+    <a href="bookings.html" class="mobile-nav-link">Booking</a>
+    <a href="team.html" class="mobile-nav-link nav-active">Team</a>
+    <a href="gallery.html" class="mobile-nav-link">Reels</a>
+    <a href="bookings.html" class="mobile-nav-link mobile-nav-cta">Get In Touch</a>
   </div>
 
   <!-- ── Midnight Ember Design System ── -->
@@ -336,6 +344,20 @@
         text-transform: uppercase;
         color: var(--me-ghost);
       }
+      /* ── Hamburger nav ── */
+      .hamburger-btn { display: none; flex-direction: column; justify-content: center; gap: 5px; width: 32px; height: 32px; background: none; border: none; cursor: pointer; padding: 4px; z-index: 10001; }
+      .hamburger-btn span { display: block; width: 20px; height: 2px; background: rgba(226,226,226,0.85); border-radius: 1px; transition: transform 0.25s ease, opacity 0.2s ease; pointer-events: none; }
+      .hamburger-btn.is-open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+      .hamburger-btn.is-open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+      .hamburger-btn.is-open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+      .mobile-nav-menu { display: none; position: fixed; top: 0; left: 0; right: 0; padding: 68px 1.25rem 1.5rem; background: rgba(10,10,10,0.98); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); z-index: 9998; flex-direction: column; gap: 0; border-bottom: 1px solid rgba(255,255,255,0.08); }
+      .mobile-nav-menu.is-open { display: flex; }
+      .mobile-nav-link { display: block; font-family: var(--font-ui, 'Hanken Grotesk', sans-serif); font-size: 11px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(226,226,226,0.72); text-decoration: none; padding: 1rem 0; border-bottom: 1px solid rgba(255,255,255,0.07); transition: color 0.2s; }
+      .mobile-nav-link:last-child { border-bottom: none; }
+      .mobile-nav-link.nav-active, .mobile-nav-link:hover { color: #e2e2e2; }
+      .mobile-nav-link.mobile-nav-cta { margin-top: 0.75rem; color: #ff8c00; border: 1px solid rgba(255,140,0,0.35); padding: 0.85rem 1rem; text-align: center; }
+      @media (max-width: 640px) { .hamburger-btn { display: flex; } .nav-button-wrap { display: none !important; } }
+      @media (min-width: 641px) { .mobile-nav-menu { display: none !important; } }
     </style>
   </div>
 
@@ -479,5 +501,8 @@
     }
   </script>
 
+<script>
+(function(){var b=document.getElementById('hamburger-btn'),m=document.getElementById('mobile-nav-menu');if(!b||!m)return;b.addEventListener('click',function(){var o=b.classList.toggle('is-open');m.classList.toggle('is-open',o);b.setAttribute('aria-expanded',o?'true':'false');});document.addEventListener('click',function(e){if(!b.contains(e.target)&&!m.contains(e.target)){b.classList.remove('is-open');m.classList.remove('is-open');b.setAttribute('aria-expanded','false');}});})();
+</script>
 </body>
 </html>
