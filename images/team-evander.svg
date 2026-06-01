@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" width="400" height="400">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#1b1b1b"/>
+      <stop offset="100%" stop-color="#0e0e0e"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#ff8c00"/>
+      <stop offset="100%" stop-color="#ffdb3c"/>
+    </linearGradient>
+  </defs>
+  <rect width="400" height="400" fill="url(#bg)"/>
+
+  <!-- Diagonal speed lines -->
+  <g opacity="0.04" stroke="#ff8c00" stroke-width="1">
+    <line x1="-40" y1="0" x2="200" y2="400"/>
+    <line x1="0" y1="0" x2="240" y2="400"/>
+    <line x1="40" y1="0" x2="280" y2="400"/>
+    <line x1="80" y1="0" x2="320" y2="400"/>
+    <line x1="120" y1="0" x2="360" y2="400"/>
+    <line x1="160" y1="0" x2="400" y2="400"/>
+    <line x1="200" y1="0" x2="440" y2="400"/>
+    <line x1="240" y1="0" x2="480" y2="400"/>
+    <line x1="280" y1="0" x2="520" y2="400"/>
+  </g>
+
+  <!-- Corner frame marks -->
+  <g stroke="rgba(255,140,0,0.25)" stroke-width="1.5" fill="none">
+    <path d="M16 36 L16 16 L36 16"/>
+    <path d="M364 16 L384 16 L384 36"/>
+    <path d="M16 364 L16 384 L36 384"/>
+    <path d="M364 384 L384 384 L384 364"/>
+  </g>
+
+  <!-- Orange left bar -->
+  <rect x="0" y="0" width="4" height="400" fill="url(#accent)"/>
+
+  <!-- Large initial -->
+  <text x="200" y="240" font-family="Arial Black, sans-serif" font-weight="900" font-size="160" fill="rgba(255,140,0,0.08)" text-anchor="middle" letter-spacing="-4">EV</text>
+
+  <!-- Name -->
+  <text x="32" y="350" font-family="Arial Black, sans-serif" font-weight="900" font-size="42" fill="#e2e2e2" letter-spacing="2">EVANDER</text>
+
+  <!-- Role label -->
+  <text x="32" y="375" font-family="Arial, sans-serif" font-weight="700" font-size="11" fill="rgba(226,226,226,0.45)" letter-spacing="3">VIDEOGRAPHER / EDITOR</text>
+
+  <!-- Scan line -->
+  <rect x="32" y="330" width="60" height="2" fill="url(#accent)" opacity="0.8"/>
+</svg>
