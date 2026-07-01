@@ -160,6 +160,19 @@ body { overscroll-behavior: none; background: #131313; color: #e2e2e2; }
 .mobile-nav-link.mobile-nav-cta { margin-top: 0.75rem; color: #ff8c00; border: 1px solid rgba(255,140,0,0.35); padding: 0.85rem 1rem; text-align: center; }
 @media (max-width: 640px) { .hamburger-btn { display: flex; } .nav-button-wrap { display: none !important; } }
 @media (min-width: 641px) { .mobile-nav-menu { display: none !important; } }
+/* Lightbox: full-size Vimeo on mobile */
+@media (max-width: 767px) {
+  .w-lightbox-view .w-lightbox-frame {
+    max-width: 96vw !important;
+    max-height: 90vh !important;
+  }
+  .w-lightbox-embed,
+  .w-lightbox-embed iframe {
+    width: 100% !important;
+    height: 100% !important;
+    min-height: 70vh;
+  }
+}
 </style>
     </div>
     <div carousel="wrap" class="carousel_wrap w-dyn-list">
@@ -201,7 +214,7 @@ body { overscroll-behavior: none; background: #131313; color: #e2e2e2; }
       "width": 940,
       "height": 529,
       "thumbnailUrl": "https://i.vimeocdn.com/video/2134663898-876609b5a4cb7258a1fc4a01e8836735fcaae5d272ecb5367f48bd48d571e77d-d_1280?region=us",
-      "html": "<iframe class=\"embedly-embed\" src=\"//cdn.embedly.com/widgets/media.html?src=https%3A%2F%2Fplayer.vimeo.com%2Fvideo%2F1174158034%3Fh%3Dc80e23ac22%26app_id%3D122963&dntp=1&display_name=Vimeo&url=https%3A%2F%2Fvimeo.com%2F1174158034%2Fc80e23ac22&image=https%3A%2F%2Fi.vimeocdn.com%2Fvideo%2F2134663898-876609b5a4cb7258a1fc4a01e8836735fcaae5d272ecb5367f48bd48d571e77d-d_1280%3Fregion%3Dus&type=text%2Fhtml&schema=vimeo\" width=\"940\" height=\"529\" scrolling=\"no\" title=\"Vimeo embed\" frameborder=\"0\" allow=\"autoplay; fullscreen; encrypted-media; picture-in-picture;\" allowfullscreen=\"true\"></iframe>",
+      "html": "<iframe src=\"https://player.vimeo.com/video/1174158034?h=c80e23ac22&amp;autoplay=1&amp;title=0&amp;byline=0&amp;portrait=0&amp;badge=0\" width=\"100%\" height=\"100%\" frameborder=\"0\" allow=\"autoplay; fullscreen; picture-in-picture\" allowfullscreen title=\"Vimeo embed\"></iframe>",
       "type": "video"
     }
   ],
@@ -222,9 +235,9 @@ body { overscroll-behavior: none; background: #131313; color: #e2e2e2; }
       "url": "https://vimeo.com/1174189190/65b57ab239?fl=tl&fe=ec",
       "originalUrl": "https://vimeo.com/1174189190/65b57ab239?fl=tl&fe=ec",
       "width": 940,
-      "height": 529,
+      "height": 1671,
       "thumbnailUrl": "https://i.vimeocdn.com/video/2134702482-ca92f758b21ddf048ed003633d2c9a92108304ba5b83fd4e79974a033ee4f8f0-d_1280?region=us",
-      "html": "<iframe class=\"embedly-embed\" src=\"//cdn.embedly.com/widgets/media.html?src=https%3A%2F%2Fplayer.vimeo.com%2Fvideo%2F1174189190%3Fh%3D65b57ab239%26app_id%3D122963&dntp=1&display_name=Vimeo&url=https%3A%2F%2Fvimeo.com%2F1174189190%2F65b57ab239&image=https%3A%2F%2Fi.vimeocdn.com%2Fvideo%2F2134702482-ca92f758b21ddf048ed003633d2c9a92108304ba5b83fd4e79974a033ee4f8f0-d_1280%3Fregion%3Dus&type=text%2Fhtml&schema=vimeo\" width=\"940\" height=\"529\" scrolling=\"no\" title=\"Vimeo embed\" frameborder=\"0\" allow=\"autoplay; fullscreen; encrypted-media; picture-in-picture;\" allowfullscreen=\"true\"></iframe>",
+      "html": "<iframe src=\"https://player.vimeo.com/video/1174189190?h=65b57ab239&amp;autoplay=1&amp;title=0&amp;byline=0&amp;portrait=0&amp;badge=0\" width=\"100%\" height=\"100%\" frameborder=\"0\" allow=\"autoplay; fullscreen; picture-in-picture\" allowfullscreen title=\"Vimeo embed\"></iframe>",
       "type": "video"
     }
   ],
@@ -247,7 +260,7 @@ body { overscroll-behavior: none; background: #131313; color: #e2e2e2; }
       "width": 940,
       "height": 1671,
       "thumbnailUrl": "https://i.vimeocdn.com/video/2134691108-21e8d7b8b4ee6c3ef6a6d672060a45b81fc4fbc26396f2670f77162376aa5e3d-d_295x166?region=us",
-      "html": "<iframe class=\"embedly-embed\" src=\"//cdn.embedly.com/widgets/media.html?src=https%3A%2F%2Fplayer.vimeo.com%2Fvideo%2F1174180245%3Fh%3D8eb63b9ca8%26app_id%3D122963&dntp=1&display_name=Vimeo&url=https%3A%2F%2Fvimeo.com%2F1174180245%2F8eb63b9ca8&image=https%3A%2F%2Fi.vimeocdn.com%2Fvideo%2F2134691108-21e8d7b8b4ee6c3ef6a6d672060a45b81fc4fbc26396f2670f77162376aa5e3d-d_295x166%3Fregion%3Dus&type=text%2Fhtml&schema=vimeo\" width=\"940\" height=\"1671\" scrolling=\"no\" title=\"Vimeo embed\" frameborder=\"0\" allow=\"autoplay; fullscreen; encrypted-media; picture-in-picture;\" allowfullscreen=\"true\"></iframe>",
+      "html": "<iframe src=\"https://player.vimeo.com/video/1174180245?h=8eb63b9ca8&amp;autoplay=1&amp;title=0&amp;byline=0&amp;portrait=0&amp;badge=0\" width=\"100%\" height=\"100%\" frameborder=\"0\" allow=\"autoplay; fullscreen; picture-in-picture\" allowfullscreen title=\"Vimeo embed\"></iframe>",
       "type": "video"
     }
   ],
@@ -270,7 +283,7 @@ body { overscroll-behavior: none; background: #131313; color: #e2e2e2; }
       "width": 940,
       "height": 1671,
       "thumbnailUrl": "https://i.vimeocdn.com/video/2134702850-7032c7ce6036cd301c9a88fb1fbb7dcd36955d0eacdf299810481e90ff7aa7c2-d_960?region=us",
-      "html": "<iframe class=\"embedly-embed\" src=\"//cdn.embedly.com/widgets/media.html?src=https%3A%2F%2Fplayer.vimeo.com%2Fvideo%2F1174189429%3Fh%3D4698d1d76c%26app_id%3D122963&dntp=1&display_name=Vimeo&url=https%3A%2F%2Fvimeo.com%2F1174189429%2F4698d1d76c&image=https%3A%2F%2Fi.vimeocdn.com%2Fvideo%2F2134702850-7032c7ce6036cd301c9a88fb1fbb7dcd36955d0eacdf299810481e90ff7aa7c2-d_960%3Fregion%3Dus&type=text%2Fhtml&schema=vimeo\" width=\"940\" height=\"1671\" scrolling=\"no\" title=\"Vimeo embed\" frameborder=\"0\" allow=\"autoplay; fullscreen; encrypted-media; picture-in-picture;\" allowfullscreen=\"true\"></iframe>",
+      "html": "<iframe src=\"https://player.vimeo.com/video/1174189429?h=4698d1d76c&amp;autoplay=1&amp;title=0&amp;byline=0&amp;portrait=0&amp;badge=0\" width=\"100%\" height=\"100%\" frameborder=\"0\" allow=\"autoplay; fullscreen; picture-in-picture\" allowfullscreen title=\"Vimeo embed\"></iframe>",
       "type": "video"
     }
   ],
@@ -293,7 +306,7 @@ body { overscroll-behavior: none; background: #131313; color: #e2e2e2; }
       "width": 940,
       "height": 529,
       "thumbnailUrl": "https://i.vimeocdn.com/video/2134663898-876609b5a4cb7258a1fc4a01e8836735fcaae5d272ecb5367f48bd48d571e77d-d_1280?region=us",
-      "html": "<iframe class=\"embedly-embed\" src=\"//cdn.embedly.com/widgets/media.html?src=https%3A%2F%2Fplayer.vimeo.com%2Fvideo%2F1174158034%3Fh%3Dc80e23ac22%26app_id%3D122963&dntp=1&display_name=Vimeo&url=https%3A%2F%2Fvimeo.com%2F1174158034%2Fc80e23ac22&image=https%3A%2F%2Fi.vimeocdn.com%2Fvideo%2F2134663898-876609b5a4cb7258a1fc4a01e8836735fcaae5d272ecb5367f48bd48d571e77d-d_1280%3Fregion%3Dus&type=text%2Fhtml&schema=vimeo\" width=\"940\" height=\"529\" scrolling=\"no\" title=\"Vimeo embed\" frameborder=\"0\" allow=\"autoplay; fullscreen; encrypted-media; picture-in-picture;\" allowfullscreen=\"true\"></iframe>",
+      "html": "<iframe src=\"https://player.vimeo.com/video/1174158034?h=c80e23ac22&amp;autoplay=1&amp;title=0&amp;byline=0&amp;portrait=0&amp;badge=0\" width=\"100%\" height=\"100%\" frameborder=\"0\" allow=\"autoplay; fullscreen; picture-in-picture\" allowfullscreen title=\"Vimeo embed\"></iframe>",
       "type": "video"
     }
   ],
@@ -314,9 +327,9 @@ body { overscroll-behavior: none; background: #131313; color: #e2e2e2; }
       "url": "https://vimeo.com/1174189190/65b57ab239?fl=tl&fe=ec",
       "originalUrl": "https://vimeo.com/1174189190/65b57ab239?fl=tl&fe=ec",
       "width": 940,
-      "height": 529,
+      "height": 1671,
       "thumbnailUrl": "https://i.vimeocdn.com/video/2134702482-ca92f758b21ddf048ed003633d2c9a92108304ba5b83fd4e79974a033ee4f8f0-d_1280?region=us",
-      "html": "<iframe class=\"embedly-embed\" src=\"//cdn.embedly.com/widgets/media.html?src=https%3A%2F%2Fplayer.vimeo.com%2Fvideo%2F1174189190%3Fh%3D65b57ab239%26app_id%3D122963&dntp=1&display_name=Vimeo&url=https%3A%2F%2Fvimeo.com%2F1174189190%2F65b57ab239&image=https%3A%2F%2Fi.vimeocdn.com%2Fvideo%2F2134702482-ca92f758b21ddf048ed003633d2c9a92108304ba5b83fd4e79974a033ee4f8f0-d_1280%3Fregion%3Dus&type=text%2Fhtml&schema=vimeo\" width=\"940\" height=\"529\" scrolling=\"no\" title=\"Vimeo embed\" frameborder=\"0\" allow=\"autoplay; fullscreen; encrypted-media; picture-in-picture;\" allowfullscreen=\"true\"></iframe>",
+      "html": "<iframe src=\"https://player.vimeo.com/video/1174189190?h=65b57ab239&amp;autoplay=1&amp;title=0&amp;byline=0&amp;portrait=0&amp;badge=0\" width=\"100%\" height=\"100%\" frameborder=\"0\" allow=\"autoplay; fullscreen; picture-in-picture\" allowfullscreen title=\"Vimeo embed\"></iframe>",
       "type": "video"
     }
   ],
@@ -339,7 +352,7 @@ body { overscroll-behavior: none; background: #131313; color: #e2e2e2; }
       "width": 940,
       "height": 1671,
       "thumbnailUrl": "https://i.vimeocdn.com/video/2134691108-21e8d7b8b4ee6c3ef6a6d672060a45b81fc4fbc26396f2670f77162376aa5e3d-d_295x166?region=us",
-      "html": "<iframe class=\"embedly-embed\" src=\"//cdn.embedly.com/widgets/media.html?src=https%3A%2F%2Fplayer.vimeo.com%2Fvideo%2F1174180245%3Fh%3D8eb63b9ca8%26app_id%3D122963&dntp=1&display_name=Vimeo&url=https%3A%2F%2Fvimeo.com%2F1174180245%2F8eb63b9ca8&image=https%3A%2F%2Fi.vimeocdn.com%2Fvideo%2F2134691108-21e8d7b8b4ee6c3ef6a6d672060a45b81fc4fbc26396f2670f77162376aa5e3d-d_295x166%3Fregion%3Dus&type=text%2Fhtml&schema=vimeo\" width=\"940\" height=\"1671\" scrolling=\"no\" title=\"Vimeo embed\" frameborder=\"0\" allow=\"autoplay; fullscreen; encrypted-media; picture-in-picture;\" allowfullscreen=\"true\"></iframe>",
+      "html": "<iframe src=\"https://player.vimeo.com/video/1174180245?h=8eb63b9ca8&amp;autoplay=1&amp;title=0&amp;byline=0&amp;portrait=0&amp;badge=0\" width=\"100%\" height=\"100%\" frameborder=\"0\" allow=\"autoplay; fullscreen; picture-in-picture\" allowfullscreen title=\"Vimeo embed\"></iframe>",
       "type": "video"
     }
   ],
@@ -362,7 +375,7 @@ body { overscroll-behavior: none; background: #131313; color: #e2e2e2; }
       "width": 940,
       "height": 1671,
       "thumbnailUrl": "https://i.vimeocdn.com/video/2134702850-7032c7ce6036cd301c9a88fb1fbb7dcd36955d0eacdf299810481e90ff7aa7c2-d_960?region=us",
-      "html": "<iframe class=\"embedly-embed\" src=\"//cdn.embedly.com/widgets/media.html?src=https%3A%2F%2Fplayer.vimeo.com%2Fvideo%2F1174189429%3Fh%3D4698d1d76c%26app_id%3D122963&dntp=1&display_name=Vimeo&url=https%3A%2F%2Fvimeo.com%2F1174189429%2F4698d1d76c&image=https%3A%2F%2Fi.vimeocdn.com%2Fvideo%2F2134702850-7032c7ce6036cd301c9a88fb1fbb7dcd36955d0eacdf299810481e90ff7aa7c2-d_960%3Fregion%3Dus&type=text%2Fhtml&schema=vimeo\" width=\"940\" height=\"1671\" scrolling=\"no\" title=\"Vimeo embed\" frameborder=\"0\" allow=\"autoplay; fullscreen; encrypted-media; picture-in-picture;\" allowfullscreen=\"true\"></iframe>",
+      "html": "<iframe src=\"https://player.vimeo.com/video/1174189429?h=4698d1d76c&amp;autoplay=1&amp;title=0&amp;byline=0&amp;portrait=0&amp;badge=0\" width=\"100%\" height=\"100%\" frameborder=\"0\" allow=\"autoplay; fullscreen; picture-in-picture\" allowfullscreen title=\"Vimeo embed\"></iframe>",
       "type": "video"
     }
   ],
@@ -377,36 +390,46 @@ body { overscroll-behavior: none; background: #131313; color: #e2e2e2; }
   const API_URL = "/api/videos";
   const IFRAME_PARAMS =
     "title=0&byline=0&portrait=0&badge=0&autopause=0&autoplay=1&loop=1&muted=1";
+  const LIGHTBOX_PARAMS =
+    "autoplay=1&title=0&byline=0&portrait=0&badge=0";
+  const DEFAULT_WIDTH = 1080;
+  const DEFAULT_HEIGHT = 1920;
 
   function buildIframeSrc(embedBaseUrl) {
     if (!embedBaseUrl) return "";
     return embedBaseUrl + (embedBaseUrl.includes("?") ? "&" : "?") + IFRAME_PARAMS;
   }
 
-  function buildLightboxJson(shareUrl, embedBaseUrl) {
+  function buildLightboxIframeSrc(embedBaseUrl) {
+    if (!embedBaseUrl) return "";
+    return embedBaseUrl + (embedBaseUrl.includes("?") ? "&" : "?") + LIGHTBOX_PARAMS;
+  }
+
+  function buildLightboxHtml(embedBaseUrl) {
+    const src = buildLightboxIframeSrc(embedBaseUrl);
+    if (!src) return "";
+    return (
+      "<iframe src=\"" + src + "\" " +
+      "width=\"100%\" height=\"100%\" frameborder=\"0\" " +
+      "allow=\"autoplay; fullscreen; picture-in-picture\" " +
+      "allowfullscreen title=\"Vimeo embed\"></iframe>"
+    );
+  }
+
+  function buildLightboxJson(shareUrl, embedBaseUrl, width, height) {
     const safeShare = shareUrl || "";
-    const src = (embedBaseUrl || "").replace(/^https?:\/\//, "https://");
-    const html =
-      "<iframe class='embedly-embed' " +
-      "src='//cdn.embedly.com/widgets/media.html?src=" +
-      encodeURIComponent(src) +
-      "&dntp=1&display_name=Vimeo&url=" +
-      encodeURIComponent(safeShare) +
-      "&type=text%2Fhtml&schema=vimeo' " +
-      "width='940' height='529' scrolling='no' " +
-      "title='Vimeo embed' frameborder='0' " +
-      "allow='autoplay; fullscreen; encrypted-media; picture-in-picture;' " +
-      "allowfullscreen='true'></iframe>";
+    const w = width || DEFAULT_WIDTH;
+    const h = height || DEFAULT_HEIGHT;
 
     return {
       items: [
         {
           url: safeShare,
           originalUrl: safeShare,
-          width: 940,
-          height: 529,
+          width: w,
+          height: h,
           thumbnailUrl: "",
-          html,
+          html: buildLightboxHtml(embedBaseUrl),
           type: "video",
         },
       ],
@@ -435,6 +458,8 @@ body { overscroll-behavior: none; background: #131313; color: #e2e2e2; }
       const title = record.title || "";
       const shareUrl = record?.vimeo?.shareUrl || "";
       const embedBaseUrl = record?.vimeo?.embedBaseUrl || "";
+      const width = record?.vimeo?.width;
+      const height = record?.vimeo?.height;
 
       const h1 = el.querySelector(".carousel_item_title");
       if (h1) h1.textContent = title;
@@ -447,7 +472,9 @@ body { overscroll-behavior: none; background: #131313; color: #e2e2e2; }
 
       const jsonScript = el.querySelector("script.w-json");
       if (jsonScript) {
-        jsonScript.textContent = JSON.stringify(buildLightboxJson(shareUrl, embedBaseUrl));
+        jsonScript.textContent = JSON.stringify(
+          buildLightboxJson(shareUrl, embedBaseUrl, width, height)
+        );
       }
 
       // Keep link from navigating
