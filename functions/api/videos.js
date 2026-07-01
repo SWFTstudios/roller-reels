@@ -1,3 +1,6 @@
+const DEFAULT_WIDTH = 1080;
+const DEFAULT_HEIGHT = 1920;
+
 export async function onRequestGet(context) {
   const baseId = "appyk4Nbvjtzj8334";
   const tableName = context.env.AIRTABLE_TABLE_NAME || "Videos";
@@ -54,7 +57,7 @@ export async function onRequestGet(context) {
   const data = await res.json();
   const records = Array.isArray(data?.records) ? data.records : [];
 
-  const items = records
+  const rawItems = records
     .map((r) => {
       const fields = r.fields || {};
       const title = typeof fields["Title"] === "string" ? fields["Title"] : "";
@@ -84,6 +87,20 @@ export async function onRequestGet(context) {
     })
     .filter(Boolean);
 
+  const items = await Promise.all(
+    rawItems.map(async (item) => {
+      const dims = await fetchVimeoDimensions(item.vimeo.shareUrl);
+      return {
+        ...item,
+        vimeo: {
+          ...item.vimeo,
+          width: dims.width,
+          height: dims.height,
+        },
+      };
+    })
+  );
+
   const body = JSON.stringify({ items });
   const response = new Response(body, {
     headers: {
@@ -94,6 +111,34 @@ export async function onRequestGet(context) {
 
   context.waitUntil(cache.put(cacheKey, response.clone()));
   return response;
+}
+
+async function fetchVimeoDimensions(shareUrl) {
+  try {
+    const oembedUrl = `https://vimeo.com/api/oembed.json?url=${encodeURIComponent(
+      shareUrl
+    )}`;
+    const res = await fetch(oembedUrl);
+    if (!res.ok) {
+      return { width: DEFAULT_WIDTH, height: DEFAULT_HEIGHT };
+    }
+
+    const data = await res.json();
+    const width = Number(data.width);
+    const height = Number(data.height);
+    if (
+      !Number.isFinite(width) ||
+      !Number.isFinite(height) ||
+      width <= 0 ||
+      height <= 0
+    ) {
+      return { width: DEFAULT_WIDTH, height: DEFAULT_HEIGHT };
+    }
+
+    return { width, height };
+  } catch {
+    return { width: DEFAULT_WIDTH, height: DEFAULT_HEIGHT };
+  }
 }
 
 function normalizeVimeo(input) {
@@ -118,4 +163,3 @@ function normalizeVimeo(input) {
 
   return { shareUrl, videoId, hash, embedBaseUrl };
 }
-
