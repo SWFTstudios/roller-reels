@@ -101,8 +101,20 @@
   <div carousel="component" class="carousel_component">
     <div class="page_code_custom w-embed">
       <style>
-/* remove scroll bounce */
-body { overscroll-behavior: none; background: #131313; color: #e2e2e2; }
+/* Gallery: lock page scroll — carousel handles vertical interaction */
+html, body {
+  height: 100%;
+  overflow: hidden;
+  overscroll-behavior: none;
+}
+body { background: #131313; color: #e2e2e2; }
+.carousel-container {
+  height: calc(100svh - 80px) !important;
+  min-height: 0 !important;
+  padding-top: 2rem !important;
+  padding-bottom: 2rem !important;
+  box-sizing: border-box !important;
+}
 
 /* Midnight Ember nav */
 :root { --me-primary:#ff8c00; --me-gold:#ffdb3c; --me-text:#e2e2e2; --me-ghost:#333; --font-display:'Anton','Audiowide',sans-serif; --font-ui:'Hanken Grotesk','Archivo',sans-serif; }
@@ -514,11 +526,21 @@ $('.play').on('click', function() {
   <script>
 $(document).ready(function () {
   const items = $(".carousel-item");
+  const $container = $(".carousel-container");
+  const containerEl = $container[0];
   let currentIndex = 4;
   let isAnimating = false;
   CustomEase.create("customEase", ".06,.39,.95,-0.06");
   let touchStartY = 0;
   let touchEndY = 0;
+
+  function advanceCarousel(direction) {
+    if (isAnimating) return;
+    isAnimating = true;
+    if (direction > 0) currentIndex = (currentIndex + 1) % items.length;
+    else currentIndex = (currentIndex - 1 + items.length) % items.length;
+    updateCarousel();
+  }
 
   function updateCarousel() {
     items.each(function (index) {
@@ -568,25 +590,28 @@ $(document).ready(function () {
     }
   }
 
-  $(window).on("wheel", function (e) {
-    if (isAnimating) return;
-    isAnimating = true;
-    if (e.originalEvent.deltaY > 0) currentIndex = (currentIndex + 1) % items.length;
-    else currentIndex = (currentIndex - 1 + items.length) % items.length;
-    updateCarousel();
-  });
-  $(".carousel-container").on("touchstart", function (e) {
+  if (containerEl) {
+    containerEl.addEventListener("wheel", function (e) {
+      e.preventDefault();
+      advanceCarousel(e.deltaY > 0 ? 1 : -1);
+    }, { passive: false });
+
+    containerEl.addEventListener("touchmove", function (e) {
+      e.preventDefault();
+      if (e.touches.length) touchEndY = e.touches[0].clientY;
+    }, { passive: false });
+  }
+
+  $container.on("touchstart", function (e) {
     touchStartY = e.originalEvent.touches[0].clientY;
+    touchEndY = touchStartY;
   });
-  $(".carousel-container").on("touchmove", function (e) {
-    touchEndY = e.originalEvent.touches[0].clientY;
-  });
-  $(".carousel-container").on("touchend", function () {
-    if (isAnimating) return;
-    isAnimating = true;
-    if (touchEndY < touchStartY) currentIndex = (currentIndex + 1) % items.length;
-    else if (touchEndY > touchStartY) currentIndex = (currentIndex - 1 + items.length) % items.length;
-    updateCarousel();
+  $container.on("touchend", function () {
+    if (Math.abs(touchEndY - touchStartY) < 24) {
+      isAnimating = false;
+      return;
+    }
+    advanceCarousel(touchEndY < touchStartY ? 1 : -1);
   });
 
   updateCarousel();
