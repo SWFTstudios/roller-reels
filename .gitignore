@@ -3,3 +3,7 @@ videos/
 
 # Local documentation notes (not tracked in Git)
 docs/cms-architecture.md
+
+# Wrangler / Node tooling
+node_modules/
+.wrangler/
